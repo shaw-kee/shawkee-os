@@ -1,2 +1,2 @@
-# RapidDesign
-Easy &amp; Fast
+# shawkee-os
+Inspired by the macOS
