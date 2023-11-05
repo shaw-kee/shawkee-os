@@ -39,7 +39,7 @@ const MenuItem = ({ isAppName = false, children }: { isAppName?: boolean; childr
   return (
     <button
       type='button'
-      className={`text-[13px] leading-[16px] text rounded-[4px] px-[11px] py-[4px] active:bg-[#E6E6E6] cursor-default ${fontWeightClass}`}
+      className={`text-[13px] leading-[16px] text rounded-[4px] px-[11px] py-[4px] active:bg-[#090909]/10 cursor-default ${fontWeightClass}`}
     >
       {children}
     </button>
