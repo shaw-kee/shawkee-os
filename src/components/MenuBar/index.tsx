@@ -1,7 +1,7 @@
-import AppleIcon from './icons/AppleIcon';
-import ControlCenterIcon from './icons/ControlCenterIcon';
-import SpotlightIcon from './icons/SpotlightIcon';
-import WifiIcon from './icons/WifiIcon';
+import AppleIcon from '@/assets/icons/AppleIcon.svg?react';
+import ControlCenterIcon from '@/assets/icons/ControlCenterIcon.svg?react';
+import SpotlightIcon from '@/assets/icons/SpotlightIcon.svg?react';
+import WifiIcon from '@/assets/icons/WifiIcon.svg?react';
 import MenuItem from './MenuItem';
 import Clock from './Clock';
 
