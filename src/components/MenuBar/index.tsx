@@ -1,9 +1,9 @@
-import { ReactNode } from 'react';
 import AppleIcon from './icons/AppleIcon';
 import ControlCenterIcon from './icons/ControlCenterIcon';
 import SpotlightIcon from './icons/SpotlightIcon';
 import WifiIcon from './icons/WifiIcon';
-import useCurrentDate from './useCurrentDate';
+import MenuItem from './MenuItem';
+import Clock from './Clock';
 
 const MenuBar = () => {
   return (
@@ -32,23 +32,6 @@ const MenuBar = () => {
       </div>
     </div>
   );
-};
-
-const MenuItem = ({ isAppName = false, children }: { isAppName?: boolean; children: ReactNode }) => {
-  const fontWeightClass = isAppName ? 'font-bold' : 'font-base';
-  return (
-    <button
-      type='button'
-      className={`text-[13px] leading-[16px] text rounded-[4px] px-[11px] py-[4px] active:bg-[#090909]/10 cursor-default ${fontWeightClass}`}
-    >
-      {children}
-    </button>
-  );
-};
-
-const Clock = () => {
-  const { date } = useCurrentDate();
-  return <div className='whitespace-pre'>{date}</div>;
 };
 
 export default MenuBar;
