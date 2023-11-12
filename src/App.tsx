@@ -3,8 +3,8 @@ import WallpaperUrl from './assets/wallpaper.jpg';
 
 function App() {
   return (
-    <div className='w-full h-screen'>
-      <img src={WallpaperUrl} className='absolute w-full h-full object-cover' />
+    <div className='h-screen w-full'>
+      <img src={WallpaperUrl} className='absolute h-full w-full object-cover' />
       <MenuBar />
       {/* Desktop */}
       {/* Dock */}
