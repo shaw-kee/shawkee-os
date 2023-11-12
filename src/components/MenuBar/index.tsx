@@ -7,7 +7,7 @@ import Clock from './Clock';
 
 const MenuBar = () => {
   return (
-    <div className='w-full bg-white/50 backdrop-blur-[25px] flex justify-between pl-[4px] pr-[8px]'>
+    <div className='flex w-full justify-between bg-white/50 pl-[4px] pr-[8px] backdrop-blur-[25px]'>
       <div className='flex gap-[-4px]'>
         <MenuItem>
           <AppleIcon width={14} height={17} viewBox='0 0 14 17' />
