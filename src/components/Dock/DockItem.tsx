@@ -13,7 +13,7 @@ interface Props {
 
 const DockItem = ({ title, imageUrl, isOpen = false, link = '', mousePosition }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
-  const width = useCalculatedWidth(mousePosition, ref, 50);
+  const width = useCalculatedWidth(mousePosition, ref);
 
   return (
     <motion.div
