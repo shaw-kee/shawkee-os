@@ -1,12 +1,13 @@
 @tailwind base;
 @tailwind components;
-
-.tooltip-text {
-  @apply invisible absolute z-50;
-}
-
-.tooltip:hover .tooltip-text {
-  @apply visible;
-}
-
 @tailwind utilities;
+
+@layer components {
+  .tooltip-text {
+    @apply invisible absolute z-50;
+  }
+
+  .tooltip:hover .tooltip-text {
+    @apply visible;
+  }
+}
