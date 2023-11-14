@@ -1,5 +1,5 @@
 import ConditionalLink from '@/components/ConditionalLink';
-import { useCalculatedWidth } from '@/hooks/useCalculatedWidth';
+import { useCalculatedWidth } from '@/components/Dock/useCalculatedWidth';
 import { motion, MotionValue } from 'framer-motion';
 import { useRef } from 'react';
 
