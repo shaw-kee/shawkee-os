@@ -30,7 +30,7 @@ const DockItem = ({ title, imageUrl, isOpen = false, link = '', mousePosition }:
         <div className='tooltip-text top-[calc(-100%-10px)] inline-flex items-center rounded-md bg-[#F6F6F6B8] px-3 py-1 text-sm text-black shadow-[0_2px_6px_0_rgba(0,0,0,0.20),0_0_0_0.5px_rgba(0,0,0,0.12)]'>
           {title}
         </div>
-        <img src={imageUrl} className='aspect-square w-full' />
+        <img src={imageUrl} className='aspect-square w-full active:contrast-50' />
         <div className={`absolute bottom-[2px] h-1 w-1 rounded-full bg-[#575757] ${isOpen ? '' : 'hidden'}`} />
       </ConditionalLink>
     </motion.div>
