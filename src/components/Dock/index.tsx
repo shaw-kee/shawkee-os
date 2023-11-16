@@ -1,9 +1,11 @@
-import apps from '@/config/apps';
 import DockItem from '@/components/Dock/DockItem';
 import { useMotionValue } from 'framer-motion';
 import { DOCK_SIZE } from '@/constants/dock';
+import { useContext } from 'react';
+import { AppStateContext } from '@/store/App/AppContext';
 
 const Dock = () => {
+  const apps = useContext(AppStateContext);
   const mousePosition = useMotionValue(Infinity);
   const handleMouseMove = (e: React.MouseEvent) => mousePosition.set(e.clientX);
   const handleMouseLeave = () => mousePosition.set(Infinity);
@@ -18,10 +20,12 @@ const Dock = () => {
       {apps.map((app) => (
         <DockItem
           key={app.id}
+          id={app.id}
           title={app.title}
           imageUrl={app.imageUrl}
           link={app.link}
           mousePosition={mousePosition}
+          isOpen={app.isOpen}
         />
       ))}
     </div>

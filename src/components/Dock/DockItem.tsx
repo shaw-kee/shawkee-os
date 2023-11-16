@@ -1,10 +1,12 @@
 import ConditionalLink from '@/components/ConditionalLink';
 import { useCalculatedWidth } from '@/components/Dock/useCalculatedWidth';
+import { AppReducerContext } from '@/store/App/AppContext';
 import { motion, MotionValue } from 'framer-motion';
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 
 interface Props {
   title: string;
+  id: string;
   imageUrl: string;
   isOpen?: boolean;
   link?: string;
@@ -12,8 +14,11 @@ interface Props {
 }
 
 const DockItem = ({ title, imageUrl, isOpen = false, link = '', mousePosition }: Props) => {
+  const dispatch = useContext(AppReducerContext);
   const ref = useRef<HTMLDivElement>(null);
   const width = useCalculatedWidth(mousePosition, ref);
+
+  if (!dispatch) throw new Error('dispatch is null');
 
   return (
     <motion.div
