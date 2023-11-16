@@ -12,13 +12,9 @@ export const AppReducerContext = createContext<Dispatch<ActionType> | null>(null
 export const appReducer = (state: App[], action: ActionType): App[] => {
   switch (action.type) {
     case 'CLOSE':
-      return state.map((app) => {
-        return app.id === action.id ? { ...app, isOpen: false } : { ...app };
-      });
+      return state.map((app) => (app.id === action.id ? { ...app, isOpen: false } : app));
     case 'OPEN':
-      return state.map((app) => {
-        return app.id === action.id ? { ...app, isOpen: true } : { ...app };
-      });
+      return state.map((app) => (app.id === action.id ? { ...app, isOpen: true } : app));
     default:
       throw new Error('invalid action!');
   }
