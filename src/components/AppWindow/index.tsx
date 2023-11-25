@@ -16,11 +16,11 @@ const AppWindow = ({ title, id }: Props) => {
       <div className='flex h-7 w-full items-center justify-center bg-[#e4e4e4]'>
         <div className='absolute left-2 flex items-center gap-1'>
           <div
-            className='h-3 w-3 cursor-pointer rounded-full border-[0.5px] bg-[#FF5F57]'
+            className='h-3 w-3 cursor-pointer rounded-full border-[0.5px] border-[#00000033] bg-[#FF5F57]'
             onClick={() => dispatch({ type: 'CLOSE', id })}
           />
-          <div className='h-3 w-3 cursor-pointer rounded-full border-[0.5px] bg-[#FEBC2E]' />
-          <div className='h-3 w-3 cursor-pointer rounded-full border-[0.5px] bg-[#28C840]' />
+          <div className='h-3 w-3 cursor-pointer rounded-full border-[0.5px] border-[#00000033] bg-[#FEBC2E]' />
+          <div className='h-3 w-3 cursor-pointer rounded-full border-[0.5px] border-[#00000033] bg-[#28C840]' />
         </div>
         <span className='font-bold'>{title}</span>
       </div>
