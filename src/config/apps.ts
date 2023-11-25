@@ -21,7 +21,7 @@ export const apps: App[] = [
   },
   {
     id: 'photo_booth',
-    title: 'Photo_Booth',
+    title: 'Photo Booth',
     imageUrl: 'src/assets/icons/Photo_Booth_Icon.png',
     isOpen: false,
   },
