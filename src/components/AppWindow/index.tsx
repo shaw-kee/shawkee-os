@@ -1,8 +1,8 @@
 import { AppReducerContext } from '@/store/App/AppContext';
 import { useContext } from 'react';
-import CloseIcon from '@/assets/icons/Close.svg?react';
-import MinimizeIcon from '@/assets/icons/Minimize.svg?react';
-import FullScreenIcon from '@/assets/icons/FullScreen.svg?react';
+import CloseIcon from '@/assets/icons/AppWindow/Close.svg?react';
+import MinimizeIcon from '@/assets/icons/AppWindow/Minimize.svg?react';
+import FullScreenIcon from '@/assets/icons/AppWindow/FullScreen.svg?react';
 
 interface Props {
   title: string;

@@ -10,31 +10,31 @@ export const apps: App[] = [
   {
     id: 'notes',
     title: 'Notes',
-    imageUrl: 'src/assets/icons/Notes_Icon.png',
+    imageUrl: 'src/assets/icons/Dock/Notes_Icon.png',
     isOpen: false,
   },
   {
     id: 'safari',
     title: 'Safari',
-    imageUrl: 'src/assets/icons/Safari_Icon.png',
+    imageUrl: 'src/assets/icons/Dock/Safari_Icon.png',
     isOpen: false,
   },
   {
     id: 'photo_booth',
     title: 'Photo Booth',
-    imageUrl: 'src/assets/icons/Photo_Booth_Icon.png',
+    imageUrl: 'src/assets/icons/Dock/Photo_Booth_Icon.png',
     isOpen: false,
   },
   {
     id: 'calculator',
     title: 'Calculator',
-    imageUrl: 'src/assets/icons/Calculator_Icon.png',
+    imageUrl: 'src/assets/icons/Dock/Calculator_Icon.png',
     isOpen: false,
   },
   {
     id: 'calendar',
     title: 'Calendar',
-    imageUrl: 'src/assets/icons/Calendar_Icon.png',
+    imageUrl: 'src/assets/icons/Dock/Calendar_Icon.png',
     isOpen: false,
   },
 ];
