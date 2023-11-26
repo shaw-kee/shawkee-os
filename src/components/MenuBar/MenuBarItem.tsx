@@ -15,7 +15,6 @@ const MenuBarItem = ({ isAppName = false, children, menus }: MenuBarItemProps) =
   const { menuListRef, isOpen, menuListPosition, toggleMenuList } = useToggleMenuList();
 
   const handleMenuBarItemClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (!(event.currentTarget instanceof HTMLElement)) return;
     const rect = event.currentTarget.getBoundingClientRect();
     toggleMenuList(rect);
   };
