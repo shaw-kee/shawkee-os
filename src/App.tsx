@@ -2,7 +2,7 @@ import MenuBar from './components/MenuBar';
 import WallpaperUrl from './assets/wallpaper.jpg';
 import Dock from '@/components/Dock';
 import AppProvider from '@/store/App/AppProvider';
-import WindowWrapper from '@/components/WindowWrapper';
+import WindowWrapper from '@/components/AppWindow/WindowWrapper';
 
 function App() {
   return (
