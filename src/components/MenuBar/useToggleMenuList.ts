@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 const MENUBAR_PADDING_X = 8;
 
@@ -15,6 +15,29 @@ const useToggleMenuList = () => {
 
     setMenuListPosition({ x, y });
   };
+
+  useEffect(() => {
+    const handleClickAway = (event: Event) => {
+      const menuListElement = menuListRef.current;
+      const isClickMenuBarItemAway =
+        event.target instanceof HTMLElement &&
+        menuListElement &&
+        menuListElement.previousSibling &&
+        !menuListElement.contains(event.target) &&
+        !menuListElement.previousSibling.isSameNode(event.target) &&
+        !menuListElement.previousSibling.contains(event.target);
+
+      if (isClickMenuBarItemAway) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickAway);
+
+    return () => {
+      document.removeEventListener('click', handleClickAway);
+    };
+  }, [menuListRef]);
 
   useLayoutEffect(() => {
     if (!menuListRef.current) return;

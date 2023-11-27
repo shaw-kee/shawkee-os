@@ -16,7 +16,7 @@ const MenuBar = () => {
         </MenuBarItem>
         <MenuBarItem isAppName>Finder</MenuBarItem>
         <MenuBarItem>Menu1</MenuBarItem>
-        <MenuBarItem>Menu2</MenuBarItem>
+        <MenuBarItem menus={DEFAULT_MENUS}>Menu2</MenuBarItem>
       </div>
       <div className='flex'>
         <MenuBarItem>
