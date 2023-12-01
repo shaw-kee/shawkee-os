@@ -10,4 +10,8 @@
   .tooltip:hover .tooltip-text {
     @apply visible;
   }
+
+  .hidden-wrapper:hover .hidden {
+    @apply block;
+  }
 }
