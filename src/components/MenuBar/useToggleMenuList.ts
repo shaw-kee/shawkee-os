@@ -19,23 +19,16 @@ const useToggleMenuList = () => {
   useEffect(() => {
     const handleClickAway = (event: Event) => {
       const menuListElement = menuListRef.current;
-      const isClickMenuBarItemAway =
-        event.target instanceof HTMLElement &&
-        menuListElement &&
-        menuListElement.previousSibling &&
-        !menuListElement.contains(event.target) &&
-        !menuListElement.previousSibling.isSameNode(event.target) &&
-        !menuListElement.previousSibling.contains(event.target);
-
+      const isClickMenuBarItemAway = event.target instanceof HTMLElement && !menuListElement?.contains(event.target);
       if (isClickMenuBarItemAway) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener('click', handleClickAway);
+    document.addEventListener('mousedown', handleClickAway);
 
     return () => {
-      document.removeEventListener('click', handleClickAway);
+      document.removeEventListener('mousedown', handleClickAway);
     };
   }, [menuListRef]);
 
