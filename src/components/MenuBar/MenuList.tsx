@@ -10,7 +10,7 @@ interface MenuListProps {
 const MenuList = forwardRef<HTMLUListElement, MenuListProps>(({ menus, position }, ref) => {
   return (
     <ul
-      className={`menu-list absolute flex flex-col rounded-md p-[5px] text-[13px]`}
+      className={`menu-list absolute z-50 flex flex-col rounded-md p-[5px] text-[13px]`}
       style={{ left: position.x, top: position.y }}
       ref={ref}
     >
