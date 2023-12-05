@@ -1,14 +1,10 @@
-import { Fragment, createContext, useCallback, useMemo, useState } from 'react';
+import { Fragment, useCallback, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
+import OverlayContext from './OverlayContext';
 
 interface OverlayProviderProps {
   children: ReactNode;
 }
-
-const OverlayContext = createContext<{
-  mount: (id: string, element: ReactNode) => void;
-  unmount: (id: string) => void;
-} | null>(null);
 
 const OverlayProvider = ({ children }: OverlayProviderProps) => {
   const [overlay, setOverlay] = useState<Map<string, ReactNode>>(new Map());
@@ -29,10 +25,10 @@ const OverlayProvider = ({ children }: OverlayProviderProps) => {
     });
   }, []);
 
-  const controller = useMemo(() => ({ mount, unmount }), [mount, unmount]);
+  const context = useMemo(() => ({ mount, unmount }), [mount, unmount]);
 
   return (
-    <OverlayContext.Provider value={controller}>
+    <OverlayContext.Provider value={context}>
       {children}
       {[...overlay.entries()].map(([id, element]) => (
         <Fragment key={id}>{element}</Fragment>
