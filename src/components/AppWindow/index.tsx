@@ -1,5 +1,5 @@
 import { AppReducerContext } from '@/store/App/AppContext';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import CloseIcon from '@/assets/icons/AppWindow/Close.svg?react';
 import MinimizeIcon from '@/assets/icons/AppWindow/Minimize.svg?react';
 import FullScreenIcon from '@/assets/icons/AppWindow/FullScreen.svg?react';
@@ -16,9 +16,29 @@ const AppWindow = ({ title, id }: Props) => {
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
 
+  const [{ x, y }, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseDown = (downEvent: React.MouseEvent) => {
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      moveEvent.preventDefault();
+      const [moveX, moveY] = [moveEvent.clientX - downEvent.clientX, moveEvent.clientY - downEvent.clientY];
+      setPosition({ x: x + moveX, y: y + moveY });
+    };
+
+    const handleMouseUp = () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp, { once: true });
+  };
+
   return (
-    <div className='absolute left-[50%] top-[50%] w-96 translate-x-[-50%] translate-y-[-50%] flex-col overflow-hidden rounded-lg'>
-      <div className='flex h-7 w-full items-center justify-center bg-[#e4e4e4]'>
+    <div
+      className='absolute left-[50%] top-[50%] w-96 flex-col overflow-hidden rounded-lg'
+      style={{ transform: `translate(${x}px, ${y}px)` }}
+    >
+      <div className='flex h-7 w-full items-center justify-center bg-[#e4e4e4]' onMouseDown={handleMouseDown}>
         <div className='hidden-wrapper absolute left-2 flex items-center gap-1'>
           <button
             className='flex h-3 w-3 cursor-pointer items-center justify-center rounded-full border-[0.5px] border-[#00000033] bg-[#FF5F57]'
