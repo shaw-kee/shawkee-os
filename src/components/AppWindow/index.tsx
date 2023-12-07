@@ -9,13 +9,15 @@ interface Props {
   title: string;
   id: string;
   container: RefObject<HTMLDivElement>;
+  initialX: number;
+  initialY: number;
 }
 
-const AppWindow = ({ title, id, container }: Props) => {
+const AppWindow = ({ title, id, container, initialX, initialY }: Props) => {
   const dispatch = useContext(AppReducerContext);
   if (!dispatch) throw new Error('dispatch is null');
 
-  const { x, y, targetRef, handleDragElement } = useDragElement<HTMLDivElement>(container, 0, 0);
+  const { x, y, targetRef, handleDragElement } = useDragElement<HTMLDivElement>(container, initialX, initialY);
   const handleClose = () => dispatch({ type: 'CLOSE', id });
 
   return (
