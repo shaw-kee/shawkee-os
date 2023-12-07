@@ -1,5 +1,5 @@
 import { AppReducerContext } from '@/store/App/AppContext';
-import { useContext, useState } from 'react';
+import { RefObject, useContext, useRef, useState } from 'react';
 import CloseIcon from '@/assets/icons/AppWindow/Close.svg?react';
 import MinimizeIcon from '@/assets/icons/AppWindow/Minimize.svg?react';
 import FullScreenIcon from '@/assets/icons/AppWindow/FullScreen.svg?react';
@@ -7,22 +7,36 @@ import FullScreenIcon from '@/assets/icons/AppWindow/FullScreen.svg?react';
 interface Props {
   title: string;
   id: string;
+  container: RefObject<HTMLDivElement>;
 }
 
-const AppWindow = ({ title, id }: Props) => {
+const AppWindow = ({ title, id, container }: Props) => {
   const dispatch = useContext(AppReducerContext);
-
   if (!dispatch) throw new Error('dispatch is null');
+
+  const [{ x, y }, setPosition] = useState({ x: 0, y: 0 });
+  const appWindowRef = useRef<HTMLDivElement>(null);
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
 
-  const [{ x, y }, setPosition] = useState({ x: 0, y: 0 });
+  const getPosition = (range: number, min: number, max: number) => {
+    if (range < min) return min;
+    if (range > max) return max;
+    return range;
+  };
 
   const handleMouseDown = (downEvent: React.MouseEvent) => {
     const handleMouseMove = (moveEvent: MouseEvent) => {
       moveEvent.preventDefault();
       const [moveX, moveY] = [moveEvent.clientX - downEvent.clientX, moveEvent.clientY - downEvent.clientY];
-      setPosition({ x: x + moveX, y: y + moveY });
+
+      if (container.current && appWindowRef.current) {
+        const containerRect = container.current.getBoundingClientRect();
+        const appWindowRect = appWindowRef.current.getBoundingClientRect();
+        const calculatedX = getPosition(x + moveX, 0, containerRect.width - appWindowRect.width);
+        const calculatedY = getPosition(y + moveY, 0, containerRect.height - appWindowRect.height);
+        setPosition({ x: calculatedX, y: calculatedY });
+      }
     };
 
     const handleMouseUp = () => {
@@ -35,8 +49,9 @@ const AppWindow = ({ title, id }: Props) => {
 
   return (
     <div
-      className='absolute left-[50%] top-[50%] w-96 flex-col overflow-hidden rounded-lg'
+      className='absolute w-96 flex-col overflow-hidden rounded-lg'
       style={{ transform: `translate(${x}px, ${y}px)` }}
+      ref={appWindowRef}
     >
       <div className='flex h-7 w-full items-center justify-center bg-[#e4e4e4]' onMouseDown={handleMouseDown}>
         <div className='hidden-wrapper absolute left-2 flex items-center gap-1'>
