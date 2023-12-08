@@ -4,6 +4,7 @@ import CloseIcon from '@/assets/icons/AppWindow/Close.svg?react';
 import MinimizeIcon from '@/assets/icons/AppWindow/Minimize.svg?react';
 import FullScreenIcon from '@/assets/icons/AppWindow/FullScreen.svg?react';
 import { getPosition, mouseDrag } from '@/utils/mouseDrag';
+import ResizableContainer from '../ResizableContainer';
 
 interface Props {
   title: string;
@@ -33,7 +34,7 @@ const AppWindow = ({ title, id, container, initialX, initialY }: Props) => {
   const handleClose = () => dispatch({ type: 'CLOSE', id });
 
   return (
-    <div
+    <ResizableContainer
       className='absolute w-96 flex-col overflow-hidden rounded-lg'
       style={{ transform: `translate(${x}px, ${y}px)` }}
       ref={targetRef}
@@ -56,7 +57,7 @@ const AppWindow = ({ title, id, container, initialX, initialY }: Props) => {
         <span className='font-bold'>{title}</span>
       </div>
       <div className='h-28 bg-white'>content</div>
-    </div>
+    </ResizableContainer>
   );
 };
 
