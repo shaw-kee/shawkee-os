@@ -38,6 +38,10 @@ const AppWindow = ({ title, id, container, initialX, initialY }: Props) => {
       className='absolute w-96 flex-col overflow-hidden rounded-lg'
       style={{ transform: `translate(${x}px, ${y}px)` }}
       ref={targetRef}
+      x={x}
+      y={y}
+      container={container}
+      setPosition={setPosition}
     >
       <div className='flex h-7 w-full items-center justify-center bg-[#e4e4e4]' onMouseDown={handleMouseDown}>
         <div className='hidden-wrapper absolute left-2 flex items-center gap-1'>
@@ -56,7 +60,7 @@ const AppWindow = ({ title, id, container, initialX, initialY }: Props) => {
         </div>
         <span className='font-bold'>{title}</span>
       </div>
-      <div className='h-28 bg-white'>content</div>
+      <div className='h-full bg-white'>content</div>
     </ResizableContainer>
   );
 };
