@@ -6,6 +6,8 @@ export interface App {
   isOpen?: boolean;
   initialX: number;
   initialY: number;
+  minWidth: number;
+  minHeight: number;
 }
 
 export const apps: App[] = [
@@ -16,6 +18,8 @@ export const apps: App[] = [
     isOpen: false,
     initialX: 500,
     initialY: 300,
+    minWidth: 300,
+    minHeight: 400,
   },
   {
     id: 'safari',
@@ -24,6 +28,8 @@ export const apps: App[] = [
     isOpen: false,
     initialX: 600,
     initialY: 350,
+    minWidth: 300,
+    minHeight: 400,
   },
   {
     id: 'photo_booth',
@@ -32,6 +38,8 @@ export const apps: App[] = [
     isOpen: false,
     initialX: 700,
     initialY: 400,
+    minWidth: 300,
+    minHeight: 400,
   },
   {
     id: 'calculator',
@@ -40,6 +48,8 @@ export const apps: App[] = [
     isOpen: false,
     initialX: 800,
     initialY: 450,
+    minWidth: 300,
+    minHeight: 400,
   },
   {
     id: 'calendar',
@@ -48,5 +58,7 @@ export const apps: App[] = [
     isOpen: false,
     initialX: 900,
     initialY: 500,
+    minWidth: 300,
+    minHeight: 400,
   },
 ];

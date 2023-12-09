@@ -14,6 +14,8 @@ const WindowWrapper = () => {
         key={app.id}
         initialX={app.initialX}
         initialY={app.initialY}
+        minWidth={app.minWidth}
+        minHeight={app.minHeight}
         boundaryRef={boundaryRef}
         render={(handleDragElement) => (
           <AppWindow title={app.title} key={app.id} id={app.id} onMouseDown={handleDragElement} />

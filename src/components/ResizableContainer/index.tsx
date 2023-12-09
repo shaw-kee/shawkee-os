@@ -4,6 +4,8 @@ import { HTMLAttributes, RefObject, ReactElement } from 'react';
 interface Props {
   initialX: number;
   initialY: number;
+  minWidth: number;
+  minHeight: number;
   boundaryRef: RefObject<HTMLDivElement>;
   render: (handleDragElement: (downEvent: React.MouseEvent<Element, MouseEvent>) => void) => ReactElement;
 }
@@ -11,6 +13,8 @@ interface Props {
 const ResizableContainer = ({
   initialX,
   initialY,
+  minWidth,
+  minHeight,
   boundaryRef,
   render,
   ...props
@@ -30,7 +34,7 @@ const ResizableContainer = ({
     handleResizeWest,
     containerRef,
     handleDragElement,
-  } = useDraggable(initialX, initialY, boundaryRef);
+  } = useDraggable(initialX, initialY, minWidth, minHeight, boundaryRef);
 
   return (
     <div {...props} ref={containerRef} style={{ width: w, height: h, transform: `translate(${x}px, ${y}px)` }}>

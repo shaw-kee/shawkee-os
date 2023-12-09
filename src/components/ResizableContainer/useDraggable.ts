@@ -1,8 +1,14 @@
 import { getPosition, mouseDrag } from '@/utils/mouseDrag';
 import { RefObject, useRef, useState } from 'react';
 
-const useDraggable = (initialX: number, initialY: number, boundaryRef: RefObject<HTMLElement>) => {
-  const [{ w, h }, setSize] = useState({ w: 200, h: 200 });
+const useDraggable = (
+  initialX: number,
+  initialY: number,
+  minWidth: number,
+  minHeight: number,
+  boundaryRef: RefObject<HTMLElement>
+) => {
+  const [{ w, h }, setSize] = useState({ w: minWidth, h: minHeight });
   const [{ x, y }, setPosition] = useState({ x: initialX, y: initialY });
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -18,12 +24,12 @@ const useDraggable = (initialX: number, initialY: number, boundaryRef: RefObject
 
   const { handleMouseDown: handleResizeNorthWest } = mouseDrag((moveX, moveY) => {
     setSize({
-      w: getPosition(w - moveX, 200, x + w),
-      h: getPosition(h - moveY, 200, y + h),
+      w: getPosition(w - moveX, minWidth, x + w),
+      h: getPosition(h - moveY, minHeight, y + h),
     });
     setPosition({
-      x: getPosition(x + moveX, 0, x + w - 200),
-      y: getPosition(y + moveY, 0, y + h - 200),
+      x: getPosition(x + moveX, 0, x + w - minWidth),
+      y: getPosition(y + moveY, 0, y + h - minHeight),
     });
   });
 
@@ -32,12 +38,12 @@ const useDraggable = (initialX: number, initialY: number, boundaryRef: RefObject
       const boundaryRect = boundaryRef.current.getBoundingClientRect();
 
       setSize({
-        w: getPosition(w + moveX, 200, boundaryRect.width - x),
-        h: getPosition(h - moveY, 200, y + h),
+        w: getPosition(w + moveX, minWidth, boundaryRect.width - x),
+        h: getPosition(h - moveY, minHeight, y + h),
       });
       setPosition({
         x,
-        y: getPosition(y + moveY, 0, y + h - 200),
+        y: getPosition(y + moveY, 0, y + h - minHeight),
       });
     }
   });
@@ -47,11 +53,11 @@ const useDraggable = (initialX: number, initialY: number, boundaryRef: RefObject
       const boundaryRect = boundaryRef.current.getBoundingClientRect();
 
       setSize({
-        w: getPosition(w - moveX, 200, x + w),
-        h: getPosition(h + moveY, 200, boundaryRect.height - y),
+        w: getPosition(w - moveX, minWidth, x + w),
+        h: getPosition(h + moveY, minHeight, boundaryRect.height - y),
       });
       setPosition({
-        x: getPosition(x + moveX, 0, x + w - 200),
+        x: getPosition(x + moveX, 0, x + w - minWidth),
         y,
       });
     }
@@ -62,8 +68,8 @@ const useDraggable = (initialX: number, initialY: number, boundaryRef: RefObject
       const boundaryRect = boundaryRef.current.getBoundingClientRect();
 
       setSize({
-        w: getPosition(w + moveX, 200, boundaryRect.width - x),
-        h: getPosition(h + moveY, 200, boundaryRect.height - y),
+        w: getPosition(w + moveX, minWidth, boundaryRect.width - x),
+        h: getPosition(h + moveY, minHeight, boundaryRect.height - y),
       });
       setPosition({
         x,
@@ -74,11 +80,11 @@ const useDraggable = (initialX: number, initialY: number, boundaryRef: RefObject
 
   const { handleMouseDown: handleResizeWest } = mouseDrag((moveX) => {
     setSize({
-      w: getPosition(w - moveX, 200, x + w),
+      w: getPosition(w - moveX, minWidth, x + w),
       h,
     });
     setPosition({
-      x: getPosition(x + moveX, 0, x + w - 200),
+      x: getPosition(x + moveX, 0, x + w - minWidth),
       y,
     });
   });
@@ -88,7 +94,7 @@ const useDraggable = (initialX: number, initialY: number, boundaryRef: RefObject
       const boundaryRect = boundaryRef.current.getBoundingClientRect();
 
       setSize({
-        w: getPosition(w + moveX, 200, boundaryRect.width - x),
+        w: getPosition(w + moveX, minWidth, boundaryRect.width - x),
         h,
       });
       setPosition({
@@ -101,11 +107,11 @@ const useDraggable = (initialX: number, initialY: number, boundaryRef: RefObject
   const { handleMouseDown: handleResizeNorth } = mouseDrag((_, moveY) => {
     setSize({
       w,
-      h: getPosition(h - moveY, 200, y + h),
+      h: getPosition(h - moveY, minWidth, y + h),
     });
     setPosition({
       x,
-      y: getPosition(y + moveY, 0, y + h - 200),
+      y: getPosition(y + moveY, 0, y + h - minHeight),
     });
   });
 
@@ -115,7 +121,7 @@ const useDraggable = (initialX: number, initialY: number, boundaryRef: RefObject
 
       setSize({
         w,
-        h: getPosition(h + moveY, 200, boundaryRect.height - y),
+        h: getPosition(h + moveY, minHeight, boundaryRect.height - y),
       });
       setPosition({
         x,
