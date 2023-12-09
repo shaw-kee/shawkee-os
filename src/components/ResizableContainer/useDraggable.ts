@@ -1,3 +1,4 @@
+import { BOUNDARY_MIN } from '@/constants/resize';
 import { getPosition, mouseDrag } from '@/utils/mouseDrag';
 import { RefObject, useRef, useState } from 'react';
 
@@ -16,8 +17,8 @@ const useDraggable = (
     if (boundaryRef.current && containerRef.current) {
       const containerRect = boundaryRef.current.getBoundingClientRect();
       const targetElementRect = containerRef.current.getBoundingClientRect();
-      const calculatedX = getPosition(x + moveX, 0, containerRect.width - targetElementRect.width);
-      const calculatedY = getPosition(y + moveY, 0, containerRect.height - targetElementRect.height);
+      const calculatedX = getPosition(x + moveX, BOUNDARY_MIN, containerRect.width - targetElementRect.width);
+      const calculatedY = getPosition(y + moveY, BOUNDARY_MIN, containerRect.height - targetElementRect.height);
       setPosition({ x: calculatedX, y: calculatedY });
     }
   });
@@ -28,8 +29,8 @@ const useDraggable = (
       h: getPosition(h - moveY, minHeight, y + h),
     });
     setPosition({
-      x: getPosition(x + moveX, 0, x + w - minWidth),
-      y: getPosition(y + moveY, 0, y + h - minHeight),
+      x: getPosition(x + moveX, BOUNDARY_MIN, x + w - minWidth),
+      y: getPosition(y + moveY, BOUNDARY_MIN, y + h - minHeight),
     });
   });
 
@@ -43,7 +44,7 @@ const useDraggable = (
       });
       setPosition({
         x,
-        y: getPosition(y + moveY, 0, y + h - minHeight),
+        y: getPosition(y + moveY, BOUNDARY_MIN, y + h - minHeight),
       });
     }
   });
@@ -57,7 +58,7 @@ const useDraggable = (
         h: getPosition(h + moveY, minHeight, boundaryRect.height - y),
       });
       setPosition({
-        x: getPosition(x + moveX, 0, x + w - minWidth),
+        x: getPosition(x + moveX, BOUNDARY_MIN, x + w - minWidth),
         y,
       });
     }
@@ -84,7 +85,7 @@ const useDraggable = (
       h,
     });
     setPosition({
-      x: getPosition(x + moveX, 0, x + w - minWidth),
+      x: getPosition(x + moveX, BOUNDARY_MIN, x + w - minWidth),
       y,
     });
   });
@@ -111,7 +112,7 @@ const useDraggable = (
     });
     setPosition({
       x,
-      y: getPosition(y + moveY, 0, y + h - minHeight),
+      y: getPosition(y + moveY, BOUNDARY_MIN, y + h - minHeight),
     });
   });
 
