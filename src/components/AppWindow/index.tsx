@@ -1,49 +1,24 @@
 import { AppReducerContext } from '@/store/App/AppContext';
-import { RefObject, useContext, useRef, useState } from 'react';
+import { useContext } from 'react';
 import CloseIcon from '@/assets/icons/AppWindow/Close.svg?react';
 import MinimizeIcon from '@/assets/icons/AppWindow/Minimize.svg?react';
 import FullScreenIcon from '@/assets/icons/AppWindow/FullScreen.svg?react';
-import { getPosition, mouseDrag } from '@/utils/mouseDrag';
-import ResizableContainer from '../ResizableContainer';
 
 interface Props {
   title: string;
   id: string;
-  container: RefObject<HTMLDivElement>;
-  initialX: number;
-  initialY: number;
+  onMouseDown: (downEvent: React.MouseEvent<Element, MouseEvent>) => void;
 }
 
-const AppWindow = ({ title, id, container, initialX, initialY }: Props) => {
+const AppWindow = ({ title, id, onMouseDown }: Props) => {
   const dispatch = useContext(AppReducerContext);
   if (!dispatch) throw new Error('dispatch is null');
-
-  const [{ x, y }, setPosition] = useState({ x: initialX, y: initialY });
-  const targetRef = useRef<HTMLDivElement>(null);
-
-  const { handleMouseDown } = mouseDrag((moveX, moveY) => {
-    if (container.current && targetRef.current) {
-      const containerRect = container.current.getBoundingClientRect();
-      const targetElementRect = targetRef.current.getBoundingClientRect();
-      const calculatedX = getPosition(x + moveX, 0, containerRect.width - targetElementRect.width);
-      const calculatedY = getPosition(y + moveY, 0, containerRect.height - targetElementRect.height);
-      setPosition({ x: calculatedX, y: calculatedY });
-    }
-  });
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
 
   return (
-    <ResizableContainer
-      className='absolute w-96 flex-col overflow-hidden rounded-lg'
-      style={{ transform: `translate(${x}px, ${y}px)` }}
-      ref={targetRef}
-      x={x}
-      y={y}
-      container={container}
-      setPosition={setPosition}
-    >
-      <div className='flex h-7 w-full items-center justify-center bg-[#e4e4e4]' onMouseDown={handleMouseDown}>
+    <>
+      <div className='flex h-7 w-full items-center justify-center bg-[#e4e4e4]' onMouseDown={onMouseDown}>
         <div className='hidden-wrapper absolute left-2 flex items-center gap-1'>
           <button
             className='flex h-3 w-3 cursor-pointer items-center justify-center rounded-full border-[0.5px] border-[#00000033] bg-[#FF5F57]'
@@ -61,7 +36,7 @@ const AppWindow = ({ title, id, container, initialX, initialY }: Props) => {
         <span className='font-bold'>{title}</span>
       </div>
       <div className='h-full bg-white'>content</div>
-    </ResizableContainer>
+    </>
   );
 };
 
