@@ -4,6 +4,10 @@ export interface App {
   imageUrl: string;
   link?: string;
   isOpen?: boolean;
+  initialX: number;
+  initialY: number;
+  minWidth: number;
+  minHeight: number;
 }
 
 export const apps: App[] = [
@@ -12,29 +16,49 @@ export const apps: App[] = [
     title: 'Notes',
     imageUrl: 'src/assets/icons/Dock/Notes_Icon.png',
     isOpen: false,
+    initialX: 500,
+    initialY: 300,
+    minWidth: 300,
+    minHeight: 400,
   },
   {
     id: 'safari',
     title: 'Safari',
     imageUrl: 'src/assets/icons/Dock/Safari_Icon.png',
     isOpen: false,
+    initialX: 600,
+    initialY: 350,
+    minWidth: 300,
+    minHeight: 400,
   },
   {
     id: 'photo_booth',
     title: 'Photo Booth',
     imageUrl: 'src/assets/icons/Dock/Photo_Booth_Icon.png',
     isOpen: false,
+    initialX: 700,
+    initialY: 400,
+    minWidth: 300,
+    minHeight: 400,
   },
   {
     id: 'calculator',
     title: 'Calculator',
     imageUrl: 'src/assets/icons/Dock/Calculator_Icon.png',
     isOpen: false,
+    initialX: 800,
+    initialY: 450,
+    minWidth: 300,
+    minHeight: 400,
   },
   {
     id: 'calendar',
     title: 'Calendar',
     imageUrl: 'src/assets/icons/Dock/Calendar_Icon.png',
     isOpen: false,
+    initialX: 900,
+    initialY: 500,
+    minWidth: 300,
+    minHeight: 400,
   },
 ];

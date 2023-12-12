@@ -7,18 +7,18 @@ import FullScreenIcon from '@/assets/icons/AppWindow/FullScreen.svg?react';
 interface Props {
   title: string;
   id: string;
+  onMouseDown: (downEvent: React.MouseEvent<Element, MouseEvent>) => void;
 }
 
-const AppWindow = ({ title, id }: Props) => {
+const AppWindow = ({ title, id, onMouseDown }: Props) => {
   const dispatch = useContext(AppReducerContext);
-
   if (!dispatch) throw new Error('dispatch is null');
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
 
   return (
-    <div className='absolute left-[50%] top-[50%] w-96 translate-x-[-50%] translate-y-[-50%] flex-col overflow-hidden rounded-lg'>
-      <div className='flex h-7 w-full items-center justify-center bg-[#e4e4e4]'>
+    <>
+      <div className='flex h-7 w-full items-center justify-center bg-[#e4e4e4]' onMouseDown={onMouseDown}>
         <div className='hidden-wrapper absolute left-2 flex items-center gap-1'>
           <button
             className='flex h-3 w-3 cursor-pointer items-center justify-center rounded-full border-[0.5px] border-[#00000033] bg-[#FF5F57]'
@@ -35,8 +35,8 @@ const AppWindow = ({ title, id }: Props) => {
         </div>
         <span className='font-bold'>{title}</span>
       </div>
-      <div className='h-28 bg-white'>content</div>
-    </div>
+      <div className='h-full bg-white'>content</div>
+    </>
   );
 };
 
