@@ -17,7 +17,7 @@ export const mouseDrag = (onDragMouse: (deltaX: number, deltaY: number) => void)
   };
 };
 
-export const getPosition = (range: number, min: number, max: number) => {
+export const clampValue = (range: number, min: number, max: number) => {
   if (range < min) return min;
   if (range > max) return max;
   return range;
