@@ -10,12 +10,12 @@ interface MenuListProps {
 const MenuList = forwardRef<HTMLUListElement, MenuListProps>(({ menus, position }, ref) => {
   return (
     <ul
-      className={`menu-list absolute z-50 flex flex-col rounded-md p-[5px] text-[13px]`}
+      className={`popup-container absolute z-50 flex flex-col rounded-md p-[5px] text-[13px]`}
       style={{ left: position.x, top: position.y }}
       ref={ref}
     >
       {menus.map((menu, index) => (
-        <li key={index} className='rounded-[5px] px-2.5 hover:text-white'>
+        <li key={index} className='menu-item rounded-[5px] px-2.5 hover:text-white'>
           <button type='button' className='cursor-default leading-4'>
             {menu}
           </button>

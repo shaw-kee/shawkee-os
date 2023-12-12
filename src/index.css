@@ -11,7 +11,7 @@
     @apply visible;
   }
 
-  .menu-list {
+  .popup-container {
     background: rgba(246, 246, 246, 0.8);
     box-shadow:
       0px 7px 22px 0px rgba(0, 0, 0, 0.25),
@@ -20,7 +20,7 @@
     backdrop-filter: blur(40px);
   }
 
-  .menu-list li:hover {
+  .popup-container li.menu-item:hover {
     background: linear-gradient(0deg, rgba(10, 130, 255, 0.75) 0%, rgba(10, 130, 255, 0.75) 100%), #0a82ff;
   }
   .hidden-wrapper:hover .hidden {
