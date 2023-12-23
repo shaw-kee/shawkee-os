@@ -1,4 +1,4 @@
-const INITIAL_INDEX = 60;
+import { INITIAL_INDEX } from '@/constants/app';
 
 export interface App {
   id: string;
