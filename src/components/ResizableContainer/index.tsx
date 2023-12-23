@@ -17,6 +17,7 @@ const ResizableContainer = ({
   minHeight,
   boundaryRef,
   render,
+  style,
   ...props
 }: HTMLAttributes<HTMLElement> & Props) => {
   const {
@@ -37,7 +38,11 @@ const ResizableContainer = ({
   } = useDraggable(initialX, initialY, minWidth, minHeight, boundaryRef);
 
   return (
-    <div {...props} ref={containerRef} style={{ width: w, height: h, transform: `translate(${x}px, ${y}px)` }}>
+    <div
+      {...props}
+      ref={containerRef}
+      style={{ width: w, height: h, transform: `translate(${x}px, ${y}px)`, ...style }}
+    >
       {render(handleDragElement)}
       <div className='absolute left-2 right-2 top-0 h-1 cursor-row-resize' onMouseDown={handleResizeNorth} />
       <div className='absolute bottom-0 left-2 right-2 h-1 cursor-row-resize' onMouseDown={handleResizeSouth} />

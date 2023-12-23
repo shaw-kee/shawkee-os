@@ -1,3 +1,5 @@
+const INITIAL_INDEX = 60;
+
 export interface App {
   id: string;
   title: string;
@@ -8,6 +10,7 @@ export interface App {
   initialY: number;
   minWidth: number;
   minHeight: number;
+  zIndex: number;
 }
 
 export const apps: App[] = [
@@ -20,6 +23,7 @@ export const apps: App[] = [
     initialY: 300,
     minWidth: 300,
     minHeight: 400,
+    zIndex: INITIAL_INDEX,
   },
   {
     id: 'safari',
@@ -30,6 +34,7 @@ export const apps: App[] = [
     initialY: 350,
     minWidth: 300,
     minHeight: 400,
+    zIndex: INITIAL_INDEX,
   },
   {
     id: 'photo_booth',
@@ -40,6 +45,7 @@ export const apps: App[] = [
     initialY: 400,
     minWidth: 300,
     minHeight: 400,
+    zIndex: INITIAL_INDEX,
   },
   {
     id: 'calculator',
@@ -50,6 +56,7 @@ export const apps: App[] = [
     initialY: 450,
     minWidth: 300,
     minHeight: 400,
+    zIndex: INITIAL_INDEX,
   },
   {
     id: 'calendar',
@@ -60,5 +67,6 @@ export const apps: App[] = [
     initialY: 500,
     minWidth: 300,
     minHeight: 400,
+    zIndex: INITIAL_INDEX,
   },
 ];
