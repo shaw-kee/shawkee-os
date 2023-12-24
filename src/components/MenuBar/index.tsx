@@ -1,24 +1,38 @@
 import AppleIcon from '@/assets/icons/AppleIcon.svg?react';
-import ControlCenterIcon from '@/assets/icons/ControlCenterIcon.svg?react';
 import SpotlightIcon from '@/assets/icons/SpotlightIcon.svg?react';
 import WifiIcon from '@/assets/icons/WifiIcon.svg?react';
+import ControlCenterIcon from '@/assets/icons/ControlCenterIcon.svg?react';
 import MenuBarItem from './MenuBarItem';
 import Clock from './Clock';
-import useToggleMenuList from './useToggleMenuList';
+import useToggleMenu from './useToggleMenu';
 import MenuList from './MenuList';
 import useOverlay from '@/hooks/useOverlay';
 import Alert from '../Alert';
+import MenuOverlay from './MenuOverlay';
+import { ReactNode, useState } from 'react';
+import ControlCenter from './ControlCenter';
 
 const DEFAULT_MENUS = ['Menu1', 'Menu2', 'Menu3', 'LongTextMenuLongTextMenuLongTextMenu'];
 
 const MenuBar = () => {
-  const { menuListRef, isOpen, menuListPosition, toggleMenuList } = useToggleMenuList();
+  const { isOpen, overlayRef, overlayPosition, openMenu } = useToggleMenu();
+
+  const [menuContent, setMenuContent] = useState<ReactNode>(null);
 
   const overlay = useOverlay();
 
   const handleMenuBarItemClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
     const rect = event.currentTarget.getBoundingClientRect();
-    toggleMenuList(rect);
+    openMenu(rect);
+    setMenuContent(<MenuList menus={DEFAULT_MENUS} />);
+  };
+
+  const handleControlCenterClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    const rect = event.currentTarget.getBoundingClientRect();
+    openMenu(rect);
+    setMenuContent(<ControlCenter />);
   };
 
   const openOverlay = () => {
@@ -58,7 +72,7 @@ const MenuBar = () => {
           <MenuBarItem>
             <SpotlightIcon width={14} height={13} viewBox='0 0 14 13' />
           </MenuBarItem>
-          <MenuBarItem>
+          <MenuBarItem onClick={handleControlCenterClick}>
             <ControlCenterIcon width={14} height={13} viewBox='0 0 14 13' />
           </MenuBarItem>
           <MenuBarItem onClick={handleMenuBarItemClick}>
@@ -66,7 +80,11 @@ const MenuBar = () => {
           </MenuBarItem>
         </div>
       </div>
-      {isOpen && <MenuList ref={menuListRef} position={menuListPosition} menus={DEFAULT_MENUS} />}
+      {isOpen && (
+        <MenuOverlay ref={overlayRef} position={overlayPosition}>
+          {menuContent}
+        </MenuOverlay>
+      )}
     </>
   );
 };
