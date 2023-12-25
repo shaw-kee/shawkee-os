@@ -2,8 +2,15 @@ import WifiIcon from '@/assets/icons/WifiIcon.svg?react';
 import CommunicationButton from './CommunicationButton';
 import ControlCenterItem from './ControlCenterItem';
 import Slider from './Slider';
+import { useContext } from 'react';
+import { SystemReducerContext, SystemStateContext } from '@/store/System/SystemContext';
 
 const ControlCenter = () => {
+  const { sound, brightness } = useContext(SystemStateContext);
+  const dispatch = useContext(SystemReducerContext);
+
+  if (!dispatch) throw new Error('dispatch is null');
+
   return (
     <div className='gal-2 flex w-80 flex-col gap-2 [&_*]:gap-2'>
       <div className='flex [&>*]:flex-1'>
@@ -31,12 +38,18 @@ const ControlCenter = () => {
 
       <ControlCenterItem>
         <div>Display</div>
-        <Slider />
+        <Slider
+          value={brightness}
+          onChange={(event) => dispatch({ type: 'SET_BRIGHTNESS', value: Number(event.target.value) })}
+        />
       </ControlCenterItem>
 
       <ControlCenterItem>
         <div>Sound</div>
-        <Slider />
+        <Slider
+          value={sound}
+          onChange={(event) => dispatch({ type: 'SET_SOUND', value: Number(event.target.value) })}
+        />
       </ControlCenterItem>
 
       <ControlCenterItem>Music</ControlCenterItem>
