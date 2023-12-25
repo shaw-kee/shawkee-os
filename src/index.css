@@ -32,4 +32,26 @@
   .hidden-wrapper:hover .hidden {
     @apply block;
   }
+
+  .control-center-slider {
+    appearance: none;
+    background: #aaaaaa;
+    border-radius: 9999px;
+    overflow: hidden;
+    border: 1px solid #aaaaaa;
+  }
+
+  .control-center-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: -410px 0 0 400px white;
+    border: 1px #dddddd solid;
+  }
+
+  .control-center-slider:active::-webkit-slider-thumb {
+    background: #f1f1f1;
+  }
 }
