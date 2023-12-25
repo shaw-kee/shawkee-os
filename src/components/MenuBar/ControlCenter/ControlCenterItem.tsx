@@ -1,12 +1,8 @@
 import { type ReactNode } from 'react';
 
-const ControlCenterItem = ({ alignCenter = false, children }: { alignCenter?: boolean; children: ReactNode }) => {
+const ControlCenterItem = ({ children }: { children: ReactNode }) => {
   return (
-    <div
-      className={`h-full w-full select-none rounded-md bg-[rgba(0,0,0,0.08)] p-1 shadow-lg ${
-        alignCenter && 'flex items-center'
-      }`}
-    >
+    <div className='flex h-full w-full select-none flex-col justify-center rounded-md bg-[rgba(0,0,0,0.08)] p-1 shadow-lg'>
       {children}
     </div>
   );

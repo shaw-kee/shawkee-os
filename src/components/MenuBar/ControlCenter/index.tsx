@@ -1,6 +1,7 @@
 import WifiIcon from '@/assets/icons/WifiIcon.svg?react';
 import CommunicationButton from './CommunicationButton';
 import ControlCenterItem from './ControlCenterItem';
+import Slider from './Slider';
 
 const ControlCenter = () => {
   return (
@@ -14,7 +15,7 @@ const ControlCenter = () => {
           </ControlCenterItem>
         </div>
         <div className='flex flex-col [&>*]:flex-1'>
-          <ControlCenterItem alignCenter>
+          <ControlCenterItem>
             <CommunicationButton
               icon={<WifiIcon width={16} height={11} viewBox='0 0 16 11' />}
               name='Focus'
@@ -22,15 +23,21 @@ const ControlCenter = () => {
             />
           </ControlCenterItem>
           <div className='flex h-full items-center text-[10px]'>
-            <ControlCenterItem alignCenter>Stage Manager</ControlCenterItem>
-            <ControlCenterItem alignCenter>Screen Mirroring</ControlCenterItem>
+            <ControlCenterItem>Stage Manager</ControlCenterItem>
+            <ControlCenterItem>Screen Mirroring</ControlCenterItem>
           </div>
         </div>
       </div>
 
-      <ControlCenterItem>Bright</ControlCenterItem>
+      <ControlCenterItem>
+        <div>Display</div>
+        <Slider />
+      </ControlCenterItem>
 
-      <ControlCenterItem>Sound</ControlCenterItem>
+      <ControlCenterItem>
+        <div>Sound</div>
+        <Slider />
+      </ControlCenterItem>
 
       <ControlCenterItem>Music</ControlCenterItem>
     </div>
