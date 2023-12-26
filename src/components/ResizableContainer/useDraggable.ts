@@ -108,7 +108,7 @@ const useDraggable = (
   const { handleMouseDown: handleResizeNorth } = mouseDrag((_, moveY) => {
     setSize({
       w,
-      h: clampValue(h - moveY, minWidth, y + h),
+      h: clampValue(h - moveY, minHeight, y + h),
     });
     setPosition({
       x,
