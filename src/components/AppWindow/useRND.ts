@@ -2,7 +2,7 @@ import { BOUNDARY_MIN } from '@/constants/resize';
 import { clampValue, mouseDrag } from '@/utils/mouseDrag';
 import { RefObject, useState } from 'react';
 
-const useDraggable = (
+const useRND = (
   initialX: number,
   initialY: number,
   minWidth: number,
@@ -146,4 +146,4 @@ const useDraggable = (
   };
 };
 
-export default useDraggable;
+export default useRND;

@@ -3,7 +3,7 @@ import { RefObject, useContext } from 'react';
 import CloseIcon from '@/assets/icons/AppWindow/Close.svg?react';
 import MinimizeIcon from '@/assets/icons/AppWindow/Minimize.svg?react';
 import FullScreenIcon from '@/assets/icons/AppWindow/FullScreen.svg?react';
-import useDraggable from './useDraggable';
+import useRND from './useRND';
 
 interface Props {
   title: string;
@@ -34,7 +34,7 @@ const AppWindow = ({ title, id, initialX, initialY, minWidth, minHeight, zIndex,
     handleResizeSouthWest,
     handleResizeWest,
     handleDragElement,
-  } = useDraggable(initialX, initialY, minWidth, minHeight, boundaryRef);
+  } = useRND(initialX, initialY, minWidth, minHeight, boundaryRef);
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
   const handleClickWindow = () => dispatch({ type: 'OPEN', id });
