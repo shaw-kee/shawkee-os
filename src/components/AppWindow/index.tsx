@@ -1,23 +1,51 @@
 import { AppReducerContext } from '@/store/App/AppContext';
-import { useContext } from 'react';
+import { RefObject, useContext } from 'react';
 import CloseIcon from '@/assets/icons/AppWindow/Close.svg?react';
 import MinimizeIcon from '@/assets/icons/AppWindow/Minimize.svg?react';
 import FullScreenIcon from '@/assets/icons/AppWindow/FullScreen.svg?react';
+import useDraggable from './useDraggable';
 
 interface Props {
   title: string;
   id: string;
+  initialX: number;
+  initialY: number;
+  minWidth: number;
+  minHeight: number;
+  zIndex: number;
+  boundaryRef: RefObject<HTMLDivElement>;
 }
 
-const AppWindow = ({ title, id }: Props) => {
+const AppWindow = ({ title, id, initialX, initialY, minWidth, minHeight, zIndex, boundaryRef }: Props) => {
   const dispatch = useContext(AppReducerContext);
   if (!dispatch) throw new Error('dispatch is null');
 
+  const {
+    x,
+    y,
+    w,
+    h,
+    handleResizeEast,
+    handleResizeNorth,
+    handleResizeNorthWest,
+    handleResizeNorthEast,
+    handleResizeSouth,
+    handleResizeSouthEast,
+    handleResizeSouthWest,
+    handleResizeWest,
+    handleDragElement,
+  } = useDraggable(initialX, initialY, minWidth, minHeight, boundaryRef);
+
   const handleClose = () => dispatch({ type: 'CLOSE', id });
+  const handleClickWindow = () => dispatch({ type: 'OPEN', id });
 
   return (
-    <div className='h-full w-full'>
-      <div className='flex h-7 items-center justify-center bg-[#e4e4e4]'>
+    <div
+      style={{ width: w, height: h, transform: `translate(${x}px, ${y}px)`, zIndex }}
+      className='absolute w-96 flex-col overflow-hidden rounded-lg'
+      onMouseDown={handleClickWindow}
+    >
+      <div className='flex h-7 items-center justify-center bg-[#e4e4e4]' onMouseDown={handleDragElement}>
         <div className='hidden-wrapper absolute left-2 flex items-center gap-1'>
           <button
             className='flex h-3 w-3 cursor-pointer items-center justify-center rounded-full border-[0.5px] border-[#00000033] bg-[#FF5F57]'
@@ -35,6 +63,26 @@ const AppWindow = ({ title, id }: Props) => {
         <span className='font-bold'>{title}</span>
       </div>
       <div className='h-full bg-white'>content</div>
+      <div className='absolute left-2 right-2 top-0 h-1 cursor-row-resize' onMouseDown={handleResizeNorth} />
+      <div className='absolute bottom-0 left-2 right-2 h-1 cursor-row-resize' onMouseDown={handleResizeSouth} />
+      <div className='absolute bottom-2 left-0 top-2 w-1 cursor-col-resize' onMouseDown={handleResizeWest} />
+      <div className='absolute bottom-2 right-0 top-2 w-1 cursor-col-resize' onMouseDown={handleResizeEast} />
+      <div
+        className='absolute left-0 top-0 h-4 w-4 translate-x-[-50%] translate-y-[-50%] cursor-nw-resize'
+        onMouseDown={handleResizeNorthWest}
+      />
+      <div
+        className='absolute right-0 top-0 h-4 w-4 translate-x-[50%] translate-y-[-50%] cursor-ne-resize'
+        onMouseDown={handleResizeNorthEast}
+      />
+      <div
+        className='absolute bottom-0 left-0 h-4 w-4 translate-x-[-50%] translate-y-[50%] cursor-sw-resize'
+        onMouseDown={handleResizeSouthWest}
+      />
+      <div
+        className='absolute bottom-0 right-0 h-4 w-4 translate-x-[50%] translate-y-[50%] cursor-se-resize'
+        onMouseDown={handleResizeSouthEast}
+      />
     </div>
   );
 };

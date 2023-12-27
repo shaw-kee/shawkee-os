@@ -1,7 +1,6 @@
 import { AppReducerContext, AppStateContext } from '@/store/App/AppContext';
 import { useContext, useRef } from 'react';
 import AppWindow from '@/components/AppWindow';
-import ResizableContainer from '@/components/ResizableContainer';
 
 const WindowWrapper = () => {
   const dispatch = useContext(AppReducerContext);
@@ -11,20 +10,18 @@ const WindowWrapper = () => {
   const apps = useContext(AppStateContext);
   const appList = apps
     .filter((app) => app.isOpen)
-    .map(({ id, initialX, initialY, minWidth, minHeight, zIndex, title }) => (
-      <ResizableContainer
-        className='absolute w-96 flex-col overflow-hidden rounded-lg'
+    .map(({ id, initialX, initialY, minWidth, minHeight, title, zIndex }) => (
+      <AppWindow
+        title={title}
         key={id}
+        id={id}
         initialX={initialX}
         initialY={initialY}
         minWidth={minWidth}
         minHeight={minHeight}
+        zIndex={zIndex}
         boundaryRef={boundaryRef}
-        style={{ zIndex }}
-        onMouseDown={() => dispatch({ type: 'OPEN', id })}
-      >
-        <AppWindow title={title} key={id} id={id} />
-      </ResizableContainer>
+      />
     ));
 
   return (
