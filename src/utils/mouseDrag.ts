@@ -1,6 +1,7 @@
 export const mouseDrag = (onDragMouse: (deltaX: number, deltaY: number) => void) => {
   return {
     handleMouseDown: (downEvent: React.MouseEvent) => {
+      downEvent.stopPropagation();
       const handleMouseMove = (moveEvent: MouseEvent) => {
         moveEvent.preventDefault();
         const [moveX, moveY] = [moveEvent.clientX - downEvent.clientX, moveEvent.clientY - downEvent.clientY];

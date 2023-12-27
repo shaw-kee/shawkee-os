@@ -1,5 +1,5 @@
 import useDraggable from '@/components/ResizableContainer/useDraggable';
-import { HTMLAttributes, RefObject, ReactElement } from 'react';
+import { HTMLAttributes, RefObject } from 'react';
 
 interface Props {
   initialX: number;
@@ -7,7 +7,6 @@ interface Props {
   minWidth: number;
   minHeight: number;
   boundaryRef: RefObject<HTMLDivElement>;
-  render: (handleDragElement: (downEvent: React.MouseEvent<Element, MouseEvent>) => void) => ReactElement;
 }
 
 const ResizableContainer = ({
@@ -16,7 +15,7 @@ const ResizableContainer = ({
   minWidth,
   minHeight,
   boundaryRef,
-  render,
+  children,
   style,
   ...props
 }: HTMLAttributes<HTMLElement> & Props) => {
@@ -33,17 +32,12 @@ const ResizableContainer = ({
     handleResizeSouthEast,
     handleResizeSouthWest,
     handleResizeWest,
-    containerRef,
     handleDragElement,
   } = useDraggable(initialX, initialY, minWidth, minHeight, boundaryRef);
 
   return (
-    <div
-      {...props}
-      ref={containerRef}
-      style={{ width: w, height: h, transform: `translate(${x}px, ${y}px)`, ...style }}
-    >
-      {render(handleDragElement)}
+    <div {...props} style={{ width: w, height: h, transform: `translate(${x}px, ${y}px)`, ...style }}>
+      {children}
       <div className='absolute left-2 right-2 top-0 h-1 cursor-row-resize' onMouseDown={handleResizeNorth} />
       <div className='absolute bottom-0 left-2 right-2 h-1 cursor-row-resize' onMouseDown={handleResizeSouth} />
       <div className='absolute bottom-2 left-0 top-2 w-1 cursor-col-resize' onMouseDown={handleResizeWest} />

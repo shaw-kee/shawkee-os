@@ -1,6 +1,6 @@
 import { BOUNDARY_MIN } from '@/constants/resize';
 import { clampValue, mouseDrag } from '@/utils/mouseDrag';
-import { RefObject, useRef, useState } from 'react';
+import { RefObject, useState } from 'react';
 
 const useDraggable = (
   initialX: number,
@@ -11,14 +11,12 @@ const useDraggable = (
 ) => {
   const [{ w, h }, setSize] = useState({ w: minWidth, h: minHeight });
   const [{ x, y }, setPosition] = useState({ x: initialX, y: initialY });
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const { handleMouseDown: handleDragElement } = mouseDrag((moveX, moveY) => {
-    if (boundaryRef.current && containerRef.current) {
+    if (boundaryRef.current) {
       const containerRect = boundaryRef.current.getBoundingClientRect();
-      const targetElementRect = containerRef.current.getBoundingClientRect();
-      const calculatedX = clampValue(x + moveX, BOUNDARY_MIN, containerRect.width - targetElementRect.width);
-      const calculatedY = clampValue(y + moveY, BOUNDARY_MIN, containerRect.height - targetElementRect.height);
+      const calculatedX = clampValue(x + moveX, BOUNDARY_MIN, containerRect.width - w);
+      const calculatedY = clampValue(y + moveY, BOUNDARY_MIN, containerRect.height - h);
       setPosition({ x: calculatedX, y: calculatedY });
     }
   });
@@ -136,7 +134,6 @@ const useDraggable = (
     y,
     w,
     h,
-    containerRef,
     handleResizeEast,
     handleResizeNorth,
     handleResizeNorthEast,

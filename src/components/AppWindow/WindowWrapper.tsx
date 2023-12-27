@@ -22,8 +22,9 @@ const WindowWrapper = () => {
         boundaryRef={boundaryRef}
         style={{ zIndex }}
         onMouseDown={() => dispatch({ type: 'OPEN', id })}
-        render={(handleDragElement) => <AppWindow title={title} key={id} id={id} onMouseDown={handleDragElement} />}
-      />
+      >
+        <AppWindow title={title} key={id} id={id} />
+      </ResizableContainer>
     ));
 
   return (
