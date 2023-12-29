@@ -23,8 +23,8 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary }: Pr
   const {
     x,
     y,
-    w,
-    h,
+    width,
+    height,
     handleResizeEast,
     handleResizeNorth,
     handleResizeNorthWest,
@@ -41,7 +41,7 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary }: Pr
 
   return (
     <div
-      style={{ width: w, height: h, transform: `translate(${x}px, ${y}px)`, zIndex }}
+      style={{ width, height, transform: `translate(${x}px, ${y}px)`, zIndex }}
       className='absolute w-96 flex-col overflow-hidden rounded-lg'
       onMouseDown={handleClickWindow}
     >

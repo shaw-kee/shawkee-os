@@ -8,52 +8,52 @@ const useRND = (initialPosition: Position, minSize: Size, boundary: Size) => {
   const { width: minWidth, height: minHeight } = minSize;
   const { x: initialX, y: initialY } = initialPosition;
   const { width: boundaryWidth, height: boundaryHeight } = boundary;
-  const [{ w, h }, setSize] = useState({ w: minWidth, h: minHeight });
-  const [{ x, y }, setPosition] = useState({ x: initialX, y: initialY });
+  const [{ width, height }, setSize] = useState<Size>({ width: minWidth, height: minHeight });
+  const [{ x, y }, setPosition] = useState<Position>({ x: initialX, y: initialY });
 
   const { handleMouseDown: handleDragElement } = mouseDrag((moveX, moveY) => {
-    const calculatedX = clampValue(x + moveX, BOUNDARY_MIN, boundary.width - w);
-    const calculatedY = clampValue(y + moveY, BOUNDARY_MIN, boundary.height - h);
+    const calculatedX = clampValue(x + moveX, BOUNDARY_MIN, boundary.width - width);
+    const calculatedY = clampValue(y + moveY, BOUNDARY_MIN, boundary.height - height);
     setPosition({ x: calculatedX, y: calculatedY });
   });
 
   const { handleMouseDown: handleResizeNorthWest } = mouseDrag((moveX, moveY) => {
     setSize({
-      w: clampValue(w - moveX, minWidth, x + w),
-      h: clampValue(h - moveY, minHeight, y + h),
+      width: clampValue(width - moveX, minWidth, x + width),
+      height: clampValue(height - moveY, minHeight, y + height),
     });
     setPosition({
-      x: clampValue(x + moveX, BOUNDARY_MIN, x + w - minWidth),
-      y: clampValue(y + moveY, BOUNDARY_MIN, y + h - minHeight),
+      x: clampValue(x + moveX, BOUNDARY_MIN, x + width - minWidth),
+      y: clampValue(y + moveY, BOUNDARY_MIN, y + height - minHeight),
     });
   });
 
   const { handleMouseDown: handleResizeNorthEast } = mouseDrag((moveX, moveY) => {
     setSize({
-      w: clampValue(w + moveX, minWidth, boundaryWidth - x),
-      h: clampValue(h - moveY, minHeight, y + h),
+      width: clampValue(width + moveX, minWidth, boundaryWidth - x),
+      height: clampValue(height - moveY, minHeight, y + height),
     });
     setPosition({
       x,
-      y: clampValue(y + moveY, BOUNDARY_MIN, y + h - minHeight),
+      y: clampValue(y + moveY, BOUNDARY_MIN, y + height - minHeight),
     });
   });
 
   const { handleMouseDown: handleResizeSouthWest } = mouseDrag((moveX, moveY) => {
     setSize({
-      w: clampValue(w - moveX, minWidth, x + w),
-      h: clampValue(h + moveY, minHeight, boundaryHeight - y),
+      width: clampValue(width - moveX, minWidth, x + width),
+      height: clampValue(height + moveY, minHeight, boundaryHeight - y),
     });
     setPosition({
-      x: clampValue(x + moveX, BOUNDARY_MIN, x + w - minWidth),
+      x: clampValue(x + moveX, BOUNDARY_MIN, x + width - minWidth),
       y,
     });
   });
 
   const { handleMouseDown: handleResizeSouthEast } = mouseDrag((moveX, moveY) => {
     setSize({
-      w: clampValue(w + moveX, minWidth, boundaryWidth - x),
-      h: clampValue(h + moveY, minHeight, boundaryHeight - y),
+      width: clampValue(width + moveX, minWidth, boundaryWidth - x),
+      height: clampValue(height + moveY, minHeight, boundaryHeight - y),
     });
     setPosition({
       x,
@@ -63,19 +63,19 @@ const useRND = (initialPosition: Position, minSize: Size, boundary: Size) => {
 
   const { handleMouseDown: handleResizeWest } = mouseDrag((moveX) => {
     setSize({
-      w: clampValue(w - moveX, minWidth, x + w),
-      h,
+      width: clampValue(width - moveX, minWidth, x + width),
+      height,
     });
     setPosition({
-      x: clampValue(x + moveX, BOUNDARY_MIN, x + w - minWidth),
+      x: clampValue(x + moveX, BOUNDARY_MIN, x + width - minWidth),
       y,
     });
   });
 
   const { handleMouseDown: handleResizeEast } = mouseDrag((moveX) => {
     setSize({
-      w: clampValue(w + moveX, minWidth, boundaryWidth - x),
-      h,
+      width: clampValue(width + moveX, minWidth, boundaryWidth - x),
+      height,
     });
     setPosition({
       x,
@@ -85,19 +85,19 @@ const useRND = (initialPosition: Position, minSize: Size, boundary: Size) => {
 
   const { handleMouseDown: handleResizeNorth } = mouseDrag((_, moveY) => {
     setSize({
-      w,
-      h: clampValue(h - moveY, minHeight, y + h),
+      width,
+      height: clampValue(height - moveY, minHeight, y + height),
     });
     setPosition({
       x,
-      y: clampValue(y + moveY, BOUNDARY_MIN, y + h - minHeight),
+      y: clampValue(y + moveY, BOUNDARY_MIN, y + height - minHeight),
     });
   });
 
   const { handleMouseDown: handleResizeSouth } = mouseDrag((_, moveY) => {
     setSize({
-      w,
-      h: clampValue(h + moveY, minHeight, boundaryHeight - y),
+      width,
+      height: clampValue(height + moveY, minHeight, boundaryHeight - y),
     });
     setPosition({
       x,
@@ -108,8 +108,10 @@ const useRND = (initialPosition: Position, minSize: Size, boundary: Size) => {
   return {
     x,
     y,
-    w,
-    h,
+    width,
+    height,
+    setPosition,
+    setSize,
     handleResizeEast,
     handleResizeNorth,
     handleResizeNorthEast,
