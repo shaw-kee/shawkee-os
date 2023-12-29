@@ -1,5 +1,5 @@
 import { AppReducerContext } from '@/store/App/AppContext';
-import { RefObject, useContext } from 'react';
+import { useContext } from 'react';
 import CloseIcon from '@/assets/icons/AppWindow/Close.svg?react';
 import MinimizeIcon from '@/assets/icons/AppWindow/Minimize.svg?react';
 import FullScreenIcon from '@/assets/icons/AppWindow/FullScreen.svg?react';
@@ -13,10 +13,10 @@ interface Props {
   minWidth: number;
   minHeight: number;
   zIndex: number;
-  boundaryRef: RefObject<HTMLDivElement>;
+  boundary: { width: number; height: number };
 }
 
-const AppWindow = ({ title, id, initialX, initialY, minWidth, minHeight, zIndex, boundaryRef }: Props) => {
+const AppWindow = ({ title, id, initialX, initialY, minWidth, minHeight, zIndex, boundary }: Props) => {
   const dispatch = useContext(AppReducerContext);
   if (!dispatch) throw new Error('dispatch is null');
 
@@ -34,7 +34,7 @@ const AppWindow = ({ title, id, initialX, initialY, minWidth, minHeight, zIndex,
     handleResizeSouthWest,
     handleResizeWest,
     handleDragElement,
-  } = useRND(initialX, initialY, minWidth, minHeight, boundaryRef);
+  } = useRND(initialX, initialY, minWidth, minHeight, boundary);
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
   const handleClickWindow = () => dispatch({ type: 'OPEN', id });
