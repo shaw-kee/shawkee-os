@@ -1,4 +1,4 @@
-export interface Boundary {
+export interface Size {
   width: number;
   height: number;
 }

@@ -4,20 +4,19 @@ import CloseIcon from '@/assets/icons/AppWindow/Close.svg?react';
 import MinimizeIcon from '@/assets/icons/AppWindow/Minimize.svg?react';
 import FullScreenIcon from '@/assets/icons/AppWindow/FullScreen.svg?react';
 import useRND from './useRND';
-import { Boundary } from '@/types/boundary';
+import { Size } from '@/types/size';
+import { Position } from '@/types/position';
 
 interface Props {
   title: string;
   id: string;
-  initialX: number;
-  initialY: number;
-  minWidth: number;
-  minHeight: number;
+  initialPosition: Position;
+  minSize: Size;
   zIndex: number;
-  boundary: Boundary;
+  boundary: Size;
 }
 
-const AppWindow = ({ title, id, initialX, initialY, minWidth, minHeight, zIndex, boundary }: Props) => {
+const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary }: Props) => {
   const dispatch = useContext(AppReducerContext);
   if (!dispatch) throw new Error('dispatch is null');
 
@@ -35,7 +34,7 @@ const AppWindow = ({ title, id, initialX, initialY, minWidth, minHeight, zIndex,
     handleResizeSouthWest,
     handleResizeWest,
     handleDragElement,
-  } = useRND(initialX, initialY, minWidth, minHeight, boundary);
+  } = useRND(initialPosition, minSize, boundary);
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
   const handleClickWindow = () => dispatch({ type: 'OPEN', id });
