@@ -1,5 +1,5 @@
 import { AppReducerContext } from '@/store/App/AppContext';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import CloseIcon from '@/assets/icons/AppWindow/Close.svg?react';
 import MinimizeIcon from '@/assets/icons/AppWindow/Minimize.svg?react';
 import FullScreenIcon from '@/assets/icons/AppWindow/FullScreen.svg?react';
@@ -25,6 +25,8 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary }: Pr
     y,
     width,
     height,
+    setSize,
+    setPosition,
     handleResizeEast,
     handleResizeNorth,
     handleResizeNorthWest,
@@ -35,9 +37,24 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary }: Pr
     handleResizeWest,
     handleDragElement,
   } = useRND(initialPosition, minSize, boundary);
+  const [isMaximum, setIsMaximum] = useState<boolean>(false);
+  const [temp, setTemp] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
   const handleClickWindow = () => dispatch({ type: 'OPEN', id });
+  const handleMaximizeWindow = () => {
+    if (!isMaximum) {
+      setTemp({ x, y, width, height });
+      setPosition({ x: 0, y: 0 });
+      setSize({ width: boundary.width, height: boundary.height });
+    } else {
+      const { x, y, width, height } = temp;
+      setPosition({ x, y });
+      setSize({ width, height });
+    }
+
+    setIsMaximum((prev) => !prev);
+  };
 
   return (
     <div
@@ -45,7 +62,11 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary }: Pr
       className='absolute w-96 flex-col overflow-hidden rounded-lg'
       onMouseDown={handleClickWindow}
     >
-      <div className='flex h-7 items-center justify-center bg-[#e4e4e4]' onMouseDown={handleDragElement}>
+      <div
+        className='flex h-7 items-center justify-center bg-[#e4e4e4]'
+        onMouseDown={handleDragElement}
+        onDoubleClick={handleMaximizeWindow}
+      >
         <div className='hidden-wrapper absolute left-2 flex items-center gap-1'>
           <button
             className='flex h-3 w-3 cursor-pointer items-center justify-center rounded-full border-[0.5px] border-[#00000033] bg-[#FF5F57]'
