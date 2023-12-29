@@ -4,6 +4,7 @@ import CloseIcon from '@/assets/icons/AppWindow/Close.svg?react';
 import MinimizeIcon from '@/assets/icons/AppWindow/Minimize.svg?react';
 import FullScreenIcon from '@/assets/icons/AppWindow/FullScreen.svg?react';
 import useRND from './useRND';
+import { Boundary } from '@/types/boundary';
 
 interface Props {
   title: string;
@@ -13,7 +14,7 @@ interface Props {
   minWidth: number;
   minHeight: number;
   zIndex: number;
-  boundary: { width: number; height: number };
+  boundary: Boundary;
 }
 
 const AppWindow = ({ title, id, initialX, initialY, minWidth, minHeight, zIndex, boundary }: Props) => {

@@ -1,19 +1,20 @@
 import { AppReducerContext, AppStateContext } from '@/store/App/AppContext';
 import { useContext, useEffect, useRef, useState } from 'react';
 import AppWindow from '@/components/AppWindow';
+import { Boundary } from '@/types/boundary';
 
 const WindowWrapper = () => {
   const dispatch = useContext(AppReducerContext);
   if (!dispatch) throw new Error('dispatch is null');
 
-  const [{ boundaryWidth, boundaryHeight }, setBoundary] = useState({ boundaryWidth: 0, boundaryHeight: 0 });
+  const [{ width, height }, setBoundary] = useState<Boundary>({ width: 0, height: 0 });
   const boundaryRef = useRef<HTMLDivElement>(null);
   const apps = useContext(AppStateContext);
 
   useEffect(() => {
     if (boundaryRef.current) {
       const boundaryRect = boundaryRef.current.getBoundingClientRect();
-      setBoundary({ boundaryWidth: boundaryRect.width, boundaryHeight: boundaryRect.height });
+      setBoundary({ width: boundaryRect.width, height: boundaryRect.height });
     }
   }, []);
 
@@ -29,7 +30,7 @@ const WindowWrapper = () => {
         minWidth={minWidth}
         minHeight={minHeight}
         zIndex={zIndex}
-        boundary={{ width: boundaryWidth, height: boundaryHeight }}
+        boundary={{ width, height }}
       />
     ));
 
