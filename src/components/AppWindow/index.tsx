@@ -81,6 +81,10 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
     }
   };
 
+  const handleTransitionEnd = () => {
+    if (windowRef.current && !isMinimize) windowRef.current.style.transition = 'none';
+  };
+
   return (
     <div
       style={{ width, height, transform: `translate(${x}px, ${y}px)`, zIndex }}
@@ -88,6 +92,7 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
         isMinimize ? 'invisible opacity-0' : ''
       } `}
       onMouseDown={handleClickWindow}
+      onTransitionEnd={handleTransitionEnd}
       ref={windowRef}
     >
       <div
