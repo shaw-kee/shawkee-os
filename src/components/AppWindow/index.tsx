@@ -39,7 +39,7 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
     handleResizeWest,
     handleDragElement,
   } = useRND(initialPosition, minSize, boundary);
-  const [isMaximum, setIsMaximum] = useState<boolean>(false);
+  const [isMaximize, setIsMaximize] = useState<boolean>(false);
   const [temp, setTemp] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
   const windowRef = useRef<HTMLDivElement>(null);
 
@@ -47,11 +47,11 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
     const { x, y, width, height } = temp;
     const isInit = width === 0 && height === 0;
 
-    if (!isMinimize && !isMaximum && !isInit) {
+    if (!isMinimize && !isMaximize && !isInit) {
       setPosition({ x, y });
       setSize({ width, height });
     }
-  }, [isMinimize, temp, setPosition, setSize, isMaximum]);
+  }, [isMinimize, temp, setPosition, setSize, isMaximize]);
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
   const handleClickWindow = () => {
@@ -62,17 +62,13 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
   };
 
   const handleMaximizeWindow = () => {
-    if (!isMaximum) {
+    if (!isMaximize) {
       setTemp({ x, y, width, height });
       setPosition({ x: 0, y: 0 });
       setSize({ width: boundary.width, height: boundary.height });
-    } else {
-      const { x, y, width, height } = temp;
-      setPosition({ x, y });
-      setSize({ width, height });
     }
 
-    setIsMaximum((prev) => !prev);
+    setIsMaximize((prev) => !prev);
   };
 
   const handleMinimizeWindow = (e: MouseEvent) => {
