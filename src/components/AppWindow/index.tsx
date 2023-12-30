@@ -101,7 +101,7 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
           handleMinimize={handleMinimizeWindow}
           handleMaximize={handleMaximizeWindow}
         />
-        <span className='font-bold'>{title}</span>
+        <span className='select-none font-bold'>{title}</span>
       </div>
       <div className='h-full bg-white'>content</div>
       <div className='absolute left-2 right-2 top-0 h-1 cursor-row-resize' onMouseDown={handleResizeNorth} />
