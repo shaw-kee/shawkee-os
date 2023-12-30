@@ -3,6 +3,7 @@ import { MouseEvent, useContext, useEffect, useRef, useState } from 'react';
 import CloseIcon from '@/assets/icons/AppWindow/Close.svg?react';
 import MinimizeIcon from '@/assets/icons/AppWindow/Minimize.svg?react';
 import FullScreenIcon from '@/assets/icons/AppWindow/FullScreen.svg?react';
+import ExitMaximizeIcon from '@/assets/icons/AppWindow/ExitMaximize.svg?react';
 import useRND from './useRND';
 import { Size } from '@/types/size';
 import { Position } from '@/types/position';
@@ -86,7 +87,9 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
   return (
     <div
       style={{ width, height, transform: `translate(${x}px, ${y}px)`, zIndex }}
-      className={`absolute w-96 flex-col overflow-hidden rounded-lg ${isMinimize ? 'invisible opacity-0' : ''} `}
+      className={`absolute w-96 flex-col overflow-hidden ${isMaximize ? '' : 'rounded-lg'} ${
+        isMinimize ? 'invisible opacity-0' : ''
+      } `}
       onMouseDown={handleClickWindow}
       ref={windowRef}
     >
@@ -103,13 +106,26 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
             <CloseIcon width={6} height={6} viewBox='0 0 12 12' color='#A21B2B' className='hidden' />
           </button>
           <button
-            className='flex h-3 w-3 cursor-pointer items-center justify-center rounded-full border-[0.5px] border-[#00000033] bg-[#FEBC2E]'
+            className={`flex h-3 w-3 items-center justify-center rounded-full ${
+              isMaximize ? 'bg-gray-400' : 'cursor-pointer border-[0.5px] border-[#00000033] bg-[#FEBC2E]'
+            }`}
             onClick={handleMinimizeWindow}
+            disabled={isMaximize}
           >
-            <MinimizeIcon width={6} height={6} viewBox='0 0 12 12' color='#96550F' className='hidden' />
+            <MinimizeIcon
+              width={6}
+              height={6}
+              viewBox='0 0 12 12'
+              color='#96550F'
+              className={`hidden ${isMaximize ? 'invisible' : ''}`}
+            />
           </button>
           <button className='flex h-3 w-3 cursor-pointer items-center justify-center rounded-full border-[0.5px] border-[#00000033] bg-[#28C840]'>
-            <FullScreenIcon width={6} height={6} viewBox='0 0 12 12' color='#137006' className='hidden' />
+            {isMaximize ? (
+              <ExitMaximizeIcon width={19} height={19} viewBox='0 0 19 19' color='#137006' className='hidden' />
+            ) : (
+              <FullScreenIcon width={6} height={6} viewBox='0 0 12 12' color='#137006' className='hidden' />
+            )}
           </button>
         </div>
         <span className='font-bold'>{title}</span>
