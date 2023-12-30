@@ -52,12 +52,7 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
   }, [isMinimize, temp, setPosition, setSize, isMaximize]);
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
-  const handleClickWindow = () => {
-    if (windowRef.current) {
-      windowRef.current.style.transition = 'none';
-      dispatch({ type: 'OPEN', id });
-    }
-  };
+  const handleClickWindow = () => dispatch({ type: 'OPEN', id });
 
   const handleMaximizeWindow = () => {
     if (!isMaximize) {
