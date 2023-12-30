@@ -11,6 +11,7 @@ export interface App {
   minWidth: number;
   minHeight: number;
   zIndex: number;
+  isMinimize: boolean;
 }
 
 export const apps: App[] = [
@@ -24,6 +25,7 @@ export const apps: App[] = [
     minWidth: 300,
     minHeight: 400,
     zIndex: INITIAL_INDEX,
+    isMinimize: false,
   },
   {
     id: 'safari',
@@ -35,6 +37,7 @@ export const apps: App[] = [
     minWidth: 300,
     minHeight: 400,
     zIndex: INITIAL_INDEX,
+    isMinimize: false,
   },
   {
     id: 'photo_booth',
@@ -46,6 +49,7 @@ export const apps: App[] = [
     minWidth: 300,
     minHeight: 400,
     zIndex: INITIAL_INDEX,
+    isMinimize: false,
   },
   {
     id: 'calculator',
@@ -57,6 +61,7 @@ export const apps: App[] = [
     minWidth: 300,
     minHeight: 400,
     zIndex: INITIAL_INDEX,
+    isMinimize: false,
   },
   {
     id: 'calendar',
@@ -68,5 +73,6 @@ export const apps: App[] = [
     minWidth: 300,
     minHeight: 400,
     zIndex: INITIAL_INDEX,
+    isMinimize: false,
   },
 ];
