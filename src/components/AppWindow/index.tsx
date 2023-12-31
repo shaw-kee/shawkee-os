@@ -55,7 +55,8 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
   const handleClickWindow = () => dispatch({ type: 'OPEN', id });
 
   const handleMaximizeWindow = () => {
-    if (!isMaximize) {
+    if (windowRef.current && !isMaximize) {
+      windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
       setTemp({ x, y, width, height });
       setPosition({ x: 0, y: 0 });
       setSize({ width: boundary.width, height: boundary.height });
@@ -77,15 +78,13 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
   };
 
   const handleTransitionEnd = () => {
-    if (windowRef.current && !isMinimize) windowRef.current.style.transition = 'none';
+    if (windowRef.current && !isMinimize && !isMaximize) windowRef.current.style.transition = 'none';
   };
 
   return (
     <div
       style={{ width, height, transform: `translate(${x}px, ${y}px)`, zIndex }}
-      className={`absolute w-96 flex-col overflow-hidden ${isMaximize ? '' : 'rounded-lg'} ${
-        isMinimize ? 'invisible opacity-0' : ''
-      } `}
+      className={`absolute w-96 flex-col overflow-hidden rounded-md ${isMinimize ? 'invisible opacity-0' : ''} `}
       onMouseDown={handleClickWindow}
       onTransitionEnd={handleTransitionEnd}
       ref={windowRef}
