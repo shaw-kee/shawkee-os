@@ -3,9 +3,10 @@ import { useContext, useRef, useState } from 'react';
 
 type useAudioProps = {
   src: string;
+  loop?: boolean;
 };
 
-const useAudio = ({ src }: useAudioProps) => {
+const useAudio = ({ src, loop = false }: useAudioProps) => {
   const context = useContext(SystemStateContext);
 
   if (context === null) {
@@ -18,7 +19,7 @@ const useAudio = ({ src }: useAudioProps) => {
 
   const audioRef = useRef<HTMLAudioElement>(new Audio(src));
 
-  audioRef.current.loop = true;
+  audioRef.current.loop = loop;
   audioRef.current.volume = sound * 0.01;
 
   const play = () => {
