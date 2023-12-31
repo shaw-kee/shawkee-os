@@ -9,30 +9,29 @@ import MenuList from './MenuList';
 import useOverlay from '@/hooks/useOverlay';
 import Alert from '../Alert';
 import MenuOverlay from './MenuOverlay';
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import ControlCenter from './ControlCenter';
+import useAudio from '@/hooks/useAudio';
+import MusicSrc from '@/assets/music/sample.mp3';
+
+type MenuType = 'menu' | 'controlCenter';
 
 const DEFAULT_MENUS = ['Menu1', 'Menu2', 'Menu3', 'LongTextMenuLongTextMenuLongTextMenu'];
 
 const MenuBar = () => {
   const { isOpen, overlayRef, overlayPosition, openMenu } = useToggleMenu();
 
-  const [menuContent, setMenuContent] = useState<ReactNode>(null);
+  const { isPlaying, togglePlay } = useAudio({ src: MusicSrc });
+
+  const [showMenuType, setShowMenuType] = useState<'menu' | 'controlCenter'>('menu');
 
   const overlay = useOverlay();
 
-  const handleMenuBarItemClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMenuBarItemClick = (event: React.MouseEvent<HTMLButtonElement>, menuType: MenuType) => {
     event.stopPropagation();
     const rect = event.currentTarget.getBoundingClientRect();
     openMenu(rect);
-    setMenuContent(<MenuList menus={DEFAULT_MENUS} />);
-  };
-
-  const handleControlCenterClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    const rect = event.currentTarget.getBoundingClientRect();
-    openMenu(rect);
-    setMenuContent(<ControlCenter />);
+    setShowMenuType(menuType);
   };
 
   const openOverlay = () => {
@@ -56,14 +55,14 @@ const MenuBar = () => {
     <>
       <div className='flex w-full justify-between bg-white/50 px-[8px] backdrop-blur-[25px]'>
         <div className='flex'>
-          <MenuBarItem onClick={handleMenuBarItemClick}>
+          <MenuBarItem onClick={(event) => handleMenuBarItemClick(event, 'menu')}>
             <AppleIcon width={14} height={17} viewBox='0 0 14 17' />
           </MenuBarItem>
           <MenuBarItem isAppName onClick={openOverlay}>
             Finder
           </MenuBarItem>
           <MenuBarItem>Menu1</MenuBarItem>
-          <MenuBarItem onClick={handleMenuBarItemClick}>Menu2</MenuBarItem>
+          <MenuBarItem onClick={(event) => handleMenuBarItemClick(event, 'menu')}>Menu2</MenuBarItem>
         </div>
         <div className='flex'>
           <MenuBarItem>
@@ -72,17 +71,18 @@ const MenuBar = () => {
           <MenuBarItem>
             <SpotlightIcon width={14} height={13} viewBox='0 0 14 13' />
           </MenuBarItem>
-          <MenuBarItem onClick={handleControlCenterClick}>
+          <MenuBarItem onClick={(event) => handleMenuBarItemClick(event, 'controlCenter')}>
             <ControlCenterIcon width={14} height={13} viewBox='0 0 14 13' />
           </MenuBarItem>
-          <MenuBarItem onClick={handleMenuBarItemClick}>
+          <MenuBarItem onClick={(event) => handleMenuBarItemClick(event, 'menu')}>
             <Clock />
           </MenuBarItem>
         </div>
       </div>
       {isOpen && (
         <MenuOverlay ref={overlayRef} position={overlayPosition}>
-          {menuContent}
+          {showMenuType === 'controlCenter' && <ControlCenter isPlayingMusic={isPlaying} togglePlay={togglePlay} />}
+          {showMenuType === 'menu' && <MenuList menus={DEFAULT_MENUS} />}
         </MenuOverlay>
       )}
     </>

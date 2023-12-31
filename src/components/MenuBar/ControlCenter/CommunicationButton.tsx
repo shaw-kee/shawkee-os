@@ -8,10 +8,10 @@ type CommnuicationButtonProps = {
 
 const CommunicationButton = ({ icon, name, showDescription = true }: CommnuicationButtonProps) => {
   const [isActive, setIsActive] = useState(false);
-  const iconColorClass = isActive ? '[&>svg]:fill-white bg-[#007AFF]' : '[&>svg]:black bg-[#aaaaaa]';
+  const iconColorClass = isActive ? '[&>svg]:fill-white bg-[#007AFF]' : '[&>svg]:fill-black bg-[#aaaaaa]';
 
   return (
-    <div className='flex w-full items-center px-1 py-1.5'>
+    <div className='flex w-full items-center px-0.5 py-1'>
       <div className='flex items-center gap-2'>
         <button className='flex cursor-default items-center' onClick={() => setIsActive((prevActive) => !prevActive)}>
           <span className={`flex h-6 w-6 items-center justify-center rounded-full ${iconColorClass}`}>{icon}</span>
