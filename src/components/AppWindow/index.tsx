@@ -40,16 +40,23 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
   const [isMaximize, setIsMaximize] = useState<boolean>(false);
   const [temp, setTemp] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
   const windowRef = useRef<HTMLDivElement>(null);
+  const prevStateRef = useRef<boolean>(false);
 
   useEffect(() => {
     const { x, y, width, height } = temp;
     const isInit = width === 0 && height === 0;
+    const isPrevMinimize = prevStateRef.current && isMaximize;
 
-    if (!isMinimize && !isMaximize && !isInit) {
+    if (windowRef.current) windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+    if ((!isMinimize && !isMaximize && !isInit) || isPrevMinimize) {
       setPosition({ x, y });
       setSize({ width, height });
     }
   }, [isMinimize, temp, setPosition, setSize, isMaximize]);
+
+  useEffect(() => {
+    prevStateRef.current = isMinimize;
+  });
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
   const handleClickWindow = () => dispatch({ type: 'OPEN', id });
@@ -78,7 +85,7 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
   };
 
   const handleTransitionEnd = () => {
-    if (windowRef.current && !isMinimize && !isMaximize) windowRef.current.style.transition = 'none';
+    if (windowRef.current) windowRef.current.style.transition = 'none';
   };
 
   return (
@@ -94,12 +101,7 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
         onMouseDown={handleDragElement}
         onDoubleClick={handleMaximizeWindow}
       >
-        <ControlBox
-          isMaximize={isMaximize}
-          handleClose={handleClose}
-          handleMinimize={handleMinimizeWindow}
-          handleMaximize={handleMaximizeWindow}
-        />
+        <ControlBox handleClose={handleClose} handleMinimize={handleMinimizeWindow} />
         <span className='select-none font-bold'>{title}</span>
       </div>
       <div className='h-full bg-white'>content</div>
