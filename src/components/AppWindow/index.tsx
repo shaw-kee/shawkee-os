@@ -38,24 +38,33 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
     handleDragElement,
   } = useRND(initialPosition, minSize, boundary);
   const [isMaximize, setIsMaximize] = useState<boolean>(false);
-  const [temp, setTemp] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
+  const [tempMinimize, setTempMinimize] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
+  const [tempMaximize, setTempMaximize] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
   const windowRef = useRef<HTMLDivElement>(null);
-  const prevStateRef = useRef<boolean>(false);
+  const prevMinimizeRef = useRef<boolean>(false);
+  const prevMaximizeRef = useRef<boolean>(false);
 
   useEffect(() => {
-    const { x, y, width, height } = temp;
-    const isInit = width === 0 && height === 0;
-    const isPrevMinimize = prevStateRef.current && isMaximize;
-
     if (windowRef.current) windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-    if ((!isMinimize && !isMaximize && !isInit) || isPrevMinimize) {
+    if (!isMinimize && prevMinimizeRef.current) {
+      const { x, y, width, height } = tempMinimize;
       setPosition({ x, y });
       setSize({ width, height });
     }
-  }, [isMinimize, temp, setPosition, setSize, isMaximize]);
+  }, [setPosition, setSize, tempMinimize, isMinimize]);
 
   useEffect(() => {
-    prevStateRef.current = isMinimize;
+    if (windowRef.current) windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+    if (!isMaximize && prevMaximizeRef.current) {
+      const { x, y, width, height } = tempMaximize;
+      setPosition({ x, y });
+      setSize({ width, height });
+    }
+  }, [setPosition, setSize, tempMaximize, isMaximize]);
+
+  useEffect(() => {
+    prevMinimizeRef.current = isMinimize;
+    prevMaximizeRef.current = isMaximize;
   });
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
@@ -64,7 +73,7 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
   const handleMaximizeWindow = () => {
     if (windowRef.current && !isMaximize) {
       windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-      setTemp({ x, y, width, height });
+      setTempMaximize({ x, y, width, height });
       setPosition({ x: 0, y: 0 });
       setSize({ width: boundary.width, height: boundary.height });
     }
@@ -78,7 +87,7 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
     if (windowRef.current) {
       windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
       dispatch({ type: 'MINIMIZE', id });
-      setTemp({ x, y, width, height });
+      setTempMinimize({ x, y, width, height });
       setPosition({ x: boundary.width / 2 - DOCK_SIZE, y: boundary.height - DOCK_SIZE });
       setSize({ width: DOCK_SIZE * 2, height: DOCK_SIZE });
     }
