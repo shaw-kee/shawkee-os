@@ -5,6 +5,7 @@ import { Size } from '@/types/size';
 import { Position } from '@/types/position';
 import { DOCK_SIZE } from '@/constants/dock';
 import ControlBox from './ControlBox';
+import usePrevState from '@/hooks/usePrevState';
 
 interface Props {
   title: string;
@@ -41,31 +42,27 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
   const [tempMinimize, setTempMinimize] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
   const [tempMaximize, setTempMaximize] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
   const windowRef = useRef<HTMLDivElement>(null);
-  const prevMinimizeRef = useRef<boolean>(false);
-  const prevMaximizeRef = useRef<boolean>(false);
+  const prevState = usePrevState({ isMinimize, isMaximize });
 
   useEffect(() => {
-    if (windowRef.current) windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-    if (!isMinimize && prevMinimizeRef.current) {
+    if (!windowRef.current) return;
+    if (!isMinimize && prevState.isMinimize) {
+      windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
       const { x, y, width, height } = tempMinimize;
       setPosition({ x, y });
       setSize({ width, height });
     }
-  }, [setPosition, setSize, tempMinimize, isMinimize]);
+  }, [setPosition, setSize, tempMinimize, isMinimize, prevState]);
 
   useEffect(() => {
-    if (windowRef.current) windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-    if (!isMaximize && prevMaximizeRef.current) {
+    if (!windowRef.current) return;
+    if (!isMaximize && prevState.isMaximize) {
+      windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
       const { x, y, width, height } = tempMaximize;
       setPosition({ x, y });
       setSize({ width, height });
     }
-  }, [setPosition, setSize, tempMaximize, isMaximize]);
-
-  useEffect(() => {
-    prevMinimizeRef.current = isMinimize;
-    prevMaximizeRef.current = isMaximize;
-  });
+  }, [setPosition, setSize, tempMaximize, isMaximize, prevState]);
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
   const handleClickWindow = () => dispatch({ type: 'OPEN', id });
