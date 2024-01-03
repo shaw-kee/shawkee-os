@@ -46,23 +46,19 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
 
   useEffect(() => {
     if (!windowRef.current) return;
-    if (!isMinimize && prevState.isMinimize) {
-      windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-      const { x, y, width, height } = tempMinimize;
-      setPosition({ x, y });
-      setSize({ width, height });
-    }
-  }, [setPosition, setSize, tempMinimize, isMinimize, prevState]);
 
-  useEffect(() => {
-    if (!windowRef.current) return;
-    if (!isMaximize && prevState.isMaximize) {
+    let { x, y, width, height } = { x: 0, y: 0, width: 0, height: 0 };
+    const minimize = !isMinimize && prevState.isMinimize;
+    const maximize = !isMaximize && prevState.isMaximize;
+
+    if (minimize) ({ x, y, width, height } = tempMinimize);
+    if (maximize) ({ x, y, width, height } = tempMaximize);
+    if (minimize || maximize) {
       windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-      const { x, y, width, height } = tempMaximize;
       setPosition({ x, y });
       setSize({ width, height });
     }
-  }, [setPosition, setSize, tempMaximize, isMaximize, prevState]);
+  }, [setPosition, setSize, tempMinimize, isMinimize, isMaximize, prevState, tempMaximize]);
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
   const handleClickWindow = () => dispatch({ type: 'OPEN', id });
