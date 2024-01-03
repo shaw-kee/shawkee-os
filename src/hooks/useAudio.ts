@@ -21,7 +21,9 @@ const useAudio = ({ src, loop = false }: useAudioProps) => {
 
   audioRef.current.loop = loop;
   audioRef.current.volume = sound * 0.01;
-
+  audioRef.current.addEventListener('ended', () => {
+    setIsPlaying(false);
+  });
   const play = () => {
     audioRef.current.play();
     setIsPlaying(true);
