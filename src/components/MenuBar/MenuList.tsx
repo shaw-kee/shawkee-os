@@ -1,19 +1,12 @@
 import type { Menu } from '@/types/menu';
-import type { Position } from '@/types/position';
-import { forwardRef } from 'react';
 
 interface MenuListProps {
   menus: Menu[];
-  position: Position;
 }
 
-const MenuList = forwardRef<HTMLUListElement, MenuListProps>(({ menus, position }, ref) => {
+const MenuList = ({ menus }: MenuListProps) => {
   return (
-    <ul
-      className={`popup-container absolute z-50 flex flex-col rounded-md p-[5px] text-[13px]`}
-      style={{ left: position.x, top: position.y }}
-      ref={ref}
-    >
+    <ul className='flex flex-col'>
       {menus.map((menu, index) => (
         <li key={index} className='menu-item rounded-[5px] px-2.5 hover:text-white'>
           <button type='button' className='cursor-default leading-4'>
@@ -23,6 +16,6 @@ const MenuList = forwardRef<HTMLUListElement, MenuListProps>(({ menus, position 
       ))}
     </ul>
   );
-});
+};
 
 export default MenuList;
