@@ -1,28 +1,35 @@
 import { AppReducerContext, AppStateContext } from '@/store/App/AppContext';
-import { useContext, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import AppWindow from '@/components/AppWindow';
-import ResizableContainer from '@/components/ResizableContainer';
+import { Size } from '@/types/size';
 
 const WindowWrapper = () => {
   const dispatch = useContext(AppReducerContext);
   if (!dispatch) throw new Error('dispatch is null');
 
+  const [{ width, height }, setBoundary] = useState<Size>({ width: 0, height: 0 });
   const boundaryRef = useRef<HTMLDivElement>(null);
   const apps = useContext(AppStateContext);
+
+  useEffect(() => {
+    if (boundaryRef.current) {
+      const boundaryRect = boundaryRef.current.getBoundingClientRect();
+      setBoundary({ width: boundaryRect.width, height: boundaryRect.height });
+    }
+  }, []);
+
   const appList = apps
     .filter((app) => app.isOpen)
-    .map(({ id, initialX, initialY, minWidth, minHeight, zIndex, title }) => (
-      <ResizableContainer
-        className='absolute w-96 flex-col overflow-hidden rounded-lg'
+    .map(({ id, initialX, initialY, minWidth, minHeight, title, zIndex, isMinimize }) => (
+      <AppWindow
+        title={title}
         key={id}
-        initialX={initialX}
-        initialY={initialY}
-        minWidth={minWidth}
-        minHeight={minHeight}
-        boundaryRef={boundaryRef}
-        style={{ zIndex }}
-        onMouseDown={() => dispatch({ type: 'OPEN', id })}
-        render={(handleDragElement) => <AppWindow title={title} key={id} id={id} onMouseDown={handleDragElement} />}
+        id={id}
+        initialPosition={{ x: initialX, y: initialY }}
+        minSize={{ width: minWidth, height: minHeight }}
+        zIndex={zIndex}
+        boundary={{ width, height }}
+        isMinimize={isMinimize}
       />
     ));
 
