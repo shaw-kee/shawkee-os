@@ -73,7 +73,7 @@ const ControlCenter = ({ isPlayingMusic, togglePlay }: ControlCenterProps) => {
           <div className='h-10 w-10 rounded-md bg-slate-500/50' />
           <div className='flex flex-grow flex-col justify-center'>
             <div className='text-[11px] font-semibold'>Title</div>
-            <div className='text-[10px]'>Shaekee - Shakee 1st album</div>
+            <div className='text-[10px]'>Shawkee - Shawkee 1st album</div>
           </div>
           <button className='cursor-default' onClick={togglePlay}>
             {isPlayingMusic ? <PauseIcon /> : <PlayIcon />}

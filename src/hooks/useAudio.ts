@@ -10,7 +10,7 @@ const useAudio = ({ src, loop = false }: useAudioProps) => {
   const context = useContext(SystemStateContext);
 
   if (context === null) {
-    throw new Error('context is null. The useOverlay hook must be inside an OverlayProvider.');
+    throw new Error('context is null. The useAudio hook must be inside an SystemStateProvider.');
   }
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -21,9 +21,11 @@ const useAudio = ({ src, loop = false }: useAudioProps) => {
 
   audioRef.current.loop = loop;
   audioRef.current.volume = sound * 0.01;
+
   audioRef.current.addEventListener('ended', () => {
     setIsPlaying(false);
   });
+
   const play = () => {
     audioRef.current.play();
     setIsPlaying(true);
