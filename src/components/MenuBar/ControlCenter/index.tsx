@@ -15,8 +15,8 @@ type ControlCenterProps = {
   togglePlay?: () => void;
 };
 
-const ControlCenter = ({ isPlayingMusic, togglePlay }: ControlCenterProps) => {
-  const { sound, brightness } = useContext(SystemStateContext);
+const ControlCenter = ({ togglePlay }: ControlCenterProps) => {
+  const { sound, brightness, isPlaying } = useContext(SystemStateContext);
   const dispatch = useContext(SystemReducerContext);
 
   if (!dispatch) throw new Error('dispatch is null');
@@ -76,7 +76,7 @@ const ControlCenter = ({ isPlayingMusic, togglePlay }: ControlCenterProps) => {
             <div className='text-[10px]'>Shawkee - Shawkee 1st album</div>
           </div>
           <button className='cursor-default' onClick={togglePlay}>
-            {isPlayingMusic ? <PauseIcon /> : <PlayIcon />}
+            {isPlaying ? <PauseIcon /> : <PlayIcon />}
           </button>
         </div>
       </ControlCenterItem>

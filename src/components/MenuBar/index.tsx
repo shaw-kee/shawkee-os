@@ -15,7 +15,7 @@ import useOverlay from '@/hooks/useOverlay';
 const DEFAULT_MENUS = ['Menu1', 'Menu2', 'Menu3', 'LongTextMenuLongTextMenuLongTextMenu'];
 
 const MenuBar = () => {
-  const { isPlaying, togglePlay } = useAudio({ src: MusicSrc });
+  const { togglePlay } = useAudio({ src: MusicSrc });
 
   const overlay = useOverlay();
 
@@ -34,7 +34,7 @@ const MenuBar = () => {
     const rect = event.currentTarget.getBoundingClientRect();
     overlay.open(() => (
       <MenuOverlay initialPosition={{ x: rect.x, y: rect.y + rect.height }} close={overlay.close}>
-        <ControlCenter isPlayingMusic={isPlaying} togglePlay={togglePlay} />
+        <ControlCenter togglePlay={togglePlay} />
       </MenuOverlay>
     ));
   };
