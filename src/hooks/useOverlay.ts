@@ -1,6 +1,8 @@
 import OverlayContext from '@/store/Overlay/OverlayContext';
-import { useContext, useMemo } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
+
+let elementId = 1;
 
 const useOverlay = () => {
   const context = useContext(OverlayContext);
@@ -9,18 +11,26 @@ const useOverlay = () => {
     throw new Error('context is null. The useOverlay hook must be inside an OverlayProvider.');
   }
 
+  const [id] = useState(() => String(elementId++));
+
   const { mount, unmount } = context;
+
+  useEffect(() => {
+    return () => {
+      unmount(id);
+    };
+  }, [id, unmount]);
 
   return useMemo(
     () => ({
       open: (overlayElement: ReactNode) => {
-        mount(overlayElement);
+        mount(id, overlayElement);
       },
       close: () => {
-        unmount();
+        unmount(id);
       },
     }),
-    [mount, unmount]
+    [id, mount, unmount]
   );
 };
 

@@ -6,8 +6,6 @@ import MenuBarItem from './MenuBarItem';
 import Clock from './Clock';
 import useToggleMenu from './useToggleMenu';
 import MenuList from './MenuList';
-import useOverlay from '@/hooks/useOverlay';
-import Alert from '../Alert';
 import MenuOverlay from './MenuOverlay';
 import { useState } from 'react';
 import ControlCenter from './ControlCenter';
@@ -25,30 +23,11 @@ const MenuBar = () => {
 
   const [showMenuType, setShowMenuType] = useState<'menu' | 'controlCenter'>('menu');
 
-  const overlay = useOverlay();
-
   const handleMenuBarItemClick = (event: React.MouseEvent<HTMLButtonElement>, menuType: MenuType) => {
     event.stopPropagation();
     const rect = event.currentTarget.getBoundingClientRect();
     openMenu(rect);
     setShowMenuType(menuType);
-  };
-
-  const openOverlay = () => {
-    overlay.open(
-      <Alert
-        appIconUrl='src/assets/icons/Dock/Safari_Icon.png'
-        title='Title'
-        description='Description text about this alert is shown 
-          here, explaining to users what the options 
-          underneath are about and what to do.'
-      >
-        <Alert.Button fill onClick={overlay.close}>
-          Close Button
-        </Alert.Button>
-        <Alert.Button>Dummy Button</Alert.Button>
-      </Alert>
-    );
   };
 
   return (
@@ -58,9 +37,7 @@ const MenuBar = () => {
           <MenuBarItem onClick={(event) => handleMenuBarItemClick(event, 'menu')}>
             <AppleIcon width={14} height={17} viewBox='0 0 14 17' />
           </MenuBarItem>
-          <MenuBarItem isAppName onClick={openOverlay}>
-            Finder
-          </MenuBarItem>
+          <MenuBarItem>Finder</MenuBarItem>
           <MenuBarItem>Menu1</MenuBarItem>
           <MenuBarItem onClick={(event) => handleMenuBarItemClick(event, 'menu')}>Menu2</MenuBarItem>
         </div>

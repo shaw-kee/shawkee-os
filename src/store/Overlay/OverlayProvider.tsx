@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { Fragment, useCallback, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import OverlayContext from './OverlayContext';
 
@@ -7,14 +7,22 @@ interface OverlayProviderProps {
 }
 
 const OverlayProvider = ({ children }: OverlayProviderProps) => {
-  const [overlayElement, setOverlayElement] = useState<ReactNode | null>(null);
+  const [overlayElementMap, setOverlayElementMap] = useState<Map<string, ReactNode>>(new Map());
 
-  const mount = useCallback((element: ReactNode) => {
-    setOverlayElement(element);
+  const mount = useCallback((id: string, element: ReactNode) => {
+    setOverlayElementMap((prevOverlayMap) => {
+      const cloned = new Map(prevOverlayMap);
+      cloned.set(id, element);
+      return cloned;
+    });
   }, []);
 
-  const unmount = useCallback(() => {
-    setOverlayElement(null);
+  const unmount = useCallback((id: string) => {
+    setOverlayElementMap((prevOverlayMap) => {
+      const cloned = new Map(prevOverlayMap);
+      cloned.delete(id);
+      return cloned;
+    });
   }, []);
 
   const context = useMemo(() => ({ mount, unmount }), [mount, unmount]);
@@ -22,7 +30,9 @@ const OverlayProvider = ({ children }: OverlayProviderProps) => {
   return (
     <OverlayContext.Provider value={context}>
       {children}
-      {overlayElement}
+      {[...overlayElementMap.entries()].map(([id, element]) => (
+        <Fragment key={id}>{element}</Fragment>
+      ))}
     </OverlayContext.Provider>
   );
 };
