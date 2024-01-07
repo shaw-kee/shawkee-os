@@ -1,12 +1,49 @@
 import type { Position } from '@/types/position';
-import { forwardRef, type ReactNode } from 'react';
+import { useRef, type ReactNode, useEffect, useLayoutEffect, useState } from 'react';
+
+const MENUBAR_PADDING_X = 8;
 
 type MenuListProps = {
   children?: ReactNode;
-  position: Position;
+  initialPosition: Position;
+  close: () => void;
 };
 
-const MenuOverlay = forwardRef<HTMLDivElement, MenuListProps>(({ children, position }, ref) => {
+const MenuOverlay = ({ children, initialPosition, close }: MenuListProps) => {
+  const [position, setPosition] = useState<Position>(initialPosition);
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickAway = (event: Event) => {
+      const menuElement = ref.current;
+      const isClickMenuBarItemAway = event.target instanceof HTMLElement && !menuElement?.contains(event.target);
+
+      if (isClickMenuBarItemAway) {
+        close();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickAway);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickAway);
+    };
+  });
+
+  useLayoutEffect(() => {
+    if (!ref.current) return;
+    const menuElement = ref.current;
+
+    const menuElementRight = initialPosition.x + menuElement.clientWidth;
+    const isOverflowedWindow = menuElementRight > window.innerWidth - MENUBAR_PADDING_X;
+
+    if (isOverflowedWindow) {
+      const x = initialPosition.x - (menuElementRight - window.innerWidth + MENUBAR_PADDING_X);
+      setPosition((prevPositionState) => ({ ...prevPositionState, x }));
+    }
+  }, [initialPosition]);
+
   return (
     <div
       className={`popup-container absolute z-50 flex flex-col rounded-md p-[5px] text-[13px]`}
@@ -16,6 +53,6 @@ const MenuOverlay = forwardRef<HTMLDivElement, MenuListProps>(({ children, posit
       {children}
     </div>
   );
-});
+};
 
 export default MenuOverlay;

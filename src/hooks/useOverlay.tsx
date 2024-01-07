@@ -1,6 +1,5 @@
 import OverlayContext from '@/store/Overlay/OverlayContext';
 import { useContext, useEffect, useMemo, useState } from 'react';
-import type { ReactNode } from 'react';
 
 let elementId = 1;
 
@@ -23,8 +22,8 @@ const useOverlay = () => {
 
   return useMemo(
     () => ({
-      open: (overlayElement: ReactNode) => {
-        mount(id, overlayElement);
+      open: (overlayElement: () => JSX.Element) => {
+        mount(id, <OverlayController overlayElement={overlayElement} />);
       },
       close: () => {
         unmount(id);
@@ -32,6 +31,14 @@ const useOverlay = () => {
     }),
     [id, mount, unmount]
   );
+};
+
+type OverlayControllerProps = {
+  overlayElement: () => JSX.Element;
+};
+
+const OverlayController = ({ overlayElement: OverlayElement }: OverlayControllerProps) => {
+  return <OverlayElement />;
 };
 
 export default useOverlay;
