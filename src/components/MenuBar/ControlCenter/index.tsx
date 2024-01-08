@@ -15,11 +15,13 @@ type ControlCenterProps = {
   togglePlay?: () => void;
 };
 
-const ControlCenter = ({ togglePlay }: ControlCenterProps) => {
-  const { sound, brightness, isPlaying } = useContext(SystemStateContext);
+const ControlCenter = () => {
+  const { sound, brightness } = useContext(SystemStateContext);
   const dispatch = useContext(SystemReducerContext);
 
   if (!dispatch) throw new Error('dispatch is null');
+
+  const { isPlaying, togglePlay } = useAudio({ src: MusicSrc });
 
   return (
     <div className='gal-2 flex w-80 flex-col gap-2 [&>*]:flex-1'>
