@@ -15,7 +15,6 @@ import useOverlay from '@/hooks/useOverlay';
 const DEFAULT_MENUS = ['Menu1', 'Menu2', 'Menu3', 'LongTextMenuLongTextMenuLongTextMenu'];
 
 const MenuBar = () => {
-  const { togglePlay } = useAudio({ src: MusicSrc });
 
   const overlay = useOverlay();
 
