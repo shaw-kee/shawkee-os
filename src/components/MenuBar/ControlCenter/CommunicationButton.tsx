@@ -1,12 +1,12 @@
 import { useState, type ReactNode } from 'react';
 
-type CommnuicationButtonProps = {
+type CommunicationButtonProps = {
   icon: ReactNode;
   name: string;
   showDescription?: boolean;
 };
 
-const CommunicationButton = ({ icon, name, showDescription = true }: CommnuicationButtonProps) => {
+const CommunicationButton = ({ icon, name, showDescription = true }: CommunicationButtonProps) => {
   const [isActive, setIsActive] = useState(false);
   const iconColorClass = isActive ? '[&>svg]:fill-white bg-[#007AFF]' : '[&>svg]:fill-black bg-[#aaaaaa]';
 
