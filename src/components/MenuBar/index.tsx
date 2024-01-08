@@ -7,15 +7,12 @@ import Clock from './Clock';
 import MenuList from './MenuList';
 import MenuOverlay from './MenuOverlay';
 import ControlCenter from './ControlCenter';
-import useAudio from '@/hooks/useAudio';
-import MusicSrc from '@/assets/music/sample.mp3';
 import type { MouseEvent } from 'react';
 import useOverlay from '@/hooks/useOverlay';
 
 const DEFAULT_MENUS = ['Menu1', 'Menu2', 'Menu3', 'LongTextMenuLongTextMenuLongTextMenu'];
 
 const MenuBar = () => {
-
   const overlay = useOverlay();
 
   const openMenu = (event: MouseEvent<HTMLButtonElement>) => {
@@ -33,7 +30,7 @@ const MenuBar = () => {
     const rect = event.currentTarget.getBoundingClientRect();
     overlay.open(() => (
       <MenuOverlay initialPosition={{ x: rect.x, y: rect.y + rect.height }} close={overlay.close}>
-        <ControlCenter togglePlay={togglePlay} />
+        <ControlCenter />
       </MenuOverlay>
     ));
   };

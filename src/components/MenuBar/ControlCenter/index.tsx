@@ -9,19 +9,16 @@ import ControlCenterItem from './ControlCenterItem';
 import Slider from './Slider';
 import { useContext } from 'react';
 import { SystemReducerContext, SystemStateContext } from '@/store/System/SystemContext';
-
-type ControlCenterProps = {
-  isPlayingMusic?: boolean;
-  togglePlay?: () => void;
-};
+import useAudio from '@/hooks/useAudio';
+import MusicSrc from '@/assets/music/sample.mp3';
 
 const ControlCenter = () => {
-  const { sound, brightness } = useContext(SystemStateContext);
+  const { sound, brightness, isPlaying } = useContext(SystemStateContext);
   const dispatch = useContext(SystemReducerContext);
 
   if (!dispatch) throw new Error('dispatch is null');
 
-  const { isPlaying, togglePlay } = useAudio({ src: MusicSrc });
+  const { togglePlay } = useAudio({ src: MusicSrc });
 
   return (
     <div className='gal-2 flex w-80 flex-col gap-2 [&>*]:flex-1'>
