@@ -115,7 +115,7 @@ const AppWindow = ({
         <ControlBox handleClose={handleClose} handleMinimize={handleMinimizeWindow} />
         <span className='select-none font-bold'>{title}</span>
       </div>
-      {children}
+      <div className='h-full overflow-auto'>{children}</div>
       <div className='absolute left-2 right-2 top-0 h-1 cursor-row-resize' onMouseDown={handleResizeNorth} />
       <div className='absolute bottom-0 left-2 right-2 h-1 cursor-row-resize' onMouseDown={handleResizeSouth} />
       <div className='absolute bottom-2 left-0 top-2 w-1 cursor-col-resize' onMouseDown={handleResizeWest} />
