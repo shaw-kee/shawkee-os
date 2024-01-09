@@ -1,4 +1,5 @@
 import { INITIAL_INDEX } from '@/constants/app';
+import { ReactElement } from 'react';
 
 export interface App {
   id: string;
@@ -12,6 +13,7 @@ export interface App {
   minHeight: number;
   zIndex: number;
   isMinimize: boolean;
+  content?: ReactElement;
 }
 
 export const apps: App[] = [
