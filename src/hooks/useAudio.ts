@@ -1,5 +1,5 @@
-import { SystemStateContext } from '@/store/System/SystemContext';
-import { useContext, useRef, useState } from 'react';
+import { SystemReducerContext, SystemStateContext } from '@/store/System/SystemContext';
+import { useContext, useRef } from 'react';
 
 type useAudioProps = {
   src: string;
@@ -8,12 +8,15 @@ type useAudioProps = {
 
 const useAudio = ({ src, loop = false }: useAudioProps) => {
   const context = useContext(SystemStateContext);
+  const dispatch = useContext(SystemReducerContext);
 
   if (context === null) {
     throw new Error('context is null. The useAudio hook must be inside an SystemStateProvider.');
   }
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  if (dispatch === null) {
+    throw new Error('dispatch is null. The useAudio hook must be inside an SystemReducerProvider.');
+  }
 
   const { sound } = context;
 
@@ -23,24 +26,24 @@ const useAudio = ({ src, loop = false }: useAudioProps) => {
   audioRef.current.volume = sound * 0.01;
 
   audioRef.current.addEventListener('ended', () => {
-    setIsPlaying(false);
+    dispatch({ type: 'SET_IS_PLAYING', value: false });
   });
 
   const play = () => {
     audioRef.current.play();
-    setIsPlaying(true);
+    dispatch({ type: 'SET_IS_PLAYING', value: true });
   };
 
   const pause = () => {
     audioRef.current.pause();
-    setIsPlaying(false);
+    dispatch({ type: 'SET_IS_PLAYING', value: false });
   };
 
   const togglePlay = () => {
     audioRef.current.paused ? play() : pause();
   };
 
-  return { isPlaying, togglePlay };
+  return { togglePlay };
 };
 
 export default useAudio;

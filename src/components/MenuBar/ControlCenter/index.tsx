@@ -11,12 +11,11 @@ import { useContext } from 'react';
 import { SystemReducerContext, SystemStateContext } from '@/store/System/SystemContext';
 
 type ControlCenterProps = {
-  isPlayingMusic?: boolean;
-  togglePlay?: () => void;
+  togglePlay: () => void;
 };
 
-const ControlCenter = ({ isPlayingMusic, togglePlay }: ControlCenterProps) => {
-  const { sound, brightness } = useContext(SystemStateContext);
+const ControlCenter = ({ togglePlay }: ControlCenterProps) => {
+  const { sound, brightness, isPlaying } = useContext(SystemStateContext);
   const dispatch = useContext(SystemReducerContext);
 
   if (!dispatch) throw new Error('dispatch is null');
@@ -51,7 +50,6 @@ const ControlCenter = ({ isPlayingMusic, togglePlay }: ControlCenterProps) => {
           </div>
         </div>
       </div>
-
       <ControlCenterItem>
         <div className='mb-1 text-[11px] font-semibold'>Display</div>
         <Slider
@@ -59,7 +57,6 @@ const ControlCenter = ({ isPlayingMusic, togglePlay }: ControlCenterProps) => {
           onChange={(event) => dispatch({ type: 'SET_BRIGHTNESS', value: Number(event.target.value) })}
         />
       </ControlCenterItem>
-
       <ControlCenterItem>
         <div className='mb-1 text-[11px] font-semibold'>Sound</div>
         <Slider
@@ -67,7 +64,6 @@ const ControlCenter = ({ isPlayingMusic, togglePlay }: ControlCenterProps) => {
           onChange={(event) => dispatch({ type: 'SET_SOUND', value: Number(event.target.value) })}
         />
       </ControlCenterItem>
-
       <ControlCenterItem>
         <div className='flex gap-2'>
           <div className='h-10 w-10 rounded-md bg-slate-500/50' />
@@ -76,7 +72,7 @@ const ControlCenter = ({ isPlayingMusic, togglePlay }: ControlCenterProps) => {
             <div className='text-[10px]'>Shawkee - Shawkee 1st album</div>
           </div>
           <button className='cursor-default' onClick={togglePlay}>
-            {isPlayingMusic ? <PauseIcon /> : <PlayIcon />}
+            {isPlaying ? <PauseIcon /> : <PlayIcon />}
           </button>
         </div>
       </ControlCenterItem>
