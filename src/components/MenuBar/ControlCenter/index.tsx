@@ -9,16 +9,16 @@ import ControlCenterItem from './ControlCenterItem';
 import Slider from './Slider';
 import { useContext } from 'react';
 import { SystemReducerContext, SystemStateContext } from '@/store/System/SystemContext';
-import useAudio from '@/hooks/useAudio';
-import MusicSrc from '@/assets/music/sample.mp3';
 
-const ControlCenter = () => {
+type ControlCenterProps = {
+  togglePlay: () => void;
+};
+
+const ControlCenter = ({ togglePlay }: ControlCenterProps) => {
   const { sound, brightness, isPlaying } = useContext(SystemStateContext);
   const dispatch = useContext(SystemReducerContext);
 
   if (!dispatch) throw new Error('dispatch is null');
-
-  const { togglePlay } = useAudio({ src: MusicSrc });
 
   return (
     <div className='gal-2 flex w-80 flex-col gap-2 [&>*]:flex-1'>
@@ -50,7 +50,6 @@ const ControlCenter = () => {
           </div>
         </div>
       </div>
-
       <ControlCenterItem>
         <div className='mb-1 text-[11px] font-semibold'>Display</div>
         <Slider
@@ -58,7 +57,6 @@ const ControlCenter = () => {
           onChange={(event) => dispatch({ type: 'SET_BRIGHTNESS', value: Number(event.target.value) })}
         />
       </ControlCenterItem>
-
       <ControlCenterItem>
         <div className='mb-1 text-[11px] font-semibold'>Sound</div>
         <Slider
@@ -66,7 +64,6 @@ const ControlCenter = () => {
           onChange={(event) => dispatch({ type: 'SET_SOUND', value: Number(event.target.value) })}
         />
       </ControlCenterItem>
-
       <ControlCenterItem>
         <div className='flex gap-2'>
           <div className='h-10 w-10 rounded-md bg-slate-500/50' />
