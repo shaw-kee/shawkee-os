@@ -102,7 +102,7 @@ const AppWindow = ({
   return (
     <div
       style={{ width, height, transform: `translate(${x}px, ${y}px)`, zIndex }}
-      className={`absolute w-96 flex-col overflow-hidden rounded-md ${isMinimize ? 'invisible opacity-0' : ''} `}
+      className={`absolute flex flex-col overflow-hidden rounded-md ${isMinimize ? 'invisible opacity-0' : ''} `}
       onMouseDown={handleClickWindow}
       onTransitionEnd={handleTransitionEnd}
       ref={windowRef}
