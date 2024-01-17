@@ -11,6 +11,7 @@ import type { MouseEvent } from 'react';
 import useOverlay from '@/hooks/useOverlay';
 import useAudio from '@/hooks/useAudio';
 import MusicSrc from '@/assets/music/sample.mp3';
+import Spotlight from '../Spotlight';
 
 const DEFAULT_MENUS = ['Menu1', 'Menu2', 'Menu3', 'LongTextMenuLongTextMenuLongTextMenu'];
 
@@ -39,6 +40,10 @@ const MenuBar = () => {
     ));
   };
 
+  const openSpotlight = () => {
+    overlay.open(() => <Spotlight close={overlay.close} />);
+  };
+
   return (
     <>
       <div className='flex w-full justify-between bg-white/50 px-[8px] backdrop-blur-[25px]'>
@@ -54,7 +59,7 @@ const MenuBar = () => {
           <MenuBarItem>
             <WifiIcon width={16} height={11} viewBox='0 0 16 11' />
           </MenuBarItem>
-          <MenuBarItem>
+          <MenuBarItem onClick={openSpotlight}>
             <SpotlightIcon width={14} height={13} viewBox='0 0 14 13' />
           </MenuBarItem>
           <MenuBarItem onClick={openControlCenter}>
