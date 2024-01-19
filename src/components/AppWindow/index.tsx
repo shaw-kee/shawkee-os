@@ -54,7 +54,6 @@ const AppWindow = ({
   const [tempMinimize, setTempMinimize] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
   const [tempMaximize, setTempMaximize] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
   const [tempFullscreen, setTempFullscreen] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
-  const titleBarRef = useRef<HTMLDivElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
   const prevState = usePrevState({ isMinimize, isMaximize, isFullscreen });
 
@@ -143,7 +142,6 @@ const AppWindow = ({
         }`}
         onMouseDown={isFullscreen ? undefined : handleDragElement}
         onDoubleClick={isFullscreen ? undefined : handleMaximizeWindow}
-        ref={titleBarRef}
       >
         <ControlBox
           handleClose={handleClose}
