@@ -6,6 +6,7 @@ import { Position } from '@/types/position';
 import { DOCK_SIZE } from '@/constants/dock';
 import ControlBox from './ControlBox';
 import usePrevState from '@/hooks/usePrevState';
+import { APP_WINDOW_TRANSITION } from '@/constants/app';
 
 const MENUBAR_HEIGHT = 25;
 interface Props {
@@ -69,7 +70,7 @@ const AppWindow = ({
     if (maximize) ({ x, y, width, height } = tempMaximize);
     if (fullscreen) ({ x, y, width, height } = tempFullscreen);
     if (minimize || maximize || fullscreen) {
-      windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+      windowRef.current.style.transition = APP_WINDOW_TRANSITION;
       setPosition({ x, y });
       setSize({ width, height });
     }
@@ -90,7 +91,7 @@ const AppWindow = ({
 
   const handleMaximizeWindow = () => {
     if (windowRef.current && !isMaximize) {
-      windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+      windowRef.current.style.transition = APP_WINDOW_TRANSITION;
       setTempMaximize({ x, y, width, height });
       setPosition({ x: 0, y: 0 });
       setSize({ width: boundary.width, height: boundary.height });
@@ -103,7 +104,7 @@ const AppWindow = ({
     e.stopPropagation();
 
     if (windowRef.current) {
-      windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+      windowRef.current.style.transition = APP_WINDOW_TRANSITION;
       dispatch({ type: 'MINIMIZE', id });
       setTempMinimize({ x, y, width, height });
       setPosition({ x: boundary.width / 2 - DOCK_SIZE, y: boundary.height - DOCK_SIZE });
@@ -113,7 +114,7 @@ const AppWindow = ({
 
   const handleFullscreen = () => {
     if (windowRef.current && !isFullscreen) {
-      windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+      windowRef.current.style.transition = APP_WINDOW_TRANSITION;
       setTempFullscreen({ x, y, width, height });
       setPosition({ x: 0, y: -MENUBAR_HEIGHT });
       setSize({ width: boundary.width, height: boundary.height + MENUBAR_HEIGHT });
