@@ -103,6 +103,14 @@ const AppWindow = ({
     if (!isFullscreen) {
       setTempFullscreen({ x, y, width, height });
       setResize({ x: 0, y: -MENUBAR_HEIGHT, width: boundary.width, height: boundary.height + MENUBAR_HEIGHT });
+      document.addEventListener(
+        'keydown',
+        () => {
+          if (windowRef.current) windowRef.current.style.transition = APP_WINDOW_TRANSITION;
+          setIsFullscreen(false);
+        },
+        { once: true }
+      );
     }
 
     setIsFullscreen((prev) => !prev);
