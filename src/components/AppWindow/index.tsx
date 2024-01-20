@@ -56,24 +56,26 @@ const AppWindow = ({
     setPrevSize: setTempFullscreen,
   } = usePrevSize(setResize);
   const [tempMinimize, setTempMinimize] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
-  const prevState = usePrevState(isMinimize);
+  const minimizePrevState = usePrevState(isMinimize);
   const windowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!windowRef.current) return;
-
-    if (!isMinimize && prevState) {
-      windowRef.current.style.transition = APP_WINDOW_TRANSITION;
+    if (!isMinimize && minimizePrevState) {
       const { x, y, width, height } = tempMinimize;
       setResize({ x, y, width, height });
     }
-  }, [setResize, tempMinimize, isMinimize, isMaximize, prevState, isFullscreen]);
+  }, [setResize, tempMinimize, isMinimize, isMaximize, minimizePrevState, isFullscreen]);
+
+  useEffect(() => {
+    if (!windowRef.current) return;
+    if (isMinimize || isMaximize || isFullscreen || (!isMinimize && minimizePrevState))
+      windowRef.current.style.transition = APP_WINDOW_TRANSITION;
+  });
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
   const handleClickWindow = () => dispatch({ type: 'OPEN', id });
 
   const handleMaximizeWindow = () => {
-    if (windowRef.current) windowRef.current.style.transition = APP_WINDOW_TRANSITION;
     if (!isMaximize) {
       setTempMaximize({ x, y, width, height });
       setResize({ x: 0, y: 0, width: boundary.width, height: boundary.height });
@@ -86,7 +88,6 @@ const AppWindow = ({
     e.stopPropagation();
 
     if (windowRef.current) {
-      windowRef.current.style.transition = APP_WINDOW_TRANSITION;
       dispatch({ type: 'MINIMIZE', id });
       setTempMinimize({ x, y, width, height });
       setResize({
@@ -99,18 +100,10 @@ const AppWindow = ({
   };
 
   const handleFullscreen = () => {
-    if (windowRef.current) windowRef.current.style.transition = APP_WINDOW_TRANSITION;
     if (!isFullscreen) {
       setTempFullscreen({ x, y, width, height });
       setResize({ x: 0, y: -MENUBAR_HEIGHT, width: boundary.width, height: boundary.height + MENUBAR_HEIGHT });
-      document.addEventListener(
-        'keydown',
-        () => {
-          if (windowRef.current) windowRef.current.style.transition = APP_WINDOW_TRANSITION;
-          setIsFullscreen(false);
-        },
-        { once: true }
-      );
+      document.addEventListener('keydown', () => setIsFullscreen(false), { once: true });
     }
 
     setIsFullscreen((prev) => !prev);
