@@ -15,7 +15,7 @@ const usePrevSize = (resizingCallback: ({ x, y, width, height }: Position & Size
     }
   }, [isResize, prevSize, prevState, resizingCallback]);
 
-  return { isResize, setIsResize, setPrevSize };
+  return { isResize, setIsResize, setPrevSize, prevState };
 };
 
 export default usePrevSize;

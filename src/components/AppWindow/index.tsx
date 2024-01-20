@@ -49,11 +49,17 @@ const AppWindow = ({
     handleResizeWest,
     handleDragElement,
   } = useRND(initialPosition, minSize, boundary);
-  const { isResize: isMaximize, setIsResize: setIsMaximize, setPrevSize: setTempMaximize } = usePrevSize(setResize);
+  const {
+    isResize: isMaximize,
+    setIsResize: setIsMaximize,
+    setPrevSize: setTempMaximize,
+    prevState: maximizePrevState,
+  } = usePrevSize(setResize);
   const {
     isResize: isFullscreen,
     setIsResize: setIsFullscreen,
     setPrevSize: setTempFullscreen,
+    prevState: fullscreenPrevState,
   } = usePrevSize(setResize);
   const [tempMinimize, setTempMinimize] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
   const minimizePrevState = usePrevState(isMinimize);
@@ -68,8 +74,14 @@ const AppWindow = ({
 
   useEffect(() => {
     if (!windowRef.current) return;
-    if (isMinimize || isMaximize || isFullscreen || (!isMinimize && minimizePrevState))
-      windowRef.current.style.transition = APP_WINDOW_TRANSITION;
+
+    const resize = isMinimize || isMaximize || isFullscreen;
+    const restoreResize =
+      (!isMinimize && minimizePrevState) ||
+      (!isMaximize && maximizePrevState) ||
+      (!isFullscreen && fullscreenPrevState);
+
+    if (resize || restoreResize) windowRef.current.style.transition = APP_WINDOW_TRANSITION;
   });
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
