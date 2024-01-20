@@ -7,6 +7,7 @@ import { DOCK_SIZE } from '@/constants/dock';
 import ControlBox from './ControlBox';
 import usePrevState from '@/hooks/usePrevState';
 import { APP_WINDOW_TRANSITION } from '@/constants/app';
+import usePrevSize from './usePrevSize';
 
 const MENUBAR_HEIGHT = 25;
 interface Props {
@@ -49,41 +50,37 @@ const AppWindow = ({
     handleResizeWest,
     handleDragElement,
   } = useRND(initialPosition, minSize, boundary);
-  const [isMaximize, setIsMaximize] = useState<boolean>(false);
-  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const resizeCallback = (x: number, y: number, width: number, height: number) => {
+    setPosition({ x, y });
+    setSize({ width, height });
+  };
+  const {
+    isResize: isMaximize,
+    setIsResize: setIsMaximize,
+    setPrevSize: setTempMaximize,
+  } = usePrevSize(resizeCallback);
+  const {
+    isResize: isFullscreen,
+    setIsResize: setIsFullscreen,
+    setPrevSize: setTempFullscreen,
+  } = usePrevSize(resizeCallback);
   const [tempMinimize, setTempMinimize] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
-  const [tempMaximize, setTempMaximize] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
-  const [tempFullscreen, setTempFullscreen] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
+  const prevState = usePrevState(isMinimize);
   const windowRef = useRef<HTMLDivElement>(null);
-  const prevState = usePrevState({ isMinimize, isMaximize, isFullscreen });
 
   useEffect(() => {
     if (!windowRef.current) return;
 
-    let { x, y, width, height } = { x: 0, y: 0, width: 0, height: 0 };
-    const minimize = !isMinimize && prevState.isMinimize;
-    const maximize = !isMaximize && prevState.isMaximize;
-    const fullscreen = !isFullscreen && prevState.isFullscreen;
-
-    if (minimize) ({ x, y, width, height } = tempMinimize);
-    if (maximize) ({ x, y, width, height } = tempMaximize);
-    if (fullscreen) ({ x, y, width, height } = tempFullscreen);
-    if (minimize || maximize || fullscreen) {
+    if (!isMinimize || !isMaximize || !isFullscreen) {
       windowRef.current.style.transition = APP_WINDOW_TRANSITION;
+    }
+
+    if (!isMinimize && prevState) {
+      const { x, y, width, height } = tempMinimize;
       setPosition({ x, y });
       setSize({ width, height });
     }
-  }, [
-    setPosition,
-    setSize,
-    tempMinimize,
-    isMinimize,
-    isMaximize,
-    prevState,
-    tempMaximize,
-    isFullscreen,
-    tempFullscreen,
-  ]);
+  }, [setPosition, setSize, tempMinimize, isMinimize, isMaximize, prevState, isFullscreen]);
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
   const handleClickWindow = () => dispatch({ type: 'OPEN', id });
