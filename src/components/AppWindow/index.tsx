@@ -71,11 +71,8 @@ const AppWindow = ({
   useEffect(() => {
     if (!windowRef.current) return;
 
-    if (!isMinimize || !isMaximize || !isFullscreen) {
-      windowRef.current.style.transition = APP_WINDOW_TRANSITION;
-    }
-
     if (!isMinimize && prevState) {
+      windowRef.current.style.transition = APP_WINDOW_TRANSITION;
       const { x, y, width, height } = tempMinimize;
       setPosition({ x, y });
       setSize({ width, height });
@@ -86,8 +83,8 @@ const AppWindow = ({
   const handleClickWindow = () => dispatch({ type: 'OPEN', id });
 
   const handleMaximizeWindow = () => {
-    if (windowRef.current && !isMaximize) {
-      windowRef.current.style.transition = APP_WINDOW_TRANSITION;
+    if (windowRef.current) windowRef.current.style.transition = APP_WINDOW_TRANSITION;
+    if (!isMaximize) {
       setTempMaximize({ x, y, width, height });
       setPosition({ x: 0, y: 0 });
       setSize({ width: boundary.width, height: boundary.height });
@@ -109,8 +106,8 @@ const AppWindow = ({
   };
 
   const handleFullscreen = () => {
-    if (windowRef.current && !isFullscreen) {
-      windowRef.current.style.transition = APP_WINDOW_TRANSITION;
+    if (windowRef.current) windowRef.current.style.transition = APP_WINDOW_TRANSITION;
+    if (!isFullscreen) {
       setTempFullscreen({ x, y, width, height });
       setPosition({ x: 0, y: -MENUBAR_HEIGHT });
       setSize({ width: boundary.width, height: boundary.height + MENUBAR_HEIGHT });
