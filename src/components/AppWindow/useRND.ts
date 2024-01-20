@@ -105,13 +105,17 @@ const useRND = (initialPosition: Position, minSize: Size, boundary: Size) => {
     });
   });
 
+  const setResize = ({ x, y, width, height }: Position & Size) => {
+    setPosition({ x, y });
+    setSize({ width, height });
+  };
+
   return {
     x,
     y,
     width,
     height,
-    setPosition,
-    setSize,
+    setResize,
     handleResizeEast,
     handleResizeNorth,
     handleResizeNorthEast,

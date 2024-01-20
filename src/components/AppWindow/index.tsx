@@ -38,8 +38,7 @@ const AppWindow = ({
     y,
     width,
     height,
-    setSize,
-    setPosition,
+    setResize,
     handleResizeEast,
     handleResizeNorth,
     handleResizeNorthWest,
@@ -50,20 +49,12 @@ const AppWindow = ({
     handleResizeWest,
     handleDragElement,
   } = useRND(initialPosition, minSize, boundary);
-  const resizeCallback = (x: number, y: number, width: number, height: number) => {
-    setPosition({ x, y });
-    setSize({ width, height });
-  };
-  const {
-    isResize: isMaximize,
-    setIsResize: setIsMaximize,
-    setPrevSize: setTempMaximize,
-  } = usePrevSize(resizeCallback);
+  const { isResize: isMaximize, setIsResize: setIsMaximize, setPrevSize: setTempMaximize } = usePrevSize(setResize);
   const {
     isResize: isFullscreen,
     setIsResize: setIsFullscreen,
     setPrevSize: setTempFullscreen,
-  } = usePrevSize(resizeCallback);
+  } = usePrevSize(setResize);
   const [tempMinimize, setTempMinimize] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
   const prevState = usePrevState(isMinimize);
   const windowRef = useRef<HTMLDivElement>(null);
@@ -74,10 +65,9 @@ const AppWindow = ({
     if (!isMinimize && prevState) {
       windowRef.current.style.transition = APP_WINDOW_TRANSITION;
       const { x, y, width, height } = tempMinimize;
-      setPosition({ x, y });
-      setSize({ width, height });
+      setResize({ x, y, width, height });
     }
-  }, [setPosition, setSize, tempMinimize, isMinimize, isMaximize, prevState, isFullscreen]);
+  }, [setResize, tempMinimize, isMinimize, isMaximize, prevState, isFullscreen]);
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
   const handleClickWindow = () => dispatch({ type: 'OPEN', id });
@@ -86,8 +76,7 @@ const AppWindow = ({
     if (windowRef.current) windowRef.current.style.transition = APP_WINDOW_TRANSITION;
     if (!isMaximize) {
       setTempMaximize({ x, y, width, height });
-      setPosition({ x: 0, y: 0 });
-      setSize({ width: boundary.width, height: boundary.height });
+      setResize({ x: 0, y: 0, width: boundary.width, height: boundary.height });
     }
 
     setIsMaximize((prev) => !prev);
@@ -100,8 +89,12 @@ const AppWindow = ({
       windowRef.current.style.transition = APP_WINDOW_TRANSITION;
       dispatch({ type: 'MINIMIZE', id });
       setTempMinimize({ x, y, width, height });
-      setPosition({ x: boundary.width / 2 - DOCK_SIZE, y: boundary.height - DOCK_SIZE });
-      setSize({ width: DOCK_SIZE * 2, height: DOCK_SIZE });
+      setResize({
+        x: boundary.width / 2 - DOCK_SIZE,
+        y: boundary.height - DOCK_SIZE,
+        width: DOCK_SIZE * 2,
+        height: DOCK_SIZE,
+      });
     }
   };
 
@@ -109,8 +102,7 @@ const AppWindow = ({
     if (windowRef.current) windowRef.current.style.transition = APP_WINDOW_TRANSITION;
     if (!isFullscreen) {
       setTempFullscreen({ x, y, width, height });
-      setPosition({ x: 0, y: -MENUBAR_HEIGHT });
-      setSize({ width: boundary.width, height: boundary.height + MENUBAR_HEIGHT });
+      setResize({ x: 0, y: -MENUBAR_HEIGHT, width: boundary.width, height: boundary.height + MENUBAR_HEIGHT });
     }
 
     setIsFullscreen((prev) => !prev);
