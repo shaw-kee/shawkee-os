@@ -1,5 +1,5 @@
 import { AppReducerContext } from '@/store/App/AppContext';
-import { MouseEvent, useContext, useEffect, useRef, useState } from 'react';
+import { MouseEvent, PropsWithChildren, useContext, useEffect, useRef, useState } from 'react';
 import useRND from './useRND';
 import { Size } from '@/types/size';
 import { Position } from '@/types/position';
@@ -17,7 +17,16 @@ interface Props {
   isMinimize: boolean;
 }
 
-const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMinimize }: Props) => {
+const AppWindow = ({
+  title,
+  id,
+  initialPosition,
+  minSize,
+  zIndex,
+  boundary,
+  isMinimize,
+  children,
+}: Props & PropsWithChildren) => {
   const dispatch = useContext(AppReducerContext);
   if (!dispatch) throw new Error('dispatch is null');
 
@@ -93,7 +102,7 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
   return (
     <div
       style={{ width, height, transform: `translate(${x}px, ${y}px)`, zIndex }}
-      className={`absolute w-96 flex-col overflow-hidden rounded-md ${isMinimize ? 'invisible opacity-0' : ''} `}
+      className={`absolute flex flex-col overflow-hidden rounded-md ${isMinimize ? 'invisible opacity-0' : ''} `}
       onMouseDown={handleClickWindow}
       onTransitionEnd={handleTransitionEnd}
       ref={windowRef}
@@ -106,7 +115,7 @@ const AppWindow = ({ title, id, initialPosition, minSize, zIndex, boundary, isMi
         <ControlBox handleClose={handleClose} handleMinimize={handleMinimizeWindow} />
         <span className='select-none font-bold'>{title}</span>
       </div>
-      <div className='h-full bg-white'>content</div>
+      <div className='h-full overflow-auto'>{children}</div>
       <div className='absolute left-2 right-2 top-0 h-1 cursor-row-resize' onMouseDown={handleResizeNorth} />
       <div className='absolute bottom-0 left-2 right-2 h-1 cursor-row-resize' onMouseDown={handleResizeSouth} />
       <div className='absolute bottom-2 left-0 top-2 w-1 cursor-col-resize' onMouseDown={handleResizeWest} />

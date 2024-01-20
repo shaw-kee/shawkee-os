@@ -1,4 +1,10 @@
+import Calculator from '@/components/Apps/Calculator';
+import Calendar from '@/components/Apps/Calendar';
+import Notes from '@/components/Apps/Notes';
+import PhotoBooth from '@/components/Apps/PhotoBooth';
+import Safari from '@/components/Apps/Safari';
 import { INITIAL_INDEX } from '@/constants/app';
+import { ReactElement } from 'react';
 
 export interface App {
   id: string;
@@ -12,6 +18,7 @@ export interface App {
   minHeight: number;
   zIndex: number;
   isMinimize: boolean;
+  content?: ReactElement;
 }
 
 export const apps: App[] = [
@@ -26,6 +33,7 @@ export const apps: App[] = [
     minHeight: 400,
     zIndex: INITIAL_INDEX,
     isMinimize: false,
+    content: <Notes />,
   },
   {
     id: 'safari',
@@ -38,6 +46,7 @@ export const apps: App[] = [
     minHeight: 400,
     zIndex: INITIAL_INDEX,
     isMinimize: false,
+    content: <Safari />,
   },
   {
     id: 'photo_booth',
@@ -50,6 +59,7 @@ export const apps: App[] = [
     minHeight: 400,
     zIndex: INITIAL_INDEX,
     isMinimize: false,
+    content: <PhotoBooth />,
   },
   {
     id: 'calculator',
@@ -62,6 +72,7 @@ export const apps: App[] = [
     minHeight: 400,
     zIndex: INITIAL_INDEX,
     isMinimize: false,
+    content: <Calculator />,
   },
   {
     id: 'calendar',
@@ -74,5 +85,6 @@ export const apps: App[] = [
     minHeight: 400,
     zIndex: INITIAL_INDEX,
     isMinimize: false,
+    content: <Calendar />,
   },
 ];
