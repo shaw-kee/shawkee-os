@@ -1,5 +1,5 @@
 import { AppReducerContext } from '@/store/App/AppContext';
-import { MouseEvent, PropsWithChildren, useContext, useEffect, useRef, useState } from 'react';
+import { PropsWithChildren, useContext, useEffect, useRef, useState } from 'react';
 import useRND from './useRND';
 import { Size } from '@/types/size';
 import { Position } from '@/types/position';
@@ -84,9 +84,7 @@ const AppWindow = ({
     setIsMaximize((prev) => !prev);
   };
 
-  const handleMinimizeWindow = (e: MouseEvent) => {
-    e.stopPropagation();
-
+  const handleMinimizeWindow = () => {
     if (windowRef.current) {
       dispatch({ type: 'MINIMIZE', id });
       setTempMinimize({ x, y, width, height });

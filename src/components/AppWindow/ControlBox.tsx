@@ -2,12 +2,11 @@ import CloseIcon from '@/assets/icons/AppWindow/Close.svg?react';
 import MinimizeIcon from '@/assets/icons/AppWindow/Minimize.svg?react';
 import FullscreenIcon from '@/assets/icons/AppWindow/Fullscreen.svg?react';
 import ExitFullscreenIcon from '@/assets/icons/AppWindow/ExitFullscreen.svg?react';
-import { MouseEvent } from 'react';
 
 interface Props {
   isFullscreen: boolean;
   handleClose: () => void;
-  handleMinimize: (e: MouseEvent) => void;
+  handleMinimize: () => void;
   handleFullscreen: () => void;
 }
 
