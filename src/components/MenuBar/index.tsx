@@ -40,7 +40,8 @@ const MenuBar = () => {
     ));
   };
 
-  const openSpotlight = () => {
+  const openSpotlight = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
     overlay.open(() => <Spotlight close={overlay.close} />);
   };
 
