@@ -1,12 +1,15 @@
 import { AppReducerContext } from '@/store/App/AppContext';
-import { MouseEvent, PropsWithChildren, useContext, useEffect, useRef, useState } from 'react';
+import { PropsWithChildren, useContext, useEffect, useRef, useState } from 'react';
 import useRND from './useRND';
 import { Size } from '@/types/size';
 import { Position } from '@/types/position';
 import { DOCK_SIZE } from '@/constants/dock';
 import ControlBox from './ControlBox';
 import usePrevState from '@/hooks/usePrevState';
+import { APP_WINDOW_TRANSITION } from '@/constants/app';
+import usePrevSize from './usePrevSize';
 
+const MENUBAR_HEIGHT = 25;
 interface Props {
   title: string;
   id: string;
@@ -35,8 +38,7 @@ const AppWindow = ({
     y,
     width,
     height,
-    setSize,
-    setPosition,
+    setResize,
     handleResizeEast,
     handleResizeNorth,
     handleResizeNorthWest,
@@ -47,52 +49,74 @@ const AppWindow = ({
     handleResizeWest,
     handleDragElement,
   } = useRND(initialPosition, minSize, boundary);
-  const [isMaximize, setIsMaximize] = useState<boolean>(false);
+  const {
+    isResize: isMaximize,
+    setIsResize: setIsMaximize,
+    setPrevSize: setTempMaximize,
+    prevState: maximizePrevState,
+  } = usePrevSize(setResize);
+  const {
+    isResize: isFullscreen,
+    setIsResize: setIsFullscreen,
+    setPrevSize: setTempFullscreen,
+    prevState: fullscreenPrevState,
+  } = usePrevSize(setResize);
   const [tempMinimize, setTempMinimize] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
-  const [tempMaximize, setTempMaximize] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
+  const minimizePrevState = usePrevState(isMinimize);
   const windowRef = useRef<HTMLDivElement>(null);
-  const prevState = usePrevState({ isMinimize, isMaximize });
+
+  useEffect(() => {
+    if (!isMinimize && minimizePrevState) {
+      const { x, y, width, height } = tempMinimize;
+      setResize({ x, y, width, height });
+    }
+  }, [setResize, tempMinimize, isMinimize, isMaximize, minimizePrevState, isFullscreen]);
 
   useEffect(() => {
     if (!windowRef.current) return;
 
-    let { x, y, width, height } = { x: 0, y: 0, width: 0, height: 0 };
-    const minimize = !isMinimize && prevState.isMinimize;
-    const maximize = !isMaximize && prevState.isMaximize;
+    const resize = isMinimize || isMaximize || isFullscreen;
+    const restoreResize =
+      (!isMinimize && minimizePrevState) ||
+      (!isMaximize && maximizePrevState) ||
+      (!isFullscreen && fullscreenPrevState);
 
-    if (minimize) ({ x, y, width, height } = tempMinimize);
-    if (maximize) ({ x, y, width, height } = tempMaximize);
-    if (minimize || maximize) {
-      windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-      setPosition({ x, y });
-      setSize({ width, height });
-    }
-  }, [setPosition, setSize, tempMinimize, isMinimize, isMaximize, prevState, tempMaximize]);
+    if (resize || restoreResize) windowRef.current.style.transition = APP_WINDOW_TRANSITION;
+  });
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
   const handleClickWindow = () => dispatch({ type: 'OPEN', id });
 
   const handleMaximizeWindow = () => {
-    if (windowRef.current && !isMaximize) {
-      windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+    if (!isMaximize) {
       setTempMaximize({ x, y, width, height });
-      setPosition({ x: 0, y: 0 });
-      setSize({ width: boundary.width, height: boundary.height });
+      setResize({ x: 0, y: 0, width: boundary.width, height: boundary.height });
     }
 
     setIsMaximize((prev) => !prev);
   };
 
-  const handleMinimizeWindow = (e: MouseEvent) => {
-    e.stopPropagation();
-
+  const handleMinimizeWindow = () => {
     if (windowRef.current) {
-      windowRef.current.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
       dispatch({ type: 'MINIMIZE', id });
       setTempMinimize({ x, y, width, height });
-      setPosition({ x: boundary.width / 2 - DOCK_SIZE, y: boundary.height - DOCK_SIZE });
-      setSize({ width: DOCK_SIZE * 2, height: DOCK_SIZE });
+      setResize({
+        x: boundary.width / 2 - DOCK_SIZE,
+        y: boundary.height - DOCK_SIZE,
+        width: DOCK_SIZE * 2,
+        height: DOCK_SIZE,
+      });
     }
+  };
+
+  const handleFullscreen = () => {
+    if (!isFullscreen) {
+      setTempFullscreen({ x, y, width, height });
+      setResize({ x: 0, y: -MENUBAR_HEIGHT, width: boundary.width, height: boundary.height + MENUBAR_HEIGHT });
+      document.addEventListener('keydown', () => setIsFullscreen(false), { once: true });
+    }
+
+    setIsFullscreen((prev) => !prev);
   };
 
   const handleTransitionEnd = () => {
@@ -102,40 +126,53 @@ const AppWindow = ({
   return (
     <div
       style={{ width, height, transform: `translate(${x}px, ${y}px)`, zIndex }}
-      className={`absolute flex flex-col overflow-hidden rounded-md ${isMinimize ? 'invisible opacity-0' : ''} `}
+      className={`absolute flex flex-col overflow-hidden ${isFullscreen ? '' : 'rounded-md'} ${
+        isMinimize ? 'invisible opacity-0' : ''
+      } `}
       onMouseDown={handleClickWindow}
       onTransitionEnd={handleTransitionEnd}
       ref={windowRef}
     >
       <div
-        className='flex h-7 items-center justify-center bg-[#e4e4e4]'
-        onMouseDown={handleDragElement}
-        onDoubleClick={handleMaximizeWindow}
+        className={`flex h-7 items-center justify-center bg-[#e5e7eb] ${
+          isFullscreen ? 'absolute inset-x-0 opacity-0 hover:static hover:opacity-100' : ''
+        }`}
+        onMouseDown={isFullscreen ? undefined : handleDragElement}
+        onDoubleClick={isFullscreen ? undefined : handleMaximizeWindow}
       >
-        <ControlBox handleClose={handleClose} handleMinimize={handleMinimizeWindow} />
+        <ControlBox
+          handleClose={handleClose}
+          handleMinimize={handleMinimizeWindow}
+          handleFullscreen={handleFullscreen}
+          isFullscreen={isFullscreen}
+        />
         <span className='select-none font-bold'>{title}</span>
       </div>
       <div className='h-full overflow-auto'>{children}</div>
-      <div className='absolute left-2 right-2 top-0 h-1 cursor-row-resize' onMouseDown={handleResizeNorth} />
-      <div className='absolute bottom-0 left-2 right-2 h-1 cursor-row-resize' onMouseDown={handleResizeSouth} />
-      <div className='absolute bottom-2 left-0 top-2 w-1 cursor-col-resize' onMouseDown={handleResizeWest} />
-      <div className='absolute bottom-2 right-0 top-2 w-1 cursor-col-resize' onMouseDown={handleResizeEast} />
-      <div
-        className='absolute left-0 top-0 h-4 w-4 translate-x-[-50%] translate-y-[-50%] cursor-nw-resize'
-        onMouseDown={handleResizeNorthWest}
-      />
-      <div
-        className='absolute right-0 top-0 h-4 w-4 translate-x-[50%] translate-y-[-50%] cursor-ne-resize'
-        onMouseDown={handleResizeNorthEast}
-      />
-      <div
-        className='absolute bottom-0 left-0 h-4 w-4 translate-x-[-50%] translate-y-[50%] cursor-sw-resize'
-        onMouseDown={handleResizeSouthWest}
-      />
-      <div
-        className='absolute bottom-0 right-0 h-4 w-4 translate-x-[50%] translate-y-[50%] cursor-se-resize'
-        onMouseDown={handleResizeSouthEast}
-      />
+      {!isFullscreen && (
+        <>
+          <div className='absolute left-2 right-2 top-0 h-1 cursor-row-resize' onMouseDown={handleResizeNorth} />
+          <div className='absolute bottom-0 left-2 right-2 h-1 cursor-row-resize' onMouseDown={handleResizeSouth} />
+          <div className='absolute bottom-2 left-0 top-2 w-1 cursor-col-resize' onMouseDown={handleResizeWest} />
+          <div className='absolute bottom-2 right-0 top-2 w-1 cursor-col-resize' onMouseDown={handleResizeEast} />
+          <div
+            className='absolute left-0 top-0 h-4 w-4 translate-x-[-50%] translate-y-[-50%] cursor-nw-resize'
+            onMouseDown={handleResizeNorthWest}
+          />
+          <div
+            className='absolute right-0 top-0 h-4 w-4 translate-x-[50%] translate-y-[-50%] cursor-ne-resize'
+            onMouseDown={handleResizeNorthEast}
+          />
+          <div
+            className='absolute bottom-0 left-0 h-4 w-4 translate-x-[-50%] translate-y-[50%] cursor-sw-resize'
+            onMouseDown={handleResizeSouthWest}
+          />
+          <div
+            className='absolute bottom-0 right-0 h-4 w-4 translate-x-[50%] translate-y-[50%] cursor-se-resize'
+            onMouseDown={handleResizeSouthEast}
+          />
+        </>
+      )}
     </div>
   );
 };
