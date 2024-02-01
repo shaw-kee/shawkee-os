@@ -50,6 +50,34 @@ const Spotlight = ({ close }: SpotlightProps) => {
     };
   }, [close]);
 
+  useEffect(() => {
+    const handleKeydown = (event: KeyboardEvent) => {
+      switch (event.key) {
+        case 'ArrowDown':
+          setCursor(cursor === suggestedApps.length - 1 ? 0 : cursor + 1);
+          event.preventDefault();
+          return;
+        case 'ArrowUp':
+          setCursor(cursor === 0 ? suggestedApps.length - 1 : cursor - 1);
+          event.preventDefault();
+          return;
+        case 'Enter':
+          dispatch({ type: 'OPEN', id: suggestedApps[cursor].id });
+          close();
+          return;
+        default:
+          setCursor(0);
+          return;
+      }
+    };
+
+    document.addEventListener('keydown', handleKeydown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeydown);
+    };
+  }, [cursor, suggestedApps, dispatch, close]);
+
   const activeCursorClasses = 'bg-blue-500 text-white';
 
   return (
