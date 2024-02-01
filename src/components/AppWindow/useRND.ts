@@ -1,4 +1,4 @@
-import { BOUNDARY_MIN } from '@/constants/resize';
+import { BOUNDARY_MARGIN, BOUNDARY_MIN } from '@/constants/resize';
 import { Size } from '@/types/size';
 import { Position } from '@/types/position';
 import { clampValue, mouseDrag } from '@/utils/mouseDrag';
@@ -12,8 +12,8 @@ const useRND = (initialPosition: Position, minSize: Size, boundary: Size) => {
   const [{ x, y }, setPosition] = useState<Position>({ x: initialX, y: initialY });
 
   const { handleMouseDown: handleDragElement } = mouseDrag((moveX, moveY) => {
-    const calculatedX = clampValue(x + moveX, BOUNDARY_MIN, boundary.width - width);
-    const calculatedY = clampValue(y + moveY, BOUNDARY_MIN, boundary.height - height);
+    const calculatedX = clampValue(x + moveX, BOUNDARY_MIN - width + BOUNDARY_MARGIN, boundary.width - BOUNDARY_MARGIN);
+    const calculatedY = clampValue(y + moveY, BOUNDARY_MIN, boundary.height - BOUNDARY_MARGIN);
     setPosition({ x: calculatedX, y: calculatedY });
   });
 

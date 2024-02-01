@@ -20,7 +20,7 @@ const WindowWrapper = () => {
 
   const appList = apps
     .filter((app) => app.isOpen)
-    .map(({ id, initialX, initialY, minWidth, minHeight, title, zIndex, isMinimize, content }) => (
+    .map(({ id, initialX, initialY, minWidth, minHeight, title, zIndex, isMinimize, isResizable, content }) => (
       <AppWindow
         title={title}
         key={id}
@@ -30,6 +30,7 @@ const WindowWrapper = () => {
         zIndex={zIndex}
         boundary={{ width, height }}
         isMinimize={isMinimize}
+        isResizable={isResizable}
       >
         {content}
       </AppWindow>

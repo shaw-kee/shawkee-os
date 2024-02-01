@@ -18,6 +18,7 @@ interface Props {
   zIndex: number;
   boundary: Size;
   isMinimize: boolean;
+  isResizable: boolean;
 }
 
 const AppWindow = ({
@@ -28,6 +29,7 @@ const AppWindow = ({
   zIndex,
   boundary,
   isMinimize,
+  isResizable,
   children,
 }: Props & PropsWithChildren) => {
   const dispatch = useContext(AppReducerContext);
@@ -149,7 +151,7 @@ const AppWindow = ({
         <span className='select-none font-bold'>{title}</span>
       </div>
       <div className='h-full overflow-auto'>{children}</div>
-      {!isFullscreen && (
+      {!isFullscreen && isResizable && (
         <>
           <div className='absolute left-2 right-2 top-0 h-1 cursor-row-resize' onMouseDown={handleResizeNorth} />
           <div className='absolute bottom-0 left-2 right-2 h-1 cursor-row-resize' onMouseDown={handleResizeSouth} />
