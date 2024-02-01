@@ -13,6 +13,8 @@ const Spotlight = ({ close }: SpotlightProps) => {
   if (!dispatch) throw new Error('dispatch is null');
 
   const [suggestedApps, setSuggestedApps] = useState<typeof apps>([]);
+  const [cursor, setCursor] = useState(0);
+
   const ref = useRef<HTMLDivElement>(null);
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +50,8 @@ const Spotlight = ({ close }: SpotlightProps) => {
     };
   }, [close]);
 
+  const activeCursorClasses = 'bg-blue-500 text-white';
+
   return (
     <div ref={ref} className='absolute left-1/2 top-[20%] z-50 -translate-x-1/2 transform'>
       <div className='popup-container flex w-[36rem] flex-col rounded-2xl p-2.5'>
@@ -60,9 +64,18 @@ const Spotlight = ({ close }: SpotlightProps) => {
           />
         </div>
         <ul className='space-y-2'>
-          {suggestedApps.map(({ id, title }) => (
-            <li key={id} className='select-none first-of-type:mt-2 hover:opacity-50' onClick={() => handleClickApp(id)}>
-              {title}
+          {suggestedApps.map(({ id, title, imageUrl }, index) => (
+            <li
+              key={id}
+              className={`select-none rounded-md px-1.5 py-0.5 first-of-type:mt-2 ${
+                cursor === index ? activeCursorClasses : ''
+              }`}
+              onClick={() => handleClickApp(id)}
+            >
+              <div className='flex items-center gap-1'>
+                <img src={imageUrl} className='h-5 w-5' />
+                <div>{title}</div>
+              </div>
             </li>
           ))}
         </ul>
