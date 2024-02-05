@@ -1,6 +1,9 @@
 import SpotlightIcon from '@/assets/icons/SpotlightIcon.svg?react';
+import { type App } from '@/config/apps';
 import { AppReducerContext, AppStateContext } from '@/store/App/AppContext';
 import { useContext, useEffect, useRef, useState } from 'react';
+
+type AppId = App['id'];
 
 type SpotlightProps = {
   close: () => void;
@@ -27,7 +30,7 @@ const Spotlight = ({ close }: SpotlightProps) => {
     setSuggestedApps(selectedApps);
   };
 
-  const handleClickApp = (id: (typeof apps)[number]['id']) => {
+  const handleClickApp = (id: AppId) => {
     dispatch({ type: 'OPEN', id });
     close();
     setSuggestedApps([]);
