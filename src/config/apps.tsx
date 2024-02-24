@@ -34,7 +34,7 @@ export const apps: App[] = [
     zIndex: INITIAL_INDEX,
     isOpen: false,
     isMinimize: false,
-    isResizable: false,
+    isResizable: true,
     content: <Notes />,
   },
   {
