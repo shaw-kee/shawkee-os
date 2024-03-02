@@ -1,5 +1,5 @@
 import { AppReducerContext } from '@/store/App/AppContext';
-import { PropsWithChildren, useContext, useEffect, useRef, useState } from 'react';
+import { PropsWithChildren, useContext, useEffect, useState } from 'react';
 import useRND from './useRND';
 import { Size } from '@/types/size';
 import { Position } from '@/types/position';
@@ -50,6 +50,7 @@ const AppWindow = ({
     handleResizeSouthWest,
     handleResizeWest,
     handleDragElement,
+    ref: windowRef,
   } = useRND(initialPosition, minSize, boundary);
   const {
     isResize: isMaximize,
@@ -65,7 +66,7 @@ const AppWindow = ({
   } = usePrevSize(setResize);
   const [tempMinimize, setTempMinimize] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
   const minimizePrevState = usePrevState(isMinimize);
-  const windowRef = useRef<HTMLDivElement>(null);
+  // const windowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isMinimize && minimizePrevState) {
@@ -127,7 +128,7 @@ const AppWindow = ({
 
   return (
     <div
-      style={{ width, height, transform: `translate(${x}px, ${y}px)`, zIndex }}
+      style={{ width, height, zIndex, transform: `translate(${initialPosition.x}px, ${initialPosition.y}px)` }}
       className={`absolute flex flex-col overflow-hidden ${isFullscreen ? '' : 'rounded-md'} ${
         isMinimize ? 'invisible opacity-0' : ''
       } `}

@@ -1,4 +1,4 @@
-export const mouseDrag = (onDragMouse: (deltaX: number, deltaY: number) => void) => {
+export const mouseDrag = (onDragMouse: (deltaX: number, deltaY: number) => void, onMouseUp?: () => void) => {
   return {
     handleMouseDown: (downEvent: React.MouseEvent) => {
       const handleMouseMove = (moveEvent: MouseEvent) => {
@@ -9,6 +9,7 @@ export const mouseDrag = (onDragMouse: (deltaX: number, deltaY: number) => void)
 
       const handleMouseUp = () => {
         document.removeEventListener('mousemove', handleMouseMove);
+        onMouseUp && onMouseUp();
       };
 
       document.addEventListener('mousemove', handleMouseMove);
