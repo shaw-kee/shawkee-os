@@ -66,7 +66,6 @@ const AppWindow = ({
   } = usePrevSize(setResize);
   const [tempMinimize, setTempMinimize] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
   const minimizePrevState = usePrevState(isMinimize);
-  // const windowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isMinimize && minimizePrevState) {
