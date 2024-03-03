@@ -1,7 +1,8 @@
-import { type KeyboardEvent, type FocusEvent, useState } from 'react';
+import { type KeyboardEvent, type FocusEvent, useState, useEffect, useRef } from 'react';
 
 const Safari = () => {
   const [iframeSrc, setIframeSrc] = useState('');
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const handleFocusInput = (event: FocusEvent<HTMLInputElement, Element>) => {
     console.log('click!');
@@ -28,6 +29,23 @@ const Safari = () => {
     return protocolPattern.test(url);
   };
 
+  useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+    const handleResize = (entries: ResizeObserverEntry[]) => {
+      const iframeElement = entries[0].target as HTMLElement;
+      iframeElement.style.pointerEvents = 'none';
+
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => (iframeElement.style.pointerEvents = 'auto'), 250);
+    };
+
+    const observer = new ResizeObserver(handleResize);
+    if (iframeRef.current) observer.observe(iframeRef.current);
+
+    return () => observer.disconnect();
+  }, [iframeSrc]);
+
   return (
     <div className='flex min-h-full w-full flex-col bg-white'>
       <div className='flex items-center gap-1 bg-gray-100 px-2 py-2'>
@@ -41,7 +59,7 @@ const Safari = () => {
           onFocus={handleFocusInput}
         />
       </div>
-      {iframeSrc ? <iframe className='grow' src={iframeSrc} /> : <div className='grow bg-blue-400' />}
+      {iframeSrc ? <iframe ref={iframeRef} className='grow' src={iframeSrc} /> : <div className='grow bg-blue-400' />}
     </div>
   );
 };
