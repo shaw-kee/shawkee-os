@@ -127,7 +127,7 @@ const AppWindow = ({
 
   return (
     <div
-      style={{ width, height, zIndex, transform: `translate(${initialPosition.x}px, ${initialPosition.y}px)` }}
+      style={{ width, height, zIndex, transform: `translate(${x}px, ${y}px)` }}
       className={`absolute flex flex-col overflow-hidden ${isFullscreen ? '' : 'rounded-md'} ${
         isMinimize ? 'invisible opacity-0' : ''
       } `}
