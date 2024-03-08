@@ -8,7 +8,7 @@ const Notes = () => {
   return (
     <div className='flex min-h-full'>
       <div className='flex w-full'>
-        <div className='flex w-40 flex-col bg-[#dadada]/90 backdrop-blur-md'>
+        <div className='flex w-40 flex-col bg-[#e6e2e6]/95 backdrop-blur-md'>
           <div className='relative h-12'>
             <div className='absolute right-4 top-[50%] translate-y-[-50%]'>
               <button className='rounded-lg hover:bg-[#e6e3e6]'>
@@ -36,7 +36,7 @@ const Notes = () => {
           </div>
         </div>
         <div className='flex flex-[5_5_0%] flex-col'>
-          <div className='flex h-12 items-center border-b border-black/5 bg-[#EAEAEA]'>
+          <div className='flex h-12 items-center border-b border-black/5 bg-[#f2eff2]'>
             <div className='flex flex-[2_2_0%] justify-between border-r border-black/5'>
               <button className='mx-2 rounded-lg hover:bg-[#e6e3e6]'>
                 <div className='px-1'>
