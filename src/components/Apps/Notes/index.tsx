@@ -10,10 +10,10 @@ const Notes = () => {
       <div className='flex w-full'>
         <div className='flex w-40 flex-col bg-[#e6e2e6]/95 backdrop-blur-md'>
           <div className='relative h-12'>
-            <div className='absolute right-4 top-[50%] translate-y-[-50%]'>
-              <button className='rounded-lg hover:bg-[#e6e3e6]'>
-                <div className='flex h-7 w-7 items-center justify-center'>
-                  <SidebarIcon width='20' height='20' viewBox='0 0 20 16' color='#000000' fillOpacity='0.5' />
+            <div className='absolute right-4 top-[50%] flex translate-y-[-50%] items-center'>
+              <button className='rounded-lg hover:bg-[#d9d7da]'>
+                <div className='px-1'>
+                  <SidebarIcon width='28' height='28' viewBox='-4 -6 28 28' color='#000000' fillOpacity='0.5' />
                 </div>
               </button>
             </div>
