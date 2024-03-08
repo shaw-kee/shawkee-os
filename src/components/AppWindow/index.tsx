@@ -136,7 +136,7 @@ const AppWindow = ({
       ref={windowRef}
     >
       <div
-        className={`flex h-7 items-center justify-center bg-[#e5e7eb] ${
+        className={`z-50 flex h-7 items-center justify-center bg-[#e5e7eb] ${
           isFullscreen ? 'absolute inset-x-0 opacity-0 hover:static hover:opacity-100' : ''
         }`}
         onMouseDown={isFullscreen ? undefined : handleDragElement}
