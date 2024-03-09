@@ -2,7 +2,8 @@ import { type KeyboardEvent, type FocusEvent, useState, useEffect, useRef } from
 import HomePage from './HomePage';
 
 const Safari = () => {
-  const [iframeSrc, setIframeSrc] = useState('');
+  const [histories, setHistories] = useState<string[]>(['']);
+  const historyCursor = useRef(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -16,16 +17,22 @@ const Safari = () => {
 
       if (!value.trim()) return;
 
+      const cursor = histories.length;
+
       if (!checkUrlProtocol(value)) {
         value = 'https://' + value;
 
         event.currentTarget.value = new URL(value).hostname;
       }
 
-      setIframeSrc(value);
+      setHistories([...histories, value]);
+
+      historyCursor.current = cursor;
       event.currentTarget.blur();
     }
   };
+
+  const currentPage = histories[historyCursor.current];
 
   const checkUrlProtocol = (url: string) => {
     const protocolPattern = /^(http|https):\/\//;
@@ -47,7 +54,7 @@ const Safari = () => {
     if (iframeRef.current) observer.observe(iframeRef.current);
 
     return () => observer.disconnect();
-  }, [iframeSrc]);
+  }, [histories]);
 
   const handleClickBackButton = () => {
     alert('back');
@@ -62,8 +69,16 @@ const Safari = () => {
   };
 
   const handleClickHomeButton = () => {
-    if (inputRef.current) inputRef.current.value = '';
-    setTimeout(() => setIframeSrc(''), 100);
+    if (!inputRef.current || currentPage === '') return;
+
+    inputRef.current.value = '';
+
+    const copiedHistories = histories.slice(0, historyCursor.current + 1);
+    const cursor = copiedHistories.length;
+    historyCursor.current = cursor;
+    copiedHistories.push('');
+
+    setTimeout(() => setHistories(copiedHistories), 100);
   };
 
   return (
@@ -96,7 +111,7 @@ const Safari = () => {
           onFocus={handleFocusInput}
         />
       </div>
-      {iframeSrc ? <iframe ref={iframeRef} className='grow' src={iframeSrc} /> : <HomePage />}
+      {currentPage ? <iframe ref={iframeRef} className='grow' src={currentPage} /> : <HomePage />}
     </div>
   );
 };
