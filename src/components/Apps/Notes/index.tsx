@@ -12,7 +12,7 @@ const Notes = () => {
         <Sidebar />
         <div className='flex flex-[5_5_0%] flex-col'>
           <div className='flex h-12 items-center border-b border-black/5 bg-[#f2eff2]'>
-            <div className='flex flex-[2_2_0%] justify-between border-r border-black/5'>
+            <div className='flex max-w-xs flex-[2_2_0%] justify-between border-r border-black/5'>
               <button className='mx-2 rounded-lg hover:bg-[#e6e3e6]'>
                 <div className='px-1'>
                   <BulletListIcon width='28' height='28' viewBox='0 0 28 28' color='#000000' fillOpacity='0.5' />
