@@ -65,7 +65,7 @@ const Safari = () => {
   };
 
   const handleClickRefreshButton = () => {
-    alert('refresh');
+    setHistories([...histories]);
   };
 
   const handleClickHomeButton = () => {
