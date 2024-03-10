@@ -4,8 +4,14 @@ import NewNoteIcon from '@/assets/icons/Notes/New_Note.svg?react';
 import MemoList from '@/components/Apps/Notes/MemoList';
 import NoteContent from '@/components/Apps/Notes/NoteContent';
 import Sidebar from '@/components/Apps/Notes/Sidebar';
+import { useState } from 'react';
+import { getStorage } from '@/utils/storage';
+import { NoteData } from '@/types/note';
 
 const Notes = () => {
+  const note = getStorage('note', '');
+  const [noteData, setNoteData] = useState<NoteData>(typeof note === 'object' ? note : { lastId: 1 });
+
   return (
     <div className='flex min-h-full'>
       <div className='flex w-full'>
@@ -33,7 +39,7 @@ const Notes = () => {
             </div>
           </div>
           <div className='flex grow'>
-            <MemoList />
+            <MemoList noteData={noteData} />
             <NoteContent />
           </div>
         </div>
