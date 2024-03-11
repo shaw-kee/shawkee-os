@@ -1,4 +1,5 @@
 import { MemoType, NoteData } from '@/types/note';
+import React from 'react';
 
 interface Props {
   noteData: NoteData;
@@ -12,7 +13,7 @@ const MemoList = ({ noteData }: Props) => {
   return (
     <div className='flex w-80 flex-col border-r border-black/5 bg-white'>
       {memoList.map(([year, list]) => (
-        <>
+        <React.Fragment key={year}>
           <div className='pl-4 text-sm font-bold text-black/60 first:border-b first:border-black/5 first:py-2'>
             {year}
           </div>
@@ -29,7 +30,7 @@ const MemoList = ({ noteData }: Props) => {
               </div>
             ))}
           </div>
-        </>
+        </React.Fragment>
       ))}
     </div>
   );
