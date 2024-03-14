@@ -100,7 +100,7 @@ const Notes = () => {
   return (
     <div className='flex min-h-full'>
       <div className='flex w-full'>
-        <Sidebar />
+        <Sidebar noteData={noteData} />
         <div className='flex flex-[5_5_0%] flex-col'>
           <div className='flex h-12 items-center border-b border-black/5 bg-[#f2eff2]'>
             <div className='flex max-w-xs flex-[2_2_0%] justify-between border-r border-black/5'>

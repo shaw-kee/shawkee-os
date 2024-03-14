@@ -1,7 +1,16 @@
 import SidebarIcon from '@/assets/icons/Notes/Sidebar.svg?react';
 import DirectoryIcon from '@/assets/icons/Notes/Directory.svg?react';
+import { NoteData } from '@/types/note';
 
-const Sidebar = () => {
+interface Props {
+  noteData: NoteData;
+}
+
+const Sidebar = ({ noteData }: Props) => {
+  const memoCount = Object.values(noteData)
+    .map((array) => array.length)
+    .reduce((sum, num) => (sum += num), 0);
+
   return (
     <div className='flex w-40 select-none flex-col bg-[#e6e2e6]/95 backdrop-blur-md'>
       <div className='relative h-12'>
@@ -24,7 +33,7 @@ const Sidebar = () => {
                 </div>
                 <span className='text-[13px]'>메모</span>
               </div>
-              <span className='text-sm font-bold text-black/25'>4</span>
+              <span className='text-sm font-bold text-black/25'>{memoCount}</span>
             </li>
           </ul>
         </div>
