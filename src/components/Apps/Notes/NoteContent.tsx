@@ -3,6 +3,7 @@ import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 interface Props {
   selectedMemo: SelectedMemo;
+  handleClick: () => void;
   handleChange: (id: number, year: string, title: string, content: string) => void;
 }
 
@@ -20,7 +21,7 @@ const formatDate = (date: Date) => {
   return `${year}년 ${month}월 ${day}일 ${meridiem} ${hour}:${minutePadded}`;
 };
 
-const NoteContent = ({ selectedMemo, handleChange }: Props) => {
+const NoteContent = ({ selectedMemo, handleChange, handleClick }: Props) => {
   const date = new Date(selectedMemo.date);
   const [title, setTitle] = useState(selectedMemo.title);
   const [content, setContent] = useState(selectedMemo.content);
@@ -78,7 +79,7 @@ const NoteContent = ({ selectedMemo, handleChange }: Props) => {
   };
 
   return (
-    <div className='flex flex-[3_3_0%] flex-col justify-center bg-white'>
+    <div className='flex flex-[3_3_0%] flex-col justify-center bg-white' onClick={handleClick}>
       {selectedMemo.year !== '' && (
         <>
           <span className='mt-2 select-none text-center text-sm font-bold text-black/30'>{`${formatDate(date)}`}</span>

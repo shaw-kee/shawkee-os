@@ -3,6 +3,8 @@ import React from 'react';
 
 interface Props {
   noteData: NoteData;
+  selectedMemo: SelectedMemo;
+  selectedId: number;
   handleSelectMemo: (memo: SelectedMemo) => void;
 }
 
@@ -10,7 +12,7 @@ const formatDate = (date: Date) => {
   return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}.`;
 };
 
-const MemoList = ({ noteData, handleSelectMemo }: Props) => {
+const MemoList = ({ noteData, handleSelectMemo, selectedMemo, selectedId }: Props) => {
   const memoList = Object.entries(noteData)
     .filter(([key]) => key !== 'lastId')
     .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA));
@@ -25,18 +27,25 @@ const MemoList = ({ noteData, handleSelectMemo }: Props) => {
           <div className='mb-8 mt-2 flex flex-col gap-1 px-2'>
             {(list as Array<MemoType>).map((memo) => (
               <div
-                className='flex flex-col whitespace-nowrap px-4 py-2'
+                className={`flex select-none flex-col whitespace-nowrap rounded-[4px] px-4 py-2 ${
+                  selectedId === memo.id ? 'bg-[#3477f6] text-white' : ''
+                } ${selectedMemo.id === memo.id ? 'bg-[#d6d4d6]' : ''}`}
                 key={memo.id}
                 onClick={() => handleSelectMemo({ year, ...memo })}
+                data-id={memo.id}
               >
-                <span className='overflow-hidden text-ellipsis text-[12px]/[14px] font-bold'>
+                <div className={`overflow-hidden text-ellipsis text-[12px]/[14px] font-bold`}>
                   {memo.title === '' ? '새로운 제목' : memo.title}
-                </span>
+                </div>
                 <div className='flex gap-2'>
-                  <span className='text-[11px]'>{`${formatDate(new Date(memo.date))}`}</span>
-                  <span className='overflow-hidden text-ellipsis text-[11px] font-bold text-black/50'>
+                  <div className='text-[11px]'>{`${formatDate(new Date(memo.date))}`}</div>
+                  <div
+                    className={`overflow-hidden text-ellipsis text-[11px] text-[#969596] ${
+                      selectedId === memo.id ? 'text-[#d4d3d3]' : ''
+                    }`}
+                  >
                     {memo.content === '' ? '추가 컨텐츠 없음' : memo.content}
-                  </span>
+                  </div>
                 </div>
               </div>
             ))}

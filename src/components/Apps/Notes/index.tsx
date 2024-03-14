@@ -20,14 +20,11 @@ const defaultSelectedMemo = {
 const Notes = () => {
   const [noteData, setNoteData] = useState<NoteData>(getStorage('note', { lastId: 0 }));
   const [selectedMemo, setSelectedMemo] = useState<SelectedMemo>(defaultSelectedMemo);
+  const [selectedId, setSelectedId] = useState<number>(0);
 
   useEffect(() => {
     updateStorage('note', noteData);
   }, [noteData]);
-
-  const handleSelectMemo = (memo: SelectedMemo) => {
-    setSelectedMemo(memo);
-  };
 
   const createMemo = () => {
     const date = new Date();
@@ -43,6 +40,7 @@ const Notes = () => {
     }
 
     setSelectedMemo({ year: yearNow.toString(), ...newMemo });
+    setSelectedId(0);
   };
 
   const deleteMemo = () => {
@@ -87,6 +85,15 @@ const Notes = () => {
     }
   };
 
+  const handleSelectMemo = (memo: SelectedMemo) => {
+    setSelectedMemo(memo);
+    setSelectedId(memo.id);
+  };
+
+  const initSelectId = () => {
+    setSelectedId(0);
+  };
+
   return (
     <div className='flex min-h-full'>
       <div className='flex w-full'>
@@ -114,8 +121,13 @@ const Notes = () => {
             </div>
           </div>
           <div className='flex grow'>
-            <MemoList noteData={noteData} handleSelectMemo={handleSelectMemo} />
-            <NoteContent selectedMemo={selectedMemo} handleChange={handleChange} />
+            <MemoList
+              noteData={noteData}
+              handleSelectMemo={handleSelectMemo}
+              selectedMemo={selectedMemo}
+              selectedId={selectedId}
+            />
+            <NoteContent selectedMemo={selectedMemo} handleChange={handleChange} handleClick={initSelectId} />
           </div>
         </div>
       </div>
