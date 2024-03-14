@@ -45,6 +45,24 @@ const Notes = () => {
     setSelectedMemo({ year: yearNow.toString(), ...newMemo });
   };
 
+  const deleteMemo = () => {
+    if (selectedMemo.id === 0) return;
+
+    const targetNoteData = noteData[selectedMemo.year] as Array<MemoType>;
+
+    if (targetNoteData.length > 1) {
+      const nextNoteData = targetNoteData.filter((memo) => memo.id !== selectedMemo.id);
+      setNoteData({ ...noteData, [selectedMemo.year]: nextNoteData });
+    } else {
+      setNoteData((data) => {
+        const keyDeletedData = removeKey(selectedMemo.year, data);
+        return { ...keyDeletedData };
+      });
+    }
+
+    setSelectedMemo(defaultSelectedMemo);
+  };
+
   const handleChange = (id: number, year: string, title: string, content: string) => {
     const date = new Date();
     const yearNow = date.getFullYear();
@@ -81,7 +99,7 @@ const Notes = () => {
                   <BulletListIcon width='28' height='28' viewBox='0 0 28 28' color='#000000' fillOpacity='0.5' />
                 </div>
               </button>
-              <button className='mx-2 rounded-lg hover:bg-[#e6e3e6]'>
+              <button className='mx-2 rounded-lg hover:bg-[#e6e3e6]' onClick={deleteMemo}>
                 <div className='px-1'>
                   <TrashCanIcon width='28' height='28' viewBox='0 0 28 28' color='#000000' fillOpacity='0.5' />
                 </div>
