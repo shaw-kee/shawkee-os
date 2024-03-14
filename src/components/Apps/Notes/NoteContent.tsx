@@ -64,23 +64,27 @@ const NoteContent = ({ selectedMemo, handleChange }: Props) => {
 
   return (
     <div className='flex flex-[3_3_0%] flex-col justify-center bg-white'>
-      <span className='mt-2 select-none text-center text-sm font-bold text-black/30'>{selectedMemo.date}</span>
-      <div className='mt-2 flex grow flex-col px-4' onKeyDown={handleKeyDown}>
-        <textarea
-          ref={titleRef}
-          className='resize-none break-all text-lg font-bold outline-none'
-          value={title}
-          onChange={changeTitle}
-          onKeyDown={handleKeyDownTitle}
-          rows={1}
-        />
-        <textarea
-          ref={contentRef}
-          className='mt-2 grow resize-none text-sm focus:outline-none'
-          value={content}
-          onChange={changeContent}
-        />
-      </div>
+      {selectedMemo.year !== '' && (
+        <>
+          <span className='mt-2 select-none text-center text-sm font-bold text-black/30'>{selectedMemo.date}</span>
+          <div className='mt-2 flex grow flex-col px-4' onKeyDown={handleKeyDown}>
+            <textarea
+              ref={titleRef}
+              className='resize-none break-all text-lg font-bold outline-none'
+              value={title}
+              onChange={changeTitle}
+              onKeyDown={handleKeyDownTitle}
+              rows={1}
+            />
+            <textarea
+              ref={contentRef}
+              className='mt-2 grow resize-none text-sm focus:outline-none'
+              value={content}
+              onChange={changeContent}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

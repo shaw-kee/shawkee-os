@@ -12,7 +12,7 @@ import { removeKey } from '@/utils/key';
 const defaultSelectedMemo = {
   year: '',
   date: '',
-  id: 1,
+  id: 0,
   title: '',
   content: '',
 };
