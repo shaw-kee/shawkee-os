@@ -1,11 +1,12 @@
-import { MemoType, NoteData } from '@/types/note';
+import { MemoType, NoteData, SelectedMemo } from '@/types/note';
 import React from 'react';
 
 interface Props {
   noteData: NoteData;
+  handleSelectMemo: (memo: SelectedMemo) => void;
 }
 
-const MemoList = ({ noteData }: Props) => {
+const MemoList = ({ noteData, handleSelectMemo }: Props) => {
   const memoList = Object.entries(noteData)
     .filter(([key]) => key !== 'lastId')
     .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA));
@@ -19,7 +20,11 @@ const MemoList = ({ noteData }: Props) => {
           </div>
           <div className='mb-8 mt-2 flex flex-col gap-1 px-2'>
             {(list as Array<MemoType>).map((memo) => (
-              <div className='flex flex-col whitespace-nowrap px-4 py-2' key={memo.id}>
+              <div
+                className='flex flex-col whitespace-nowrap px-4 py-2'
+                key={memo.id}
+                onClick={() => handleSelectMemo({ year, ...memo })}
+              >
                 <span className='overflow-hidden text-ellipsis text-[12px]/[14px] font-bold'>{memo.title}</span>
                 <div className='flex gap-2'>
                   <span className='text-[11px]'>{memo.date}</span>

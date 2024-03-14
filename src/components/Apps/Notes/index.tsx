@@ -6,11 +6,48 @@ import NoteContent from '@/components/Apps/Notes/NoteContent';
 import Sidebar from '@/components/Apps/Notes/Sidebar';
 import { useState } from 'react';
 import { getStorage } from '@/utils/storage';
-import { NoteData } from '@/types/note';
+import { MemoType, NoteData, SelectedMemo } from '@/types/note';
+
+const defaultSelectedMemo = {
+  year: '',
+  date: '',
+  id: 1,
+  title: '',
+  content: '',
+};
 
 const Notes = () => {
   const note = getStorage('note', '');
-  const [noteData, setNoteData] = useState<NoteData>(typeof note === 'object' ? note : { lastId: 1 });
+  const [noteData, setNoteData] = useState<NoteData>(typeof note === 'object' ? note : { lastId: 0 });
+  const [selectedMemo, setSelectedMemo] = useState<SelectedMemo>(defaultSelectedMemo);
+
+  const handleSelectMemo = (memo: SelectedMemo) => {
+    setSelectedMemo(memo);
+  };
+
+  const handleChange = (id: number, year: string, title: string, content: string) => {
+    const date = new Date();
+    const yearNow = date.getFullYear();
+    const nextMemo = { id, title, content, date: `${yearNow}.${date.getMonth() + 1}.${date.getDate()}` };
+    const selectedNoteData = noteData[year] as Array<MemoType>;
+    const currentNoteData = noteData[yearNow] as Array<MemoType>;
+    const nextData = [nextMemo, ...currentNoteData.filter((memo) => memo.id !== id)];
+
+    if (noteData[year] && selectedNoteData.length > 1) {
+      const filteredPrevData = [...selectedNoteData.filter((memo) => memo.id !== id)];
+
+      setNoteData({
+        ...noteData,
+        [year]: filteredPrevData,
+        [yearNow]: nextData,
+      });
+    } else {
+      setNoteData((data) => {
+        const { [year]: _, ...restNoteData } = data;
+        return { ...restNoteData, [yearNow]: [...nextData] };
+      });
+    }
+  };
 
   return (
     <div className='flex min-h-full'>
@@ -39,8 +76,8 @@ const Notes = () => {
             </div>
           </div>
           <div className='flex grow'>
-            <MemoList noteData={noteData} />
-            <NoteContent />
+            <MemoList noteData={noteData} handleSelectMemo={handleSelectMemo} />
+            <NoteContent selectedMemo={selectedMemo} handleChange={handleChange} />
           </div>
         </div>
       </div>

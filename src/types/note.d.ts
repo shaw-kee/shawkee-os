@@ -8,3 +8,7 @@ export interface MemoType {
   title: string;
   content: string;
 }
+
+export interface SelectedMemo extends MemoType {
+  year: string;
+}
