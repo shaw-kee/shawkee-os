@@ -22,7 +22,7 @@ const MemoList = ({ noteData, handleSelectMemo, selectedMemo, selectedId }: Prop
       {memoList.map(([year, list]) => (
         <React.Fragment key={year}>
           <div className='pl-4 text-sm font-bold text-black/60 first:border-b first:border-black/5 first:py-2'>
-            {year}
+            {year}년
           </div>
           <div className='mb-8 mt-2 flex flex-col gap-1 px-2'>
             {(list as Array<MemoType>).map((memo) => (
