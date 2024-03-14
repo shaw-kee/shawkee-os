@@ -18,7 +18,7 @@ const defaultSelectedMemo = {
 };
 
 const Notes = () => {
-  const [noteData, setNoteData] = useState<NoteData>(getStorage('note', { lastId: 1 }));
+  const [noteData, setNoteData] = useState<NoteData>(getStorage('note', { lastId: 0 }));
   const [selectedMemo, setSelectedMemo] = useState<SelectedMemo>(defaultSelectedMemo);
 
   useEffect(() => {
@@ -27,6 +27,22 @@ const Notes = () => {
 
   const handleSelectMemo = (memo: SelectedMemo) => {
     setSelectedMemo(memo);
+  };
+
+  const createMemo = () => {
+    const date = new Date();
+    const yearNow = date.getFullYear();
+    const nextId = (noteData.lastId as number) + 1;
+    const newMemo = { id: nextId, title: '', content: '', date: `${date}` };
+
+    if (noteData[yearNow]) {
+      const prevNoteData = noteData[yearNow] as Array<MemoType>;
+      setNoteData({ ...noteData, [yearNow]: [newMemo, ...prevNoteData], lastId: nextId });
+    } else {
+      setNoteData({ ...noteData, [yearNow]: [newMemo], lastId: nextId });
+    }
+
+    setSelectedMemo({ year: yearNow.toString(), ...newMemo });
   };
 
   const handleChange = (id: number, year: string, title: string, content: string) => {
@@ -72,7 +88,7 @@ const Notes = () => {
               </button>
             </div>
             <div className='flex flex-[3_3_0%]'>
-              <button className='mx-2 rounded-lg hover:bg-[#e6e3e6]'>
+              <button className='mx-2 rounded-lg hover:bg-[#e6e3e6]' onClick={createMemo}>
                 <div className='px-1'>
                   <NewNoteIcon width='28' height='28' viewBox='0 0 28 28' color='#000000' fillOpacity='0.5' />
                 </div>
