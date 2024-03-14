@@ -21,6 +21,14 @@ const NoteContent = ({ selectedMemo, handleChange }: Props) => {
   });
 
   useEffect(() => {
+    if (!(titleRef.current && contentRef.current)) return;
+
+    if (selectedMemo.title === '') {
+      titleRef.current.focus();
+    } else {
+      contentRef.current.focus();
+    }
+
     setTitle(selectedMemo.title);
     setContent(selectedMemo.content);
   }, [selectedMemo]);
