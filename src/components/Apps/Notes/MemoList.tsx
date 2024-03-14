@@ -25,11 +25,13 @@ const MemoList = ({ noteData, handleSelectMemo }: Props) => {
                 key={memo.id}
                 onClick={() => handleSelectMemo({ year, ...memo })}
               >
-                <span className='overflow-hidden text-ellipsis text-[12px]/[14px] font-bold'>{memo.title}</span>
+                <span className='overflow-hidden text-ellipsis text-[12px]/[14px] font-bold'>
+                  {memo.title === '' ? '새로운 제목' : memo.title}
+                </span>
                 <div className='flex gap-2'>
                   <span className='text-[11px]'>{memo.date}</span>
                   <span className='overflow-hidden text-ellipsis text-[11px] font-bold text-black/50'>
-                    {memo.content}
+                    {memo.content === '' ? '추가 컨텐츠 없음' : memo.content}
                   </span>
                 </div>
               </div>
