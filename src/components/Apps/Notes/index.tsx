@@ -4,8 +4,8 @@ import NewNoteIcon from '@/assets/icons/Notes/New_Note.svg?react';
 import MemoList from '@/components/Apps/Notes/MemoList';
 import NoteContent from '@/components/Apps/Notes/NoteContent';
 import Sidebar from '@/components/Apps/Notes/Sidebar';
-import { useState } from 'react';
-import { getStorage } from '@/utils/storage';
+import { useEffect, useState } from 'react';
+import { getStorage, updateStorage } from '@/utils/storage';
 import { MemoType, NoteData, SelectedMemo } from '@/types/note';
 import { removeKey } from '@/utils/key';
 
@@ -18,9 +18,12 @@ const defaultSelectedMemo = {
 };
 
 const Notes = () => {
-  const note = getStorage('note', '');
-  const [noteData, setNoteData] = useState<NoteData>(typeof note === 'object' ? note : { lastId: 0 });
+  const [noteData, setNoteData] = useState<NoteData>(getStorage('note', { lastId: 1 }));
   const [selectedMemo, setSelectedMemo] = useState<SelectedMemo>(defaultSelectedMemo);
+
+  useEffect(() => {
+    updateStorage('note', noteData);
+  }, [noteData]);
 
   const handleSelectMemo = (memo: SelectedMemo) => {
     setSelectedMemo(memo);
