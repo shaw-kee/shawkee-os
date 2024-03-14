@@ -1,4 +1,4 @@
-export const getStorage = (key: string, defaultValue: string): string => {
+export const getStorage = <T>(key: string, defaultValue: T): T => {
   const storage = window.localStorage;
 
   try {
@@ -10,7 +10,7 @@ export const getStorage = (key: string, defaultValue: string): string => {
   }
 };
 
-export const updateStorage = (key: string, value: string): void => {
+export const updateStorage = <T>(key: string, value: T): void => {
   const storage = window.localStorage;
   storage.setItem(key, JSON.stringify(value));
 };
