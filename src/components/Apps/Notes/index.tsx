@@ -7,6 +7,7 @@ import Sidebar from '@/components/Apps/Notes/Sidebar';
 import { useState } from 'react';
 import { getStorage } from '@/utils/storage';
 import { MemoType, NoteData, SelectedMemo } from '@/types/note';
+import { removeKey } from '@/utils/key';
 
 const defaultSelectedMemo = {
   year: '',
@@ -43,8 +44,8 @@ const Notes = () => {
       });
     } else {
       setNoteData((data) => {
-        const { [year]: _, ...restNoteData } = data;
-        return { ...restNoteData, [yearNow]: [...nextData] };
+        const keyDeletedData = removeKey(year, data);
+        return { ...keyDeletedData, [yearNow]: [...nextData] };
       });
     }
   };
