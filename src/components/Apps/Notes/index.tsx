@@ -4,7 +4,7 @@ import NewNoteIcon from '@/assets/icons/Notes/New_Note.svg?react';
 import MemoList from '@/components/Apps/Notes/MemoList';
 import NoteContent from '@/components/Apps/Notes/NoteContent';
 import Sidebar from '@/components/Apps/Notes/Sidebar';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getStorage, updateStorage } from '@/utils/storage';
 import { MemoType, NoteData, SelectedMemo } from '@/types/note';
 import { removeKey } from '@/utils/key';
@@ -18,27 +18,30 @@ const defaultSelectedMemo = {
 };
 
 const Notes = () => {
-  const [noteData, setNoteData] = useState<NoteData>(getStorage('note', { lastId: 0 }));
+  const [noteData, setNoteData] = useState<NoteData>(getStorage('note', {}));
   const [selectedMemo, setSelectedMemo] = useState<SelectedMemo>(defaultSelectedMemo);
   const [selectedId, setSelectedId] = useState<number>(0);
+  const noteIndex = useRef<number>(getStorage('noteIndex', 0));
 
   useEffect(() => {
     updateStorage('note', noteData);
+    updateStorage('noteIndex', noteIndex.current);
   }, [noteData]);
 
   const createMemo = () => {
     const date = new Date();
     const yearNow = date.getFullYear();
-    const nextId = (noteData.lastId as number) + 1;
+    const nextId = noteIndex.current + 1;
     const newMemo = { id: nextId, title: '', content: '', date: `${date}` };
 
     if (noteData[yearNow]) {
       const prevNoteData = noteData[yearNow] as Array<MemoType>;
-      setNoteData({ ...noteData, [yearNow]: [newMemo, ...prevNoteData], lastId: nextId });
+      setNoteData({ ...noteData, [yearNow]: [newMemo, ...prevNoteData] });
     } else {
-      setNoteData({ ...noteData, [yearNow]: [newMemo], lastId: nextId });
+      setNoteData({ ...noteData, [yearNow]: [newMemo] });
     }
 
+    noteIndex.current += 1;
     setSelectedMemo({ year: yearNow.toString(), ...newMemo });
     setSelectedId(0);
   };

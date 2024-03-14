@@ -1,5 +1,5 @@
 export interface NoteData {
-  [key: string]: MemoType[] | number;
+  [key: string]: MemoType[];
 }
 
 export interface MemoType {
