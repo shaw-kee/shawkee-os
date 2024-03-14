@@ -32,7 +32,7 @@ const Notes = () => {
   const handleChange = (id: number, year: string, title: string, content: string) => {
     const date = new Date();
     const yearNow = date.getFullYear();
-    const nextMemo = { id, title, content, date: `${yearNow}.${date.getMonth() + 1}.${date.getDate()}` };
+    const nextMemo = { id, title, content, date: `${date}` };
     const selectedNoteData = noteData[year] as Array<MemoType>;
     const currentNoteData = noteData[yearNow] as Array<MemoType>;
     const nextData = [nextMemo, ...currentNoteData.filter((memo) => memo.id !== id)];

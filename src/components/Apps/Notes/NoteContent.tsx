@@ -6,7 +6,22 @@ interface Props {
   handleChange: (id: number, year: string, title: string, content: string) => void;
 }
 
+const formatDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  let hour = date.getHours();
+  const minute = date.getMinutes();
+  const meridiem = hour >= 12 ? '오후' : '오전';
+
+  hour = hour % 12;
+  hour = hour === 0 ? 12 : hour;
+  const minutePadded = minute < 10 ? '0' + minute : minute;
+  return `${year}년 ${month}월 ${day}일 ${meridiem} ${hour}:${minutePadded}`;
+};
+
 const NoteContent = ({ selectedMemo, handleChange }: Props) => {
+  const date = new Date(selectedMemo.date);
   const [title, setTitle] = useState(selectedMemo.title);
   const [content, setContent] = useState(selectedMemo.content);
   const titleRef = useRef<HTMLTextAreaElement>(null);
@@ -66,7 +81,7 @@ const NoteContent = ({ selectedMemo, handleChange }: Props) => {
     <div className='flex flex-[3_3_0%] flex-col justify-center bg-white'>
       {selectedMemo.year !== '' && (
         <>
-          <span className='mt-2 select-none text-center text-sm font-bold text-black/30'>{selectedMemo.date}</span>
+          <span className='mt-2 select-none text-center text-sm font-bold text-black/30'>{`${formatDate(date)}`}</span>
           <div className='mt-2 flex grow flex-col px-4' onKeyDown={handleKeyDown}>
             <textarea
               ref={titleRef}

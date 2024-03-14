@@ -6,6 +6,10 @@ interface Props {
   handleSelectMemo: (memo: SelectedMemo) => void;
 }
 
+const formatDate = (date: Date) => {
+  return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}.`;
+};
+
 const MemoList = ({ noteData, handleSelectMemo }: Props) => {
   const memoList = Object.entries(noteData)
     .filter(([key]) => key !== 'lastId')
@@ -29,7 +33,7 @@ const MemoList = ({ noteData, handleSelectMemo }: Props) => {
                   {memo.title === '' ? '새로운 제목' : memo.title}
                 </span>
                 <div className='flex gap-2'>
-                  <span className='text-[11px]'>{memo.date}</span>
+                  <span className='text-[11px]'>{`${formatDate(new Date(memo.date))}`}</span>
                   <span className='overflow-hidden text-ellipsis text-[11px] font-bold text-black/50'>
                     {memo.content === '' ? '추가 컨텐츠 없음' : memo.content}
                   </span>
