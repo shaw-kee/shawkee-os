@@ -1,5 +1,5 @@
 import { SelectedMemo } from '@/types/note';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 interface Props {
   selectedMemo: SelectedMemo;
@@ -10,7 +10,8 @@ const NoteContent = ({ selectedMemo, handleChange }: Props) => {
   const [title, setTitle] = useState(selectedMemo.title);
   const [content, setContent] = useState(selectedMemo.content);
   const titleRef = useRef<HTMLTextAreaElement>(null);
-  const isKeyPress = useRef<boolean>(false);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
+  const isKeyDown = useRef<boolean>(false);
 
   useEffect(() => {
     if (titleRef.current) {
@@ -25,9 +26,9 @@ const NoteContent = ({ selectedMemo, handleChange }: Props) => {
   }, [selectedMemo]);
 
   useEffect(() => {
-    if (isKeyPress.current) {
+    if (isKeyDown.current) {
       handleChange(selectedMemo.id, selectedMemo.year, title, content);
-      isKeyPress.current = false;
+      isKeyDown.current = false;
     }
   }, [handleChange, selectedMemo, title, content]);
 
@@ -44,26 +45,32 @@ const NoteContent = ({ selectedMemo, handleChange }: Props) => {
   };
 
   const handleKeyDown = () => {
-    isKeyPress.current = true;
+    isKeyDown.current = true;
+  };
+
+  const handleKeyDownTitle = (e: KeyboardEvent) => {
+    if (e.key === 'Enter' && contentRef.current) {
+      contentRef.current.focus();
+    }
   };
 
   return (
     <div className='flex flex-[3_3_0%] flex-col justify-center bg-white'>
       <span className='mt-2 select-none text-center text-sm font-bold text-black/30'>{selectedMemo.date}</span>
-      <div className='mt-2 flex grow flex-col px-4'>
+      <div className='mt-2 flex grow flex-col px-4' onKeyDown={handleKeyDown}>
         <textarea
           ref={titleRef}
           className='resize-none break-all text-lg font-bold outline-none'
           value={title}
           onChange={changeTitle}
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleKeyDownTitle}
           rows={1}
         />
         <textarea
+          ref={contentRef}
           className='mt-2 grow resize-none text-sm focus:outline-none'
           value={content}
           onChange={changeContent}
-          onKeyDown={handleKeyDown}
         />
       </div>
     </div>
