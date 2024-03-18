@@ -17,6 +17,7 @@ const MemoList = ({ noteData, handleSelectMemo, selectedMemo, selectedId }: Prop
     .filter(([key]) => key !== 'lastId')
     .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA));
 
+  console.log(selectedId);
   return (
     <div className='flex w-80 flex-col border-r border-black/5 bg-white'>
       {memoList.map(([year, list]) => (
@@ -28,8 +29,8 @@ const MemoList = ({ noteData, handleSelectMemo, selectedMemo, selectedId }: Prop
             {(list as Array<MemoType>).map((memo) => (
               <div
                 className={`flex select-none flex-col whitespace-nowrap rounded-[4px] px-4 py-2 ${
-                  selectedId === memo.id ? 'bg-[#3477f6] text-white' : ''
-                } ${selectedMemo.id === memo.id ? 'bg-[#d6d4d6]' : ''}`}
+                  selectedMemo.id === memo.id && selectedId === 0 ? 'bg-[#d6d4d6]' : ''
+                } ${selectedId === memo.id ? 'bg-[#3477f6] text-white' : ''}`}
                 key={memo.id}
                 onClick={() => handleSelectMemo({ year, ...memo })}
                 data-id={memo.id}
