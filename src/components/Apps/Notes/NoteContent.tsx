@@ -1,4 +1,5 @@
 import { SelectedMemo } from '@/types/note';
+import { formatDate } from '@/utils/formatDate';
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 interface Props {
@@ -6,20 +7,6 @@ interface Props {
   handleClick: () => void;
   handleChange: (id: number, year: string, title: string, content: string) => void;
 }
-
-const formatDate = (date: Date) => {
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  let hour = date.getHours();
-  const minute = date.getMinutes();
-  const meridiem = hour >= 12 ? '오후' : '오전';
-
-  hour = hour % 12;
-  hour = hour === 0 ? 12 : hour;
-  const minutePadded = minute < 10 ? '0' + minute : minute;
-  return `${year}년 ${month}월 ${day}일 ${meridiem} ${hour}:${minutePadded}`;
-};
 
 const NoteContent = ({ selectedMemo, handleChange, handleClick }: Props) => {
   const date = new Date(selectedMemo.date);
