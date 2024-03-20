@@ -1,6 +1,6 @@
 import { SelectedMemo } from '@/types/note';
 import { formatDate } from '@/utils/formatDate';
-import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 interface Props {
   selectedMemo: SelectedMemo;
@@ -23,7 +23,7 @@ const NoteContent = ({ selectedMemo, handleChange, handleClick }: Props) => {
     }
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!titleRef.current) return;
 
     if (selectedMemo.title === '') {
