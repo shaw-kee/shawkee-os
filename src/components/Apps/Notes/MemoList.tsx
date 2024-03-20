@@ -17,7 +17,6 @@ const MemoList = ({ noteData, handleSelectMemo, selectedMemo, selectedId }: Prop
     .filter(([key]) => key !== 'lastId')
     .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA));
 
-  console.log(selectedId);
   return (
     <div className='flex w-80 flex-col border-r border-black/5 bg-white'>
       {memoList.map(([year, list]) => (
