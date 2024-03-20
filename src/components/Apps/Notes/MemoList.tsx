@@ -1,4 +1,4 @@
-import { MemoType, NoteData, SelectedMemo } from '@/types/note';
+import { NoteData, SelectedMemo } from '@/types/note';
 import React from 'react';
 
 interface Props {
@@ -25,7 +25,7 @@ const MemoList = ({ noteData, handleSelectMemo, selectedMemo, selectedId }: Prop
             {year}년
           </div>
           <div className='mb-8 mt-2 flex flex-col gap-1 px-2'>
-            {(list as Array<MemoType>).map((memo) => (
+            {list.map((memo) => (
               <div
                 className={`flex select-none flex-col whitespace-nowrap rounded-[4px] px-4 py-2 ${
                   selectedMemo.id === memo.id && selectedId === 0 ? 'bg-[#d6d4d6]' : ''

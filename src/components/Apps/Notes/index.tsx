@@ -6,7 +6,7 @@ import NoteContent from '@/components/Apps/Notes/NoteContent';
 import Sidebar from '@/components/Apps/Notes/Sidebar';
 import { useEffect, useRef, useState } from 'react';
 import { getStorage, updateStorage } from '@/utils/storage';
-import { MemoType, NoteData, SelectedMemo } from '@/types/note';
+import { NoteData, SelectedMemo } from '@/types/note';
 import { removeKey } from '@/utils/key';
 
 const defaultSelectedMemo = {
@@ -35,7 +35,7 @@ const Notes = () => {
     const newMemo = { id: nextId, title: '', content: '', date: `${date}` };
 
     if (noteData[yearNow]) {
-      const prevNoteData = noteData[yearNow] as Array<MemoType>;
+      const prevNoteData = noteData[yearNow];
       setNoteData({ ...noteData, [yearNow]: [newMemo, ...prevNoteData] });
     } else {
       setNoteData({ ...noteData, [yearNow]: [newMemo] });
@@ -49,7 +49,7 @@ const Notes = () => {
   const deleteMemo = () => {
     if (selectedMemo.id === 0) return;
 
-    const targetNoteData = noteData[selectedMemo.year] as Array<MemoType>;
+    const targetNoteData = noteData[selectedMemo.year];
 
     if (targetNoteData.length > 1) {
       const nextNoteData = targetNoteData.filter((memo) => memo.id !== selectedMemo.id);
@@ -68,8 +68,8 @@ const Notes = () => {
     const date = new Date();
     const yearNow = date.getFullYear();
     const nextMemo = { id, title, content, date: `${date}` };
-    const selectedNoteData = noteData[year] as Array<MemoType>;
-    const currentNoteData = noteData[yearNow] as Array<MemoType>;
+    const selectedNoteData = noteData[year];
+    const currentNoteData = noteData[yearNow];
     const nextData = [nextMemo, ...currentNoteData.filter((memo) => memo.id !== id)];
 
     if (noteData[year] && selectedNoteData.length > 1) {
