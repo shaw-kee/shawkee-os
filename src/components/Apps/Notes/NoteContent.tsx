@@ -42,11 +42,7 @@ const NoteContent = ({ selectedMemo, handleChange, handleClick }: Props) => {
   }, [handleChange, selectedMemo, title, content]);
 
   const changeTitle = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    if (titleRef.current) {
-      titleRef.current.style.height = 'auto';
-      titleRef.current.style.height = `${titleRef.current.scrollHeight}px`;
-      setTitle(e.target.value);
-    }
+    setTitle(e.target.value);
   };
 
   const changeContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
