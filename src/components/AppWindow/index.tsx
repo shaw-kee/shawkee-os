@@ -111,17 +111,18 @@ const AppWindow = ({
     }
   };
 
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      setIsFullscreen(false);
+      document.removeEventListener('keydown', handleKeyDown);
+    }
+  };
+
   const handleFullscreen = () => {
     if (!isFullscreen) {
       setTempFullscreen({ x, y, width, height });
       setResize({ x: 0, y: -MENUBAR_HEIGHT, width: boundary.width, height: boundary.height + MENUBAR_HEIGHT });
-      document.addEventListener(
-        'keydown',
-        (event) => {
-          if (event.key === 'ESC') setIsFullscreen(false);
-        },
-        { once: true }
-      );
+      document.addEventListener('keydown', handleKeyDown);
     }
 
     setIsFullscreen((prev) => !prev);
