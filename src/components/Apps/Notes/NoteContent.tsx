@@ -1,3 +1,4 @@
+import useResize from '@/hooks/useResize';
 import { SelectedMemo } from '@/types/note';
 import { formatDate } from '@/utils/formatDate';
 import { ChangeEvent, KeyboardEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
@@ -8,11 +9,19 @@ interface Props {
   handleChange: (id: number, year: string, title: string, content: string) => void;
 }
 
+const handleResize = (entries: ResizeObserverEntry[]) => {
+  for (const entry of entries) {
+    const element = entry.target as HTMLElement;
+    element.style.height = 'auto';
+    element.style.height = `${element.scrollHeight}px`;
+  }
+};
+
 const NoteContent = ({ selectedMemo, handleChange, handleClick }: Props) => {
   const date = new Date(selectedMemo.date);
   const [title, setTitle] = useState(selectedMemo.title);
   const [content, setContent] = useState(selectedMemo.content);
-  const titleRef = useRef<HTMLTextAreaElement>(null);
+  const titleRef = useResize<HTMLTextAreaElement>(handleResize);
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const isKeyDown = useRef<boolean>(false);
 
@@ -32,7 +41,7 @@ const NoteContent = ({ selectedMemo, handleChange, handleClick }: Props) => {
 
     setTitle(selectedMemo.title);
     setContent(selectedMemo.content);
-  }, [selectedMemo]);
+  }, [selectedMemo, titleRef]);
 
   useEffect(() => {
     if (isKeyDown.current) {
