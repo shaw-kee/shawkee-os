@@ -22,16 +22,16 @@ const MemoGallery = ({ noteData }: Props) => {
           <div className='select-none text-lg font-bold text-black first:mt-4'>{year}년</div>
           <div className='gap mb-8 mt-2 box-content grid auto-rows-[16rem] grid-cols-[repeat(auto-fill,15rem)] justify-between gap-x-4 gap-y-3'>
             {list.map((memo) => (
-              <div className={`flex select-none flex-col whitespace-nowrap py-2`} key={memo.id} data-id={memo.id}>
-                <div className='grow rounded-[0.7rem] border shadow-md'>
-                  <div className={`overflow-hidden text-ellipsis text-lg font-bold`}>{memo.title}</div>
-                  <div className={`overflow-hidden text-ellipsis text-sm text-[#969596]`}>{memo.content}</div>
+              <div className='flex select-none flex-col py-2' key={memo.id} data-id={memo.id}>
+                <div className='h-40 overflow-hidden break-all rounded-[0.7rem] border p-3 shadow-md'>
+                  <div className='text-md font-bold'>{memo.title}</div>
+                  <div className='whitespace-pre-line text-[11px]'>{memo.content}</div>
                 </div>
                 <div className='mt-4 flex flex-col items-center'>
-                  <div className={`overflow-hidden text-ellipsis text-[14px]/[18px] font-bold`}>
+                  <div className={`w-full overflow-hidden text-ellipsis text-center text-[12px]/[18px] font-bold`}>
                     {memo.title === '' ? '새로운 제목' : memo.title}
                   </div>
-                  <div className='text-sm font-bold text-[#969596]'>{formatDate(new Date(memo.date))}</div>
+                  <div className='text-[11px]/[16px] font-bold text-[#969596]'>{formatDate(new Date(memo.date))}</div>
                   <div className='flex gap-1'>
                     <div>
                       <DirectoryIcon width='20' height='20' viewBox='0 0 28 28' color='#cacaca' />
