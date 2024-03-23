@@ -2,6 +2,7 @@ import BulletListIcon from '@/assets/icons/Notes/Bullet_List.svg?react';
 import GalleryIcon from '@/assets/icons/Notes/Gallery.svg?react';
 import TrashCanIcon from '@/assets/icons/Notes/Trash_Can.svg?react';
 import NewNoteIcon from '@/assets/icons/Notes/New_Note.svg?react';
+import BackwardIcon from '@/assets/icons/Notes/Backward.svg?react';
 import MemoList from '@/components/Apps/Notes/MemoList';
 import NoteContent from '@/components/Apps/Notes/NoteContent';
 import Sidebar from '@/components/Apps/Notes/Sidebar';
@@ -112,6 +113,10 @@ const Notes = () => {
     setSelectedMemo(defaultSelectedMemo);
   };
 
+  const handleClickBackward = () => {
+    setIsEditMode(false);
+  };
+
   const handleDoubleClick = () => {
     setIsEditMode(true);
   };
@@ -142,6 +147,23 @@ const Notes = () => {
                     />
                   </div>
                 </button>
+                {isGalleryMode && (
+                  <button
+                    className='rounded-lg enabled:hover:bg-[#e6e3e6]'
+                    onClick={handleClickBackward}
+                    disabled={!isEditMode}
+                  >
+                    <div className='px-1'>
+                      <BackwardIcon
+                        width='28'
+                        height='28'
+                        viewBox='0 0 28 28'
+                        color='#000000'
+                        fillOpacity={`${isEditMode ? '0.5' : '0.2'}`}
+                      />
+                    </div>
+                  </button>
+                )}
               </div>
               <button className='mx-2 rounded-lg hover:bg-[#e6e3e6]' onClick={deleteMemo}>
                 <div className='px-1'>
