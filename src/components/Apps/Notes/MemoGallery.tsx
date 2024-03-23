@@ -1,16 +1,18 @@
-import { NoteData } from '@/types/note';
+import { NoteData, SelectedMemo } from '@/types/note';
 import DirectoryIcon from '@/assets/icons/Notes/Directory.svg?react';
 import React from 'react';
 
 interface Props {
   noteData: NoteData;
+  selectedMemo: SelectedMemo;
+  handleSelectMemo: (memo: SelectedMemo) => void;
 }
 
 const formatDate = (date: Date) => {
   return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}.`;
 };
 
-const MemoGallery = ({ noteData }: Props) => {
+const MemoGallery = ({ noteData, selectedMemo, handleSelectMemo }: Props) => {
   const memoList = Object.entries(noteData)
     .filter(([key]) => key !== 'lastId')
     .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA));
@@ -23,7 +25,12 @@ const MemoGallery = ({ noteData }: Props) => {
           <div className='gap mb-8 mt-2 box-content grid auto-rows-[16rem] grid-cols-[repeat(auto-fill,15rem)] justify-between gap-x-4 gap-y-3'>
             {list.map((memo) => (
               <div className='flex select-none flex-col py-2' key={memo.id} data-id={memo.id}>
-                <div className='h-40 overflow-hidden break-all rounded-[0.7rem] border p-3 shadow-md'>
+                <div
+                  className={`h-40 overflow-hidden break-all rounded-[0.7rem] shadow-md ${
+                    selectedMemo.id === memo.id ? 'border-2 border-[#3477f6] p-[11px]' : 'border p-[12px]'
+                  }`}
+                  onClick={() => handleSelectMemo({ year, ...memo })}
+                >
                   <div className='text-md font-bold'>{memo.title}</div>
                   <div className='whitespace-pre-line text-[11px]'>{memo.content}</div>
                 </div>

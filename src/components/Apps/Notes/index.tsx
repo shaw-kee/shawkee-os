@@ -154,7 +154,7 @@ const Notes = () => {
           </div>
           <div className='flex grow'>
             {isGalleryMode ? (
-              <MemoGallery noteData={noteData} />
+              <MemoGallery noteData={noteData} selectedMemo={selectedMemo} handleSelectMemo={handleSelectMemo} />
             ) : (
               <>
                 <MemoList
