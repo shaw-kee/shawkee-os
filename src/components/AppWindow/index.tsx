@@ -143,8 +143,8 @@ const AppWindow = ({
       ref={windowRef}
     >
       <div
-        className={`z-50 flex h-7 items-center justify-center bg-[#e5e7eb] ${
-          isFullscreen ? 'absolute inset-x-0 opacity-0 hover:static hover:opacity-100' : ''
+        className={`z-50 flex items-center justify-center bg-[#e5e7eb] ${
+          isFullscreen ? 'absolute inset-x-0 h-3 opacity-0 hover:static hover:h-7 hover:opacity-100' : 'h-7'
         }`}
         onMouseDown={isFullscreen ? undefined : handleDragElement}
         onDoubleClick={isFullscreen ? undefined : handleMaximizeWindow}
