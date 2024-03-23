@@ -133,6 +133,7 @@ const Notes = () => {
                   <button
                     className={`rounded-lg ${isGalleryMode ? '' : 'bg-black/10'}`}
                     onClick={handleClickBulletList}
+                    disabled={isEditMode}
                   >
                     <div className='px-1'>
                       <BulletListIcon
@@ -140,11 +141,15 @@ const Notes = () => {
                         height='28'
                         viewBox='0 0 28 28'
                         color='#000000'
-                        fillOpacity={`${isGalleryMode ? '0.5' : '0.8'}`}
+                        fillOpacity={`${isEditMode ? '0.2' : isGalleryMode ? '0.5' : '0.8'}`}
                       />
                     </div>
                   </button>
-                  <button className={`rounded-lg ${isGalleryMode ? 'bg-black/10' : ''}`} onClick={handleClickGallery}>
+                  <button
+                    className={`rounded-lg ${isGalleryMode ? 'bg-black/10' : ''}`}
+                    onClick={handleClickGallery}
+                    disabled={isEditMode}
+                  >
                     <div className='px-1'>
                       <GalleryIcon
                         width='28'
@@ -152,7 +157,7 @@ const Notes = () => {
                         viewBox='-6 -6 24 24'
                         fill='none'
                         stroke='black'
-                        strokeOpacity={`${isGalleryMode ? '0.8' : '0.5'}`}
+                        strokeOpacity={`${isEditMode ? '0.2' : isGalleryMode ? '0.8' : '0.5'}`}
                         strokeWidth='1.2'
                       />
                     </div>
