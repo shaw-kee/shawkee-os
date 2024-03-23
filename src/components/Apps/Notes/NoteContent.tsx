@@ -22,13 +22,15 @@ const NoteContent = ({ selectedMemo, handleChange, handleClick }: Props) => {
   const [title, setTitle] = useState(selectedMemo.title);
   const [content, setContent] = useState(selectedMemo.content);
   const titleRef = useResize<HTMLTextAreaElement>(handleResize);
-  const contentRef = useRef<HTMLTextAreaElement>(null);
+  const contentRef = useResize<HTMLTextAreaElement>(handleResize);
   const isKeyDown = useRef<boolean>(false);
 
   useEffect(() => {
-    if (titleRef.current) {
+    if (titleRef.current && contentRef.current) {
       titleRef.current.style.height = 'auto';
       titleRef.current.style.height = `${titleRef.current.scrollHeight}px`;
+      contentRef.current.style.height = 'auto';
+      contentRef.current.style.height = `${contentRef.current.scrollHeight}px`;
     }
   });
 
