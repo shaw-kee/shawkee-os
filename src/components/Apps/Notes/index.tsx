@@ -129,24 +129,35 @@ const Notes = () => {
           <div className='flex h-12 items-center border-b border-black/5 bg-[#f2eff2]'>
             <div className='flex max-w-xs flex-[2_2_0%] justify-between border-r border-black/5'>
               <div className='flex pl-2'>
-                <button className='rounded-lg hover:bg-[#e6e3e6]' onClick={handleClickBulletList}>
-                  <div className='px-1'>
-                    <BulletListIcon width='28' height='28' viewBox='0 0 28 28' color='#000000' fillOpacity='0.5' />
-                  </div>
-                </button>
-                <button className='rounded-lg hover:bg-[#e6e3e6]' onClick={handleClickGallery}>
-                  <div className='px-1'>
-                    <GalleryIcon
-                      width='28'
-                      height='28'
-                      viewBox='-6 -6 24 24'
-                      fill='none'
-                      stroke='black'
-                      strokeOpacity='0.5'
-                      strokeWidth='1.2'
-                    />
-                  </div>
-                </button>
+                <div className='flex rounded-lg hover:bg-[#dfdfdf]'>
+                  <button
+                    className={`rounded-lg ${isGalleryMode ? '' : 'bg-black/10'}`}
+                    onClick={handleClickBulletList}
+                  >
+                    <div className='px-1'>
+                      <BulletListIcon
+                        width='28'
+                        height='28'
+                        viewBox='0 0 28 28'
+                        color='#000000'
+                        fillOpacity={`${isGalleryMode ? '0.5' : '0.8'}`}
+                      />
+                    </div>
+                  </button>
+                  <button className={`rounded-lg ${isGalleryMode ? 'bg-black/10' : ''}`} onClick={handleClickGallery}>
+                    <div className='px-1'>
+                      <GalleryIcon
+                        width='28'
+                        height='28'
+                        viewBox='-6 -6 24 24'
+                        fill='none'
+                        stroke='black'
+                        strokeOpacity={`${isGalleryMode ? '0.8' : '0.5'}`}
+                        strokeWidth='1.2'
+                      />
+                    </div>
+                  </button>
+                </div>
                 {isGalleryMode && (
                   <button
                     className='rounded-lg enabled:hover:bg-[#e6e3e6]'
