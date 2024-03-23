@@ -6,13 +6,14 @@ interface Props {
   noteData: NoteData;
   selectedMemo: SelectedMemo;
   handleSelectMemo: (memo: SelectedMemo) => void;
+  handleDoubleClick: () => void;
 }
 
 const formatDate = (date: Date) => {
   return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}.`;
 };
 
-const MemoGallery = ({ noteData, selectedMemo, handleSelectMemo }: Props) => {
+const MemoGallery = ({ noteData, selectedMemo, handleSelectMemo, handleDoubleClick }: Props) => {
   const memoList = Object.entries(noteData)
     .filter(([key]) => key !== 'lastId')
     .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA));
@@ -30,6 +31,7 @@ const MemoGallery = ({ noteData, selectedMemo, handleSelectMemo }: Props) => {
                     selectedMemo.id === memo.id ? 'border-2 border-[#3477f6] p-[11px]' : 'border p-[12px]'
                   }`}
                   onClick={() => handleSelectMemo({ year, ...memo })}
+                  onDoubleClick={handleDoubleClick}
                 >
                   <div className='text-md font-bold'>{memo.title}</div>
                   <div className='whitespace-pre-line text-[11px]'>{memo.content}</div>

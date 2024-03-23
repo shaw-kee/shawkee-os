@@ -24,6 +24,7 @@ const Notes = () => {
   const [selectedMemo, setSelectedMemo] = useState<SelectedMemo>(defaultSelectedMemo);
   const [selectedId, setSelectedId] = useState<number>(0);
   const [isGalleryMode, setIsGalleryMode] = useState<boolean>(false);
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const noteIndex = useRef<number>(getStorage('noteIndex', 0));
 
   useEffect(() => {
@@ -111,6 +112,10 @@ const Notes = () => {
     setSelectedMemo(defaultSelectedMemo);
   };
 
+  const handleDoubleClick = () => {
+    setIsEditMode(true);
+  };
+
   return (
     <div className='flex min-h-full'>
       <div className='flex w-full'>
@@ -153,8 +158,15 @@ const Notes = () => {
             </div>
           </div>
           <div className='flex grow'>
-            {isGalleryMode ? (
-              <MemoGallery noteData={noteData} selectedMemo={selectedMemo} handleSelectMemo={handleSelectMemo} />
+            {isEditMode ? (
+              <NoteContent selectedMemo={selectedMemo} handleChange={handleChange} />
+            ) : isGalleryMode ? (
+              <MemoGallery
+                noteData={noteData}
+                selectedMemo={selectedMemo}
+                handleSelectMemo={handleSelectMemo}
+                handleDoubleClick={handleDoubleClick}
+              />
             ) : (
               <>
                 <MemoList

@@ -5,7 +5,7 @@ import { ChangeEvent, KeyboardEvent, useEffect, useLayoutEffect, useRef, useStat
 
 interface Props {
   selectedMemo: SelectedMemo;
-  handleClick: () => void;
+  handleClick?: () => void;
   handleChange: (id: number, year: string, title: string, content: string) => void;
 }
 
