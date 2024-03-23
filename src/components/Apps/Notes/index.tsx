@@ -1,5 +1,5 @@
 import BulletListIcon from '@/assets/icons/Notes/Bullet_List.svg?react';
-import CardListIcon from '@/assets/icons/Notes/Card_List.svg?react';
+import GalleryIcon from '@/assets/icons/Notes/Gallery.svg?react';
 import TrashCanIcon from '@/assets/icons/Notes/Trash_Can.svg?react';
 import NewNoteIcon from '@/assets/icons/Notes/New_Note.svg?react';
 import MemoList from '@/components/Apps/Notes/MemoList';
@@ -126,7 +126,7 @@ const Notes = () => {
                 </button>
                 <button className='rounded-lg hover:bg-[#e6e3e6]' onClick={handleClickGallery}>
                   <div className='px-1'>
-                    <CardListIcon
+                    <GalleryIcon
                       width='28'
                       height='28'
                       viewBox='-6 -6 24 24'
