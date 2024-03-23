@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from 'react';
 import { getStorage, updateStorage } from '@/utils/storage';
 import { NoteData, SelectedMemo } from '@/types/note';
 import { removeKey } from '@/utils/key';
+import MemoGallery from './MemoGallery';
 
 const defaultSelectedMemo = {
   year: '',
@@ -22,6 +23,7 @@ const Notes = () => {
   const [noteData, setNoteData] = useState<NoteData>(getStorage('note', {}));
   const [selectedMemo, setSelectedMemo] = useState<SelectedMemo>(defaultSelectedMemo);
   const [selectedId, setSelectedId] = useState<number>(0);
+  const [isGalleryMode, setIsGalleryMode] = useState<boolean>(false);
   const noteIndex = useRef<number>(getStorage('noteIndex', 0));
 
   useEffect(() => {
@@ -98,6 +100,17 @@ const Notes = () => {
     setSelectedId(0);
   };
 
+  const handleClickBulletList = () => {
+    setIsGalleryMode(false);
+    setSelectedMemo(defaultSelectedMemo);
+    initSelectId();
+  };
+
+  const handleClickGallery = () => {
+    setIsGalleryMode(true);
+    setSelectedMemo(defaultSelectedMemo);
+  };
+
   return (
     <div className='flex min-h-full'>
       <div className='flex w-full'>
@@ -106,12 +119,12 @@ const Notes = () => {
           <div className='flex h-12 items-center border-b border-black/5 bg-[#f2eff2]'>
             <div className='flex max-w-xs flex-[2_2_0%] justify-between border-r border-black/5'>
               <div className='flex pl-2'>
-                <button className='rounded-lg hover:bg-[#e6e3e6]'>
+                <button className='rounded-lg hover:bg-[#e6e3e6]' onClick={handleClickBulletList}>
                   <div className='px-1'>
                     <BulletListIcon width='28' height='28' viewBox='0 0 28 28' color='#000000' fillOpacity='0.5' />
                   </div>
                 </button>
-                <button className='rounded-lg hover:bg-[#e6e3e6]'>
+                <button className='rounded-lg hover:bg-[#e6e3e6]' onClick={handleClickGallery}>
                   <div className='px-1'>
                     <CardListIcon
                       width='28'
@@ -140,13 +153,19 @@ const Notes = () => {
             </div>
           </div>
           <div className='flex grow'>
-            <MemoList
-              noteData={noteData}
-              handleSelectMemo={handleSelectMemo}
-              selectedMemo={selectedMemo}
-              selectedId={selectedId}
-            />
-            <NoteContent selectedMemo={selectedMemo} handleChange={handleChange} handleClick={initSelectId} />
+            {isGalleryMode ? (
+              <MemoGallery noteData={noteData} />
+            ) : (
+              <>
+                <MemoList
+                  noteData={noteData}
+                  handleSelectMemo={handleSelectMemo}
+                  selectedMemo={selectedMemo}
+                  selectedId={selectedId}
+                />
+                <NoteContent selectedMemo={selectedMemo} handleChange={handleChange} handleClick={initSelectId} />
+              </>
+            )}
           </div>
         </div>
       </div>
