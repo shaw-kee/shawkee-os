@@ -49,6 +49,8 @@ const Notes = () => {
     noteIndex.current += 1;
     setSelectedMemo({ year: yearNow.toString(), ...newMemo });
     setSelectedId(0);
+
+    if (isGalleryMode) setIsEditMode(true);
   };
 
   const deleteMemo = () => {
@@ -67,6 +69,8 @@ const Notes = () => {
     }
 
     setSelectedMemo(defaultSelectedMemo);
+
+    if (isEditMode) setIsEditMode(false);
   };
 
   const handleChange = (id: number, year: string, title: string, content: string) => {
