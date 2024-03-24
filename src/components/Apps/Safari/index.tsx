@@ -64,6 +64,15 @@ const Safari = () => {
     }
   };
 
+  const handleClickBookmark = (value: string) => {
+    if (!inputRef.current) return;
+    inputRef.current.value = value;
+    if (histories[historyCursor] !== value) {
+      setHistories([...histories.slice(historyCursor, 1), value]);
+      setHistoryCursor(historyCursor + 1);
+    }
+  };
+
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
@@ -83,11 +92,12 @@ const Safari = () => {
 
   useEffect(() => {
     if (!inputRef.current) return;
+    console.log(histories, historyCursor);
     inputRef.current.value = histories[historyCursor];
   }, [historyCursor, histories]);
 
   return (
-    <div className='flex min-h-full w-full flex-col bg-white'>
+    <div className='flex h-full w-full flex-col bg-white'>
       <div className='flex select-none items-center gap-1 bg-gray-100 px-2 py-2'>
         <button
           className='aspect-square w-10 rounded-full transition-colors duration-300 hover:bg-gray-200'
@@ -119,7 +129,7 @@ const Safari = () => {
       {histories[historyCursor] ? (
         <iframe ref={iframeRef} className='grow' src={histories[historyCursor]} />
       ) : (
-        <HomePage />
+        <HomePage onClickBookmark={handleClickBookmark} />
       )}
     </div>
   );
