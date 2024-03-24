@@ -160,24 +160,36 @@ const AppWindow = ({
       <div className='grow overflow-hidden'>{children}</div>
       {!isFullscreen && isResizable && (
         <>
-          <div className='absolute left-2 right-2 top-0 h-1 cursor-row-resize' onMouseDown={handleResizeNorth} />
-          <div className='absolute bottom-0 left-2 right-2 h-1 cursor-row-resize' onMouseDown={handleResizeSouth} />
-          <div className='absolute bottom-2 left-0 top-2 w-1 cursor-col-resize' onMouseDown={handleResizeWest} />
-          <div className='absolute bottom-2 right-0 top-2 w-1 cursor-col-resize' onMouseDown={handleResizeEast} />
           <div
-            className='absolute left-0 top-0 h-4 w-4 translate-x-[-50%] translate-y-[-50%] cursor-nw-resize'
+            className='absolute left-2 right-2 top-0 z-[9999] h-1 cursor-row-resize'
+            onMouseDown={handleResizeNorth}
+          />
+          <div
+            className='absolute bottom-0 left-2 right-2 z-[9999] h-1 cursor-row-resize'
+            onMouseDown={handleResizeSouth}
+          />
+          <div
+            className='absolute bottom-2 left-0 top-2 z-[9999] w-1 cursor-col-resize'
+            onMouseDown={handleResizeWest}
+          />
+          <div
+            className='absolute bottom-2 right-0 top-2 z-[9999] w-1 cursor-col-resize'
+            onMouseDown={handleResizeEast}
+          />
+          <div
+            className='absolute left-0 top-0 z-[9999] h-4 w-4 translate-x-[-50%] translate-y-[-50%] cursor-nw-resize'
             onMouseDown={handleResizeNorthWest}
           />
           <div
-            className='absolute right-0 top-0 h-4 w-4 translate-x-[50%] translate-y-[-50%] cursor-ne-resize'
+            className='absolute right-0 top-0 z-[9999] h-4 w-4 translate-x-[50%] translate-y-[-50%] cursor-ne-resize'
             onMouseDown={handleResizeNorthEast}
           />
           <div
-            className='absolute bottom-0 left-0 h-4 w-4 translate-x-[-50%] translate-y-[50%] cursor-sw-resize'
+            className='absolute bottom-0 left-0 z-[9999] h-4 w-4 translate-x-[-50%] translate-y-[50%] cursor-sw-resize'
             onMouseDown={handleResizeSouthWest}
           />
           <div
-            className='absolute bottom-0 right-0 h-4 w-4 translate-x-[50%] translate-y-[50%] cursor-se-resize'
+            className='absolute bottom-0 right-0 z-[9999] h-4 w-4 translate-x-[50%] translate-y-[50%] cursor-se-resize'
             onMouseDown={handleResizeSouthEast}
           />
         </>
