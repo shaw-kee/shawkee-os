@@ -1,4 +1,8 @@
 import { type KeyboardEvent, type FocusEvent, useEffect, useState, useRef } from 'react';
+import RefreshIcon from '@/assets/icons/Safari/RefreshIcon.svg?react';
+import HomeIcon from '@/assets/icons/Safari/HomeIcon.svg?react';
+import LeftArrowIcon from '@/assets/icons/Safari/LeftArrowIcon.svg?react';
+import RightArrowIcon from '@/assets/icons/Safari/RightArrowIcon.svg?react';
 import HomePage from './HomePage';
 
 const Safari = () => {
@@ -68,8 +72,11 @@ const Safari = () => {
     if (!inputRef.current) return;
     inputRef.current.value = value;
     if (histories[historyCursor] !== value) {
-      setHistories([...histories.slice(historyCursor, 1), value]);
-      setHistoryCursor(historyCursor + 1);
+      const copiedHistories = [...histories.slice(0, historyCursor + 1)];
+      const nextCursor = copiedHistories.length;
+      copiedHistories.push(value);
+      setHistories(copiedHistories);
+      setHistoryCursor(nextCursor);
     }
   };
 
@@ -100,24 +107,30 @@ const Safari = () => {
     <div className='flex h-full w-full flex-col bg-white'>
       <div className='flex select-none items-center gap-1 bg-gray-100 px-2 py-2'>
         <button
-          className='aspect-square w-10 rounded-full transition-colors duration-300 hover:bg-gray-200'
+          className='flex aspect-square w-10 items-center justify-center rounded-full transition-colors duration-300 hover:bg-gray-200 disabled:fill-gray-500 disabled:hover:bg-gray-100'
           onClick={handleClickBackButton}
-        >{`<`}</button>
-        <button
-          className='aspect-square w-10 rounded-full transition-colors duration-300 hover:bg-gray-200'
-          onClick={handleClickNextButton}
-        >{`>`}</button>
-        <button
-          className='aspect-square w-10 rounded-full transition-colors duration-300 hover:bg-gray-200'
-          onClick={handleClickRefreshButton}
+          disabled={historyCursor === 0}
         >
-          R
+          <LeftArrowIcon width={16} height={16} />
         </button>
         <button
-          className='aspect-square w-10 rounded-full transition-colors duration-300 hover:bg-gray-200'
+          className='flex aspect-square w-10 items-center justify-center rounded-full transition-colors duration-300 hover:bg-gray-200 disabled:fill-gray-500 disabled:hover:bg-gray-100'
+          onClick={handleClickNextButton}
+          disabled={historyCursor === histories.length - 1}
+        >
+          <RightArrowIcon width={16} height={16} />
+        </button>
+        <button
+          className='flex aspect-square w-10 items-center justify-center rounded-full transition-colors duration-300 hover:bg-gray-200'
+          onClick={handleClickRefreshButton}
+        >
+          <RefreshIcon width={20} height={20} />
+        </button>
+        <button
+          className='flex aspect-square w-10 items-center justify-center rounded-full transition-colors duration-300 hover:bg-gray-200'
           onClick={handleClickHomeButton}
         >
-          H
+          <HomeIcon width={16} height={16} stroke='black' />
         </button>
         <input
           ref={inputRef}
