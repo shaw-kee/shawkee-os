@@ -107,14 +107,14 @@ const Safari = () => {
     <div className='flex h-full w-full flex-col bg-white'>
       <div className='flex select-none items-center gap-1 bg-gray-100 px-2 py-2'>
         <button
-          className='flex aspect-square w-10 items-center justify-center rounded-full transition-colors duration-300 hover:bg-gray-200 disabled:fill-gray-500 disabled:hover:bg-gray-100'
+          className='flex aspect-square w-10 items-center justify-center rounded-full stroke-gray-100 transition-colors duration-300 hover:bg-gray-200 disabled:fill-gray-500 disabled:hover:bg-gray-100'
           onClick={handleClickBackButton}
           disabled={historyCursor === 0}
         >
           <LeftArrowIcon width={16} height={16} />
         </button>
         <button
-          className='flex aspect-square w-10 items-center justify-center rounded-full transition-colors duration-300 hover:bg-gray-200 disabled:fill-gray-500 disabled:hover:bg-gray-100'
+          className='flex aspect-square w-10 items-center justify-center rounded-full stroke-gray-100 transition-colors duration-300 hover:bg-gray-200 disabled:fill-gray-500 disabled:hover:bg-gray-100'
           onClick={handleClickNextButton}
           disabled={historyCursor === histories.length - 1}
         >
