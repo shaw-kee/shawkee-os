@@ -8,12 +8,12 @@ const SAFARI_BOOKMARKS: Bookmark[] = [
   {
     title: 'Blog.minjong',
     url: 'https://blog.minjong.codes',
-    iconUrl: 'src/assets/icons/Safari/blog-minjong.png',
+    iconUrl: 'src/assets/icons/Safari/bookmarks/blog-minjong.png',
   },
   {
     title: 'Woong.log',
     url: 'https://blog.mckee.codes/',
-    iconUrl: 'src/assets/icons/Safari/blog-minjong.png',
+    iconUrl: 'src/assets/icons/Safari/bookmarks/woong-log.png',
   },
 ];
 
