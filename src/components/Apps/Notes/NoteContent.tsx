@@ -28,8 +28,8 @@ const NoteContent = ({ selectedMemo, handleChange, handleClick }: Props) => {
   useEffect(() => {
     if (titleRef.current && contentRef.current) {
       titleRef.current.style.height = 'auto';
-      titleRef.current.style.height = `${titleRef.current.scrollHeight}px`;
       contentRef.current.style.height = 'auto';
+      titleRef.current.style.height = `${titleRef.current.scrollHeight}px`;
       contentRef.current.style.height = `${contentRef.current.scrollHeight}px`;
     }
   });
@@ -71,28 +71,30 @@ const NoteContent = ({ selectedMemo, handleChange, handleClick }: Props) => {
   };
 
   return (
-    <div className='flex-[3_3_0%] bg-white'>
+    <div className='flex grow flex-col overflow-y-auto bg-white' onClick={handleClick}>
+      <span
+        className={`mt-2 select-none text-center text-sm font-bold text-black/30 ${
+          selectedMemo.year === '' ? 'invisible' : ''
+        }`}
+      >{`${formatDate(date)}`}</span>
       <div
-        className={`flex h-full flex-col justify-center ${selectedMemo.year === '' ? 'invisible' : ''}`}
-        onClick={handleClick}
+        className={`mt-2 flex flex-col px-4 ${selectedMemo.year === '' ? 'invisible' : ''}`}
+        onKeyDown={handleKeyDown}
       >
-        <span className='mt-2 select-none text-center text-sm font-bold text-black/30'>{`${formatDate(date)}`}</span>
-        <div className='mt-2 flex grow flex-col px-4' onKeyDown={handleKeyDown}>
-          <textarea
-            ref={titleRef}
-            className='resize-none break-all text-lg font-bold outline-none'
-            value={title}
-            onChange={changeTitle}
-            onKeyDown={handleKeyDownTitle}
-            rows={1}
-          />
-          <textarea
-            ref={contentRef}
-            className='mt-2 grow resize-none text-sm focus:outline-none'
-            value={content}
-            onChange={changeContent}
-          />
-        </div>
+        <textarea
+          ref={titleRef}
+          className='resize-none break-all text-lg font-bold outline-none'
+          value={title}
+          onChange={changeTitle}
+          onKeyDown={handleKeyDownTitle}
+          rows={1}
+        />
+        <textarea
+          ref={contentRef}
+          className='mt-2 resize-none text-sm focus:outline-none'
+          value={content}
+          onChange={changeContent}
+        />
       </div>
     </div>
   );

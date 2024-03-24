@@ -12,7 +12,7 @@ const Sidebar = ({ noteData }: Props) => {
     .reduce((sum, num) => (sum += num), 0);
 
   return (
-    <div className='w-40'>
+    <div className='min-w-[10rem]'>
       <div className='fixed flex h-full w-40 select-none flex-col bg-[#e6e2e6]/95 backdrop-blur-md'>
         <div className='relative h-12'>
           <div className='absolute right-4 top-[50%] flex translate-y-[-50%] items-center'>

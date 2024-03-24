@@ -126,101 +126,99 @@ const Notes = () => {
   };
 
   return (
-    <div className='flex min-h-full'>
-      <div className='flex w-full'>
-        <Sidebar noteData={noteData} />
-        <div className='flex flex-[5_5_0%] flex-col'>
-          <div className='sticky top-0 flex h-12 items-center border-b border-black/5 bg-[#f2eff2]'>
-            <div className='flex max-w-xs flex-[2_2_0%] justify-between border-r border-black/5'>
-              <div className='flex pl-2'>
-                <div className='flex rounded-lg hover:bg-[#dfdfdf]'>
-                  <button
-                    className={`rounded-lg ${isGalleryMode ? '' : 'bg-black/10'}`}
-                    onClick={handleClickBulletList}
-                    disabled={isEditMode}
-                  >
-                    <div className='px-1'>
-                      <BulletListIcon
-                        width='28'
-                        height='28'
-                        viewBox='0 0 28 28'
-                        color='#000000'
-                        fillOpacity={`${isEditMode ? '0.2' : isGalleryMode ? '0.5' : '0.8'}`}
-                      />
-                    </div>
-                  </button>
-                  <button
-                    className={`rounded-lg ${isGalleryMode ? 'bg-black/10' : ''}`}
-                    onClick={handleClickGallery}
-                    disabled={isEditMode}
-                  >
-                    <div className='px-1'>
-                      <GalleryIcon
-                        width='28'
-                        height='28'
-                        viewBox='-6 -6 24 24'
-                        fill='none'
-                        stroke='black'
-                        strokeOpacity={`${isEditMode ? '0.2' : isGalleryMode ? '0.8' : '0.5'}`}
-                        strokeWidth='1.2'
-                      />
-                    </div>
-                  </button>
-                </div>
-                {isGalleryMode && (
-                  <button
-                    className='rounded-lg enabled:hover:bg-[#e6e3e6]'
-                    onClick={handleClickBackward}
-                    disabled={!isEditMode}
-                  >
-                    <div className='px-1'>
-                      <BackwardIcon
-                        width='28'
-                        height='28'
-                        viewBox='0 0 28 28'
-                        color='#000000'
-                        fillOpacity={`${isEditMode ? '0.5' : '0.2'}`}
-                      />
-                    </div>
-                  </button>
-                )}
+    <div className='flex h-full w-full'>
+      <Sidebar noteData={noteData} />
+      <div className='flex w-full flex-col'>
+        <div className='sticky top-0 flex min-h-[3rem] items-center border-b border-black/5 bg-[#f2eff2]'>
+          <div className='flex max-w-xs flex-[2_2_0%] justify-between border-r border-black/5'>
+            <div className='flex pl-2'>
+              <div className='flex rounded-lg hover:bg-[#dfdfdf]'>
+                <button
+                  className={`rounded-lg ${isGalleryMode ? '' : 'bg-black/10'}`}
+                  onClick={handleClickBulletList}
+                  disabled={isEditMode}
+                >
+                  <div className='px-1'>
+                    <BulletListIcon
+                      width='28'
+                      height='28'
+                      viewBox='0 0 28 28'
+                      color='#000000'
+                      fillOpacity={`${isEditMode ? '0.2' : isGalleryMode ? '0.5' : '0.8'}`}
+                    />
+                  </div>
+                </button>
+                <button
+                  className={`rounded-lg ${isGalleryMode ? 'bg-black/10' : ''}`}
+                  onClick={handleClickGallery}
+                  disabled={isEditMode}
+                >
+                  <div className='px-1'>
+                    <GalleryIcon
+                      width='28'
+                      height='28'
+                      viewBox='-6 -6 24 24'
+                      fill='none'
+                      stroke='black'
+                      strokeOpacity={`${isEditMode ? '0.2' : isGalleryMode ? '0.8' : '0.5'}`}
+                      strokeWidth='1.2'
+                    />
+                  </div>
+                </button>
               </div>
-              <button className='mx-2 rounded-lg hover:bg-[#e6e3e6]' onClick={deleteMemo}>
-                <div className='px-1'>
-                  <TrashCanIcon width='28' height='28' viewBox='0 0 28 28' color='#000000' fillOpacity='0.5' />
-                </div>
-              </button>
+              {isGalleryMode && (
+                <button
+                  className='rounded-lg enabled:hover:bg-[#e6e3e6]'
+                  onClick={handleClickBackward}
+                  disabled={!isEditMode}
+                >
+                  <div className='px-1'>
+                    <BackwardIcon
+                      width='28'
+                      height='28'
+                      viewBox='0 0 28 28'
+                      color='#000000'
+                      fillOpacity={`${isEditMode ? '0.5' : '0.2'}`}
+                    />
+                  </div>
+                </button>
+              )}
             </div>
-            <div className='flex flex-[3_3_0%]'>
-              <button className='mx-2 rounded-lg hover:bg-[#e6e3e6]' onClick={createMemo}>
-                <div className='px-1'>
-                  <NewNoteIcon width='28' height='28' viewBox='0 0 28 28' color='#000000' fillOpacity='0.5' />
-                </div>
-              </button>
-            </div>
+            <button className='mx-2 rounded-lg hover:bg-[#e6e3e6]' onClick={deleteMemo}>
+              <div className='px-1'>
+                <TrashCanIcon width='28' height='28' viewBox='0 0 28 28' color='#000000' fillOpacity='0.5' />
+              </div>
+            </button>
           </div>
-          <div className='flex grow'>
-            {isEditMode ? (
-              <NoteContent selectedMemo={selectedMemo} handleChange={handleChange} />
-            ) : isGalleryMode ? (
-              <MemoGallery
+          <div className='flex flex-[3_3_0%]'>
+            <button className='mx-2 rounded-lg hover:bg-[#e6e3e6]' onClick={createMemo}>
+              <div className='px-1'>
+                <NewNoteIcon width='28' height='28' viewBox='0 0 28 28' color='#000000' fillOpacity='0.5' />
+              </div>
+            </button>
+          </div>
+        </div>
+        <div className='flex grow overflow-hidden'>
+          {isEditMode ? (
+            <NoteContent selectedMemo={selectedMemo} handleChange={handleChange} />
+          ) : isGalleryMode ? (
+            <MemoGallery
+              noteData={noteData}
+              selectedMemo={selectedMemo}
+              handleSelectMemo={handleSelectMemo}
+              handleDoubleClick={handleDoubleClick}
+            />
+          ) : (
+            <>
+              <MemoList
                 noteData={noteData}
-                selectedMemo={selectedMemo}
                 handleSelectMemo={handleSelectMemo}
-                handleDoubleClick={handleDoubleClick}
+                selectedMemo={selectedMemo}
+                selectedId={selectedId}
               />
-            ) : (
-              <>
-                <MemoList
-                  noteData={noteData}
-                  handleSelectMemo={handleSelectMemo}
-                  selectedMemo={selectedMemo}
-                  selectedId={selectedId}
-                />
-                <NoteContent selectedMemo={selectedMemo} handleChange={handleChange} handleClick={initSelectId} />
-              </>
-            )}
-          </div>
+              <NoteContent selectedMemo={selectedMemo} handleChange={handleChange} handleClick={initSelectId} />
+            </>
+          )}
         </div>
       </div>
     </div>

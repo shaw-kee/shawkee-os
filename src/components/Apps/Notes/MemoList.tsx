@@ -18,7 +18,7 @@ const MemoList = ({ noteData, handleSelectMemo, selectedMemo, selectedId }: Prop
     .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA));
 
   return (
-    <div className='flex w-80 flex-col border-r border-black/5 bg-white'>
+    <div className='flex w-80 flex-col overflow-y-auto border-r border-black/5 bg-white'>
       {memoList.map(([year, list]) => (
         <React.Fragment key={year}>
           <div className='pl-4 text-sm font-bold text-black/60 first:border-b first:border-black/5 first:py-2'>

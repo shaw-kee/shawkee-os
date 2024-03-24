@@ -144,7 +144,7 @@ const AppWindow = ({
     >
       <div
         className={`z-50 flex items-center justify-center bg-[#e5e7eb] ${
-          isFullscreen ? 'absolute inset-x-0 h-3 opacity-0 hover:static hover:h-7 hover:opacity-100' : 'h-7'
+          isFullscreen ? 'absolute inset-x-0 h-3 opacity-0 hover:static hover:h-7 hover:opacity-100' : 'min-h-[1.75rem]'
         }`}
         onMouseDown={isFullscreen ? undefined : handleDragElement}
         onDoubleClick={isFullscreen ? undefined : handleMaximizeWindow}
@@ -157,7 +157,7 @@ const AppWindow = ({
         />
         <span className='select-none font-bold'>{title}</span>
       </div>
-      <div className='h-full overflow-auto'>{children}</div>
+      <div className='grow overflow-hidden'>{children}</div>
       {!isFullscreen && isResizable && (
         <>
           <div className='absolute left-2 right-2 top-0 h-1 cursor-row-resize' onMouseDown={handleResizeNorth} />

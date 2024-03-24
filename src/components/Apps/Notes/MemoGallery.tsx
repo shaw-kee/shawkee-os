@@ -19,7 +19,7 @@ const MemoGallery = ({ noteData, selectedMemo, handleSelectMemo, handleDoubleCli
     .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA));
 
   return (
-    <div className='flex w-full flex-col border-r border-black/5 bg-white px-6'>
+    <div className='flex w-full flex-col overflow-y-auto border-r border-black/5 bg-white px-6'>
       {memoList.map(([year, list]) => (
         <React.Fragment key={year}>
           <div className='select-none text-lg font-bold text-black first:mt-4'>{year}년</div>
