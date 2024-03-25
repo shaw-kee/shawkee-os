@@ -6,7 +6,7 @@ import { ChangeEvent, KeyboardEvent, useEffect, useLayoutEffect, useRef, useStat
 interface Props {
   selectedMemo: SelectedMemo;
   handleClick?: () => void;
-  handleChange: (id: number, year: string, title: string, content: string) => void;
+  handleChange: (title: string, content: string) => void;
 }
 
 const handleResize = (entries: ResizeObserverEntry[]) => {
@@ -47,7 +47,7 @@ const NoteContent = ({ selectedMemo, handleChange, handleClick }: Props) => {
 
   useEffect(() => {
     if (isKeyDown.current) {
-      handleChange(selectedMemo.id, selectedMemo.year, title, content);
+      handleChange(title, content);
       isKeyDown.current = false;
     }
   }, [handleChange, selectedMemo, title, content]);

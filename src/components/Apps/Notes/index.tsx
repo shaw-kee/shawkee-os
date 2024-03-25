@@ -73,7 +73,8 @@ const Notes = () => {
     if (isEditMode) setIsEditMode(false);
   };
 
-  const handleChange = (id: number, year: string, title: string, content: string) => {
+  const handleChange = (title: string, content: string) => {
+    const { id, year } = selectedMemo;
     const date = new Date();
     const yearNow = date.getFullYear();
     const nextMemo = { id, title, content, date: `${date}` };
