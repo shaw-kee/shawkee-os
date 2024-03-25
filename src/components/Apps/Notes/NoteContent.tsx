@@ -1,7 +1,7 @@
 import useResize from '@/hooks/useResize';
 import { SelectedMemo } from '@/types/note';
 import { formatDate } from '@/utils/formatDate';
-import { ChangeEvent, KeyboardEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 interface Props {
   selectedMemo: SelectedMemo;
@@ -17,7 +17,7 @@ const handleResize = (entries: ResizeObserverEntry[]) => {
   }
 };
 
-const NoteContent = ({ selectedMemo, handleChange, handleClick }: Props) => {
+const NoteContent = React.memo(({ selectedMemo, handleChange, handleClick }: Props) => {
   const date = new Date(selectedMemo.date);
   const [title, setTitle] = useState(selectedMemo.title);
   const [content, setContent] = useState(selectedMemo.content);
@@ -50,7 +50,7 @@ const NoteContent = ({ selectedMemo, handleChange, handleClick }: Props) => {
       handleChange(title, content);
       isKeyDown.current = false;
     }
-  }, [handleChange, selectedMemo, title, content]);
+  }, [handleChange, title, content]);
 
   const changeTitle = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(e.target.value);
@@ -98,6 +98,6 @@ const NoteContent = ({ selectedMemo, handleChange, handleClick }: Props) => {
       </div>
     </div>
   );
-};
+});
 
 export default NoteContent;

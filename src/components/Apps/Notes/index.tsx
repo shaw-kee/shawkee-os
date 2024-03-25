@@ -6,7 +6,7 @@ import BackwardIcon from '@/assets/icons/Notes/Backward.svg?react';
 import MemoList from '@/components/Apps/Notes/MemoList';
 import NoteContent from '@/components/Apps/Notes/NoteContent';
 import Sidebar from '@/components/Apps/Notes/Sidebar';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getStorage, updateStorage } from '@/utils/storage';
 import { NoteData, SelectedMemo } from '@/types/note';
 import { removeKey } from '@/utils/key';
@@ -73,39 +73,42 @@ const Notes = () => {
     if (isEditMode) setIsEditMode(false);
   };
 
-  const handleChange = (title: string, content: string) => {
-    const { id, year } = selectedMemo;
-    const date = new Date();
-    const yearNow = date.getFullYear();
-    const nextMemo = { id, title, content, date: `${date}` };
-    const selectedNoteData = noteData[year];
-    const currentNoteData = noteData[yearNow];
-    const nextData = [nextMemo, ...currentNoteData.filter((memo) => memo.id !== id)];
+  const handleChange = useCallback(
+    (title: string, content: string) => {
+      const { id, year } = selectedMemo;
+      const date = new Date();
+      const yearNow = date.getFullYear();
+      const nextMemo = { id, title, content, date: `${date}` };
 
-    if (noteData[year] && selectedNoteData.length > 1) {
-      const filteredPrevData = [...selectedNoteData.filter((memo) => memo.id !== id)];
+      setNoteData((prevNoteData) => {
+        const selectedNoteData = prevNoteData[year];
+        const currentNoteData = prevNoteData[yearNow];
+        const filteredPrevData = [...selectedNoteData.filter((memo) => memo.id !== id)];
+        const nextData = [nextMemo, ...currentNoteData.filter((memo) => memo.id !== id)];
 
-      setNoteData({
-        ...noteData,
-        [year]: filteredPrevData,
-        [yearNow]: nextData,
+        if (prevNoteData[year] && selectedNoteData.length > 1)
+          return {
+            ...prevNoteData,
+            [year]: filteredPrevData,
+            [yearNow]: nextData,
+          };
+        else {
+          const keyDeletedData = removeKey(year, prevNoteData);
+          return { ...keyDeletedData, [yearNow]: [...nextData] };
+        }
       });
-    } else {
-      setNoteData((data) => {
-        const keyDeletedData = removeKey(year, data);
-        return { ...keyDeletedData, [yearNow]: [...nextData] };
-      });
-    }
-  };
+    },
+    [selectedMemo]
+  );
 
   const handleSelectMemo = (memo: SelectedMemo) => {
     setSelectedMemo(memo);
     setSelectedId(memo.id);
   };
 
-  const initSelectId = () => {
+  const initSelectId = useCallback(() => {
     setSelectedId(0);
-  };
+  }, []);
 
   const handleClickBulletList = () => {
     setIsGalleryMode(false);
