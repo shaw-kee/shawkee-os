@@ -1,7 +1,7 @@
 import useResize from '@/hooks/useResize';
 import { SelectedMemo } from '@/types/note';
 import { formatDate } from '@/utils/formatDate';
-import React, { ChangeEvent, KeyboardEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 interface Props {
   selectedMemo: SelectedMemo;
@@ -12,7 +12,6 @@ interface Props {
 const handleResize = (entries: ResizeObserverEntry[]) => {
   for (const entry of entries) {
     const element = entry.target as HTMLElement;
-    element.style.height = 'auto';
     element.style.height = `${element.scrollHeight}px`;
   }
 };
@@ -34,7 +33,7 @@ const NoteContent = React.memo(({ selectedMemo, handleChange, handleClick }: Pro
     }
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!titleRef.current) return;
 
     if (selectedMemo.title === '') {
