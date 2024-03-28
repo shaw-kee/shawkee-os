@@ -14,11 +14,11 @@ const useRND = (initialPosition: Position, minSize: Size, boundary: Size) => {
   const [{ width, height }, setSize] = useState<Size>({ width: minWidth, height: minHeight });
   const [{ x, y }, setPosition] = useState<Position>({ x: initialX, y: initialY });
 
-  let mouseUpPosition = { x, y };
-  let mouseUpSize = { width, height };
+  const mouseUpPosition = useRef({ x, y });
+  const mouseUpSize = useRef({ width, height });
 
   const handleMouseUp = () => {
-    setResize({ ...mouseUpPosition, ...mouseUpSize });
+    setResize({ ...mouseUpPosition.current, ...mouseUpSize.current });
   };
 
   const { handleMouseDown: handleDragElement } = mouseDrag((moveX, moveY) => {
@@ -124,7 +124,7 @@ const useRND = (initialPosition: Position, minSize: Size, boundary: Size) => {
   const repositionElement = ({ x, y }: Position) => {
     if (!ref.current) return;
 
-    mouseUpPosition = { x, y };
+    mouseUpPosition.current = { x, y };
 
     ref.current.style.transform = `translate(${x}px,${y}px)`;
   };
@@ -132,7 +132,7 @@ const useRND = (initialPosition: Position, minSize: Size, boundary: Size) => {
   const resizeElement = ({ width, height }: Size) => {
     if (!ref.current) return;
 
-    mouseUpSize = { width, height };
+    mouseUpSize.current = { width, height };
 
     ref.current.style.width = `${width}px`;
     ref.current.style.height = `${height}px`;
