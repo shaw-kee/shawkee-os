@@ -5,14 +5,14 @@ interface Props {
   noteData: NoteData;
   selectedMemo: SelectedMemo;
   selectedId: number;
-  handleSelectMemo: (memo: SelectedMemo) => void;
+  onClick: (memo: SelectedMemo) => void;
 }
 
 const formatDate = (date: Date) => {
   return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}.`;
 };
 
-const MemoList = ({ noteData, handleSelectMemo, selectedMemo, selectedId }: Props) => {
+const MemoList = ({ noteData, onClick, selectedMemo, selectedId }: Props) => {
   const memoList = Object.entries(noteData)
     .filter(([key]) => key !== 'lastId')
     .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA));
@@ -31,7 +31,7 @@ const MemoList = ({ noteData, handleSelectMemo, selectedMemo, selectedId }: Prop
                   selectedMemo.id === memo.id && selectedId === 0 ? 'bg-[#d6d4d6]' : ''
                 } ${selectedId === memo.id ? 'bg-[#3477f6] text-white' : ''}`}
                 key={memo.id}
-                onClick={() => handleSelectMemo({ year, ...memo })}
+                onClick={() => onClick({ year, ...memo })}
                 data-id={memo.id}
               >
                 <div className={`overflow-hidden text-ellipsis text-[12px]/[14px] font-bold`}>

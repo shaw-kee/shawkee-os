@@ -204,23 +204,23 @@ const Notes = () => {
         </div>
         <div className='flex grow overflow-hidden'>
           {isEditMode ? (
-            <NoteContent selectedMemo={selectedMemo} handleChange={handleChange} />
+            <NoteContent selectedMemo={selectedMemo} onChange={handleChange} />
           ) : isGalleryMode ? (
             <MemoGallery
               noteData={noteData}
               selectedMemo={selectedMemo}
-              handleSelectMemo={handleSelectMemo}
-              handleDoubleClick={handleDoubleClick}
+              onClick={handleSelectMemo}
+              onDoubleClick={handleDoubleClick}
             />
           ) : (
             <>
               <MemoList
                 noteData={noteData}
-                handleSelectMemo={handleSelectMemo}
+                onClick={handleSelectMemo}
                 selectedMemo={selectedMemo}
                 selectedId={selectedId}
               />
-              <NoteContent selectedMemo={selectedMemo} handleChange={handleChange} handleClick={initSelectId} />
+              <NoteContent selectedMemo={selectedMemo} onChange={handleChange} onClick={initSelectId} />
             </>
           )}
         </div>

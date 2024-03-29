@@ -5,15 +5,15 @@ import React from 'react';
 interface Props {
   noteData: NoteData;
   selectedMemo: SelectedMemo;
-  handleSelectMemo: (memo: SelectedMemo) => void;
-  handleDoubleClick: () => void;
+  onClick: (memo: SelectedMemo) => void;
+  onDoubleClick: () => void;
 }
 
 const formatDate = (date: Date) => {
   return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}.`;
 };
 
-const MemoGallery = ({ noteData, selectedMemo, handleSelectMemo, handleDoubleClick }: Props) => {
+const MemoGallery = ({ noteData, selectedMemo, onClick, onDoubleClick }: Props) => {
   const memoList = Object.entries(noteData)
     .filter(([key]) => key !== 'lastId')
     .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA));
@@ -30,8 +30,8 @@ const MemoGallery = ({ noteData, selectedMemo, handleSelectMemo, handleDoubleCli
                   className={`h-40 overflow-hidden break-all rounded-[0.7rem] shadow-md ${
                     selectedMemo.id === memo.id ? 'border-2 border-[#3477f6] p-[11px]' : 'border p-[12px]'
                   }`}
-                  onClick={() => handleSelectMemo({ year, ...memo })}
-                  onDoubleClick={handleDoubleClick}
+                  onClick={() => onClick({ year, ...memo })}
+                  onDoubleClick={onDoubleClick}
                 >
                   <div className='text-md font-bold'>{memo.title}</div>
                   <div className='whitespace-pre-line text-[11px]'>{memo.content}</div>

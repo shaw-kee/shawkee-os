@@ -5,8 +5,8 @@ import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from '
 
 interface Props {
   selectedMemo: SelectedMemo;
-  handleClick?: () => void;
-  handleChange: (title: string, content: string) => void;
+  onClick?: () => void;
+  onChange: (title: string, content: string) => void;
 }
 
 const handleResize = (entries: ResizeObserverEntry[]) => {
@@ -16,7 +16,7 @@ const handleResize = (entries: ResizeObserverEntry[]) => {
   }
 };
 
-const NoteContent = React.memo(({ selectedMemo, handleChange, handleClick }: Props) => {
+const NoteContent = React.memo(({ selectedMemo, onClick, onChange }: Props) => {
   const date = new Date(selectedMemo.date);
   const [title, setTitle] = useState(selectedMemo.title);
   const [content, setContent] = useState(selectedMemo.content);
@@ -46,10 +46,10 @@ const NoteContent = React.memo(({ selectedMemo, handleChange, handleClick }: Pro
 
   useEffect(() => {
     if (isKeyDown.current) {
-      handleChange(title, content);
+      onChange(title, content);
       isKeyDown.current = false;
     }
-  }, [handleChange, title, content]);
+  }, [onChange, title, content]);
 
   const changeTitle = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(e.target.value);
@@ -70,7 +70,7 @@ const NoteContent = React.memo(({ selectedMemo, handleChange, handleClick }: Pro
   };
 
   return (
-    <div className='flex grow flex-col overflow-y-auto bg-white' onClick={handleClick}>
+    <div className='flex grow flex-col overflow-y-auto bg-white' onClick={onClick}>
       <span
         className={`mt-2 select-none text-center text-sm font-bold text-black/30 ${
           selectedMemo.year === '' ? 'invisible' : ''
