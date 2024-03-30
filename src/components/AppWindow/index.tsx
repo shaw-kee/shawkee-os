@@ -111,11 +111,18 @@ const AppWindow = ({
     }
   };
 
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      setIsFullscreen(false);
+      document.removeEventListener('keydown', handleKeyDown);
+    }
+  };
+
   const handleFullscreen = () => {
     if (!isFullscreen) {
       setTempFullscreen({ x, y, width, height });
       setResize({ x: 0, y: -MENUBAR_HEIGHT, width: boundary.width, height: boundary.height + MENUBAR_HEIGHT });
-      document.addEventListener('keydown', () => setIsFullscreen(false), { once: true });
+      document.addEventListener('keydown', handleKeyDown);
     }
 
     setIsFullscreen((prev) => !prev);
@@ -136,8 +143,8 @@ const AppWindow = ({
       ref={windowRef}
     >
       <div
-        className={`z-50 flex h-7 items-center justify-center bg-[#e5e7eb] ${
-          isFullscreen ? 'absolute inset-x-0 opacity-0 hover:static hover:opacity-100' : ''
+        className={`z-50 flex items-center justify-center bg-[#e5e7eb] ${
+          isFullscreen ? 'absolute inset-x-0 h-3 opacity-0 hover:static hover:h-7 hover:opacity-100' : 'min-h-[1.75rem]'
         }`}
         onMouseDown={isFullscreen ? undefined : handleDragElement}
         onDoubleClick={isFullscreen ? undefined : handleMaximizeWindow}
@@ -150,27 +157,39 @@ const AppWindow = ({
         />
         <span className='select-none font-bold'>{title}</span>
       </div>
-      <div className='h-full overflow-auto'>{children}</div>
+      <div className='grow overflow-hidden'>{children}</div>
       {!isFullscreen && isResizable && (
         <>
-          <div className='absolute left-2 right-2 top-0 h-1 cursor-row-resize' onMouseDown={handleResizeNorth} />
-          <div className='absolute bottom-0 left-2 right-2 h-1 cursor-row-resize' onMouseDown={handleResizeSouth} />
-          <div className='absolute bottom-2 left-0 top-2 w-1 cursor-col-resize' onMouseDown={handleResizeWest} />
-          <div className='absolute bottom-2 right-0 top-2 w-1 cursor-col-resize' onMouseDown={handleResizeEast} />
           <div
-            className='absolute left-0 top-0 h-4 w-4 translate-x-[-50%] translate-y-[-50%] cursor-nw-resize'
+            className='absolute left-2 right-2 top-0 z-[9999] h-1 cursor-row-resize'
+            onMouseDown={handleResizeNorth}
+          />
+          <div
+            className='absolute bottom-0 left-2 right-2 z-[9999] h-1 cursor-row-resize'
+            onMouseDown={handleResizeSouth}
+          />
+          <div
+            className='absolute bottom-2 left-0 top-2 z-[9999] w-1 cursor-col-resize'
+            onMouseDown={handleResizeWest}
+          />
+          <div
+            className='absolute bottom-2 right-0 top-2 z-[9999] w-1 cursor-col-resize'
+            onMouseDown={handleResizeEast}
+          />
+          <div
+            className='absolute left-0 top-0 z-[9999] h-4 w-4 translate-x-[-50%] translate-y-[-50%] cursor-nw-resize'
             onMouseDown={handleResizeNorthWest}
           />
           <div
-            className='absolute right-0 top-0 h-4 w-4 translate-x-[50%] translate-y-[-50%] cursor-ne-resize'
+            className='absolute right-0 top-0 z-[9999] h-4 w-4 translate-x-[50%] translate-y-[-50%] cursor-ne-resize'
             onMouseDown={handleResizeNorthEast}
           />
           <div
-            className='absolute bottom-0 left-0 h-4 w-4 translate-x-[-50%] translate-y-[50%] cursor-sw-resize'
+            className='absolute bottom-0 left-0 z-[9999] h-4 w-4 translate-x-[-50%] translate-y-[50%] cursor-sw-resize'
             onMouseDown={handleResizeSouthWest}
           />
           <div
-            className='absolute bottom-0 right-0 h-4 w-4 translate-x-[50%] translate-y-[50%] cursor-se-resize'
+            className='absolute bottom-0 right-0 z-[9999] h-4 w-4 translate-x-[50%] translate-y-[50%] cursor-se-resize'
             onMouseDown={handleResizeSouthEast}
           />
         </>

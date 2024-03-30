@@ -1,38 +1,37 @@
-import { MemoType, NoteData, SelectedMemo } from '@/types/note';
+import { NoteData, SelectedMemo } from '@/types/note';
 import React from 'react';
 
 interface Props {
   noteData: NoteData;
   selectedMemo: SelectedMemo;
   selectedId: number;
-  handleSelectMemo: (memo: SelectedMemo) => void;
+  onClick: (memo: SelectedMemo) => void;
 }
 
 const formatDate = (date: Date) => {
   return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}.`;
 };
 
-const MemoList = ({ noteData, handleSelectMemo, selectedMemo, selectedId }: Props) => {
+const MemoList = ({ noteData, onClick, selectedMemo, selectedId }: Props) => {
   const memoList = Object.entries(noteData)
     .filter(([key]) => key !== 'lastId')
     .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA));
 
-  console.log(selectedId);
   return (
-    <div className='flex w-80 flex-col border-r border-black/5 bg-white'>
+    <div className='flex w-80 flex-col overflow-y-auto border-r border-black/5 bg-white'>
       {memoList.map(([year, list]) => (
         <React.Fragment key={year}>
           <div className='pl-4 text-sm font-bold text-black/60 first:border-b first:border-black/5 first:py-2'>
             {year}년
           </div>
           <div className='mb-8 mt-2 flex flex-col gap-1 px-2'>
-            {(list as Array<MemoType>).map((memo) => (
+            {list.map((memo) => (
               <div
                 className={`flex select-none flex-col whitespace-nowrap rounded-[4px] px-4 py-2 ${
                   selectedMemo.id === memo.id && selectedId === 0 ? 'bg-[#d6d4d6]' : ''
                 } ${selectedId === memo.id ? 'bg-[#3477f6] text-white' : ''}`}
                 key={memo.id}
-                onClick={() => handleSelectMemo({ year, ...memo })}
+                onClick={() => onClick({ year, ...memo })}
                 data-id={memo.id}
               >
                 <div className={`overflow-hidden text-ellipsis text-[12px]/[14px] font-bold`}>
