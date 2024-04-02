@@ -9,20 +9,28 @@ const PhotoBooth = () => {
   const [camLoaded, setCamLoaded] = useState(false);
   const webcamRef = useRef<Webcam>(null);
   const [photos, setPhotos] = useState<Photo[]>([]);
+  const [previewImage, setPreviewImage] = useState<Photo | null>(null);
 
   const webcamClassNames = camLoaded ? 'opacity-100' : 'opacity-0';
 
   const handleClickButton = () => {
+    if (previewImage !== null) {
+      setPreviewImage(null);
+      return;
+    }
+
     const screenshot = webcamRef.current?.getScreenshot();
     if (screenshot) {
       const id = new Date().getTime();
-      setPhotos((photos) => [...photos, { id, src: screenshot }]);
+      const copiedPhotos = [...photos];
+      copiedPhotos.unshift({ id, src: screenshot });
+      setPhotos(copiedPhotos);
     }
   };
 
   const handleClickPhoto = (id: number) => {
     const photo = photos.find((photo) => photo.id === id);
-    if (photo) console.log(photo);
+    if (photo) setPreviewImage(photo);
   };
 
   const handleClickDeletePhotoButton = (id: number) => {
@@ -37,6 +45,13 @@ const PhotoBooth = () => {
   return (
     <div className='flex min-h-full flex-col bg-white'>
       <div className='relative flex-grow bg-black'>
+        {previewImage && (
+          <img
+            src={previewImage.src}
+            alt={`screenshot-${previewImage.id}`}
+            className='absolute z-20 h-full w-full flex-grow object-cover'
+          />
+        )}
         <Webcam
           className={`${webcamClassNames} absolute h-full w-full flex-grow object-cover transition-opacity duration-500`}
           mirrored={true}
@@ -49,9 +64,12 @@ const PhotoBooth = () => {
           ref={webcamRef}
         />
         {photos.length !== 0 && (
-          <div className='absolute bottom-0 z-[5] flex h-20 w-full flex-row-reverse items-center gap-2 overflow-x-scroll bg-white/70 px-2 py-1'>
+          <div className='absolute bottom-0 z-30 flex h-20 w-full flex-row-reverse items-center gap-2 overflow-x-scroll bg-white/70 px-2 py-1'>
             {photos.map(({ id, src }) => (
-              <div key={id} className='relative h-full flex-shrink-0'>
+              <div
+                key={id}
+                className={`relative h-full flex-shrink-0 ${id === previewImage?.id ? 'outline outline-blue-500' : ''}`}
+              >
                 <button
                   className='absolute left-[-6px] top-0 rounded-full border border-slate-500 bg-[#e5e7eb]/75 p-1 text-md active:opacity-100'
                   onClick={() => handleClickDeletePhotoButton(id)}
