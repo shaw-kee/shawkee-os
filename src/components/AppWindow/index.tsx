@@ -135,9 +135,9 @@ const AppWindow = ({
   return (
     <div
       style={{ width, height, zIndex, transform: `translate(${x}px, ${y}px)` }}
-      className={`absolute flex flex-col overflow-hidden ${isFullscreen ? '' : 'rounded-md'} ${
-        isMinimize ? 'invisible opacity-0' : ''
-      } `}
+      className={`absolute flex flex-col overflow-hidden shadow-[0_10px_20px_6px_rgba(0,0,0,0.3)] ${
+        isFullscreen ? '' : 'rounded-md'
+      } ${isMinimize ? 'invisible opacity-0' : ''} `}
       onMouseDown={handleClickWindow}
       onTransitionEnd={handleTransitionEnd}
       ref={windowRef}
