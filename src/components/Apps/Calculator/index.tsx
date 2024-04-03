@@ -19,6 +19,9 @@ const Calculator = () => {
         <button className='bg-[#807e82]/80 text-[1.5rem] font-normal text-white'>2</button>
         <button className='bg-[#807e82]/80 text-[1.5rem] font-normal text-white'>3</button>
         <button className='bg-[#ff970e] text-[1.5rem] font-normal text-white'>+</button>
+        <button className='col-span-2 bg-[#807e82]/80 text-[1.5rem] font-normal text-white'>0</button>
+        <button className='bg-[#807e82]/80 text-[1.5rem] font-normal text-white'>.</button>
+        <button className='bg-[#ff970e] text-[1.5rem] font-normal text-white'>=</button>
       </div>
     </div>
   );
