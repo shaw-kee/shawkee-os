@@ -76,7 +76,7 @@ export const apps: App[] = [
     zIndex: INITIAL_INDEX,
     isOpen: false,
     isMinimize: false,
-    isResizable: true,
+    isResizable: false,
     content: <Calculator />,
   },
   {
