@@ -5,12 +5,13 @@ import ExitFullscreenIcon from '@/assets/icons/AppWindow/ExitFullscreen.svg?reac
 
 interface Props {
   isFullscreen: boolean;
+  isResizable: boolean;
   handleClose: () => void;
   handleMinimize: () => void;
   handleFullscreen: () => void;
 }
 
-const ControlBox = ({ handleClose, handleMinimize, handleFullscreen, isFullscreen }: Props) => {
+const ControlBox = ({ handleClose, handleMinimize, handleFullscreen, isFullscreen, isResizable }: Props) => {
   return (
     <div className='hidden-wrapper absolute left-2 flex items-center gap-1'>
       <button
@@ -30,8 +31,11 @@ const ControlBox = ({ handleClose, handleMinimize, handleFullscreen, isFullscree
         )}
       </button>
       <button
-        className='flex h-3 w-3 cursor-pointer items-center justify-center rounded-full border-[0.5px] border-[#00000033] bg-[#28C840]'
+        className={`flex h-3 w-3 cursor-pointer items-center justify-center rounded-full border-[0.5px] border-[#00000033] ${
+          isResizable ? 'bg-[#28C840]' : 'bg-[#9ca3af]'
+        }`}
         onClick={handleFullscreen}
+        disabled={!isResizable}
       >
         {isFullscreen ? (
           <ExitFullscreenIcon
@@ -42,7 +46,9 @@ const ControlBox = ({ handleClose, handleMinimize, handleFullscreen, isFullscree
             className='hidden-item hidden'
           />
         ) : (
-          <FullscreenIcon width={6} height={6} viewBox='0 0 12 12' color='#137006' className='hidden-item hidden' />
+          isResizable && (
+            <FullscreenIcon width={6} height={6} viewBox='0 0 12 12' color='#137006' className='hidden-item hidden' />
+          )
         )}
       </button>
     </div>
