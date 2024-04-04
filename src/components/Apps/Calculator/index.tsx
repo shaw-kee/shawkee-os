@@ -7,7 +7,10 @@ const Calculator = () => {
       <div className='grid grow grid-cols-4 grid-rows-5 gap-[2px]'>
         <div className='col-span-3 row-span-1 flex gap-[2px]'>
           {functionKeys.map((functionKey) => (
-            <button className='flex flex-[1_0_30%] items-center justify-center bg-calc-function text-[1.5rem] font-normal text-white active:bg-calc-number'>
+            <button
+              className='flex flex-[1_0_30%] items-center justify-center bg-calc-function text-[1.5rem] font-normal text-white active:bg-calc-number'
+              key={`calc-${functionKey}`}
+            >
               {icons[functionKey] ? icons[functionKey] : functionKey}
             </button>
           ))}
@@ -15,11 +18,17 @@ const Calculator = () => {
         <div className='col-span-3 row-span-4 grid grid-cols-3 grid-rows-4 gap-[2px]'>
           {numbers.map((number) =>
             number === 0 ? (
-              <button className='col-span-2 bg-calc-number text-[1.5rem] font-normal text-white active:bg-[#aba8ad]'>
+              <button
+                className='col-span-2 bg-calc-number text-[1.5rem] font-normal text-white active:bg-[#aba8ad]'
+                key={`calc-${number}`}
+              >
                 {number}
               </button>
             ) : (
-              <button className='bg-calc-number text-[1.5rem] font-normal text-white active:bg-[#aba8ad]'>
+              <button
+                className='bg-calc-number text-[1.5rem] font-normal text-white active:bg-[#aba8ad]'
+                key={`calc-${number}`}
+              >
                 {number}
               </button>
             )
@@ -27,7 +36,10 @@ const Calculator = () => {
         </div>
         <div className='col-start-4 row-start-1 row-end-6 flex flex-col gap-[2px]'>
           {operators.map((operator) => (
-            <button className='flex flex-1 items-center justify-center bg-calc-operator text-[1.5rem] font-normal text-white active:bg-[#ff970e]/70'>
+            <button
+              className='flex flex-1 items-center justify-center bg-calc-operator text-[1.5rem] font-normal text-white active:bg-[#ff970e]/70'
+              key={`calc-${operator}`}
+            >
               {icons[operator]}
             </button>
           ))}
