@@ -34,18 +34,59 @@ const useCalculator = () => {
           break;
         case 'Enter':
           keypadRef.current['='].click();
+          keypadRef.current['='].classList.add('bg-calc-operator-active');
           break;
         case 'x':
           keypadRef.current['*'].click();
+          keypadRef.current['*'].classList.add('bg-calc-operator-active');
           break;
       }
 
-      if (allKeys[e.key]) keypadRef.current[e.key].click();
+      if (allKeys[e.key]) {
+        const kind = keypadRef.current[e.key].dataset.kind;
+
+        switch (kind) {
+          case 'function':
+            keypadRef.current[e.key].classList.add('bg-calc-number');
+            break;
+          case 'number':
+            keypadRef.current[e.key].classList.add('bg-calc-number-active');
+            break;
+          case 'operator':
+            keypadRef.current[e.key].classList.add('bg-calc-operator-active');
+            break;
+        }
+
+        keypadRef.current[e.key].click();
+      }
     };
+
+    const handleKeyup = (e: KeyboardEvent) => {
+      switch (e.key) {
+        case 'Enter':
+          keypadRef.current['='].classList.remove('bg-calc-operator-active');
+          break;
+        case 'x':
+          keypadRef.current['*'].classList.remove('bg-calc-operator-active');
+          break;
+      }
+
+      if (!allKeys[e.key]) return;
+
+      if (keypadRef.current[e.key].dataset.kind === 'function') {
+        keypadRef.current[e.key].classList.remove('bg-calc-number');
+      }
+
+      keypadRef.current[e.key].classList.remove('bg-calc-number-active');
+      keypadRef.current[e.key].classList.remove('bg-calc-operator-active');
+    };
+
     document.addEventListener('keydown', handleKeydown);
+    document.addEventListener('keyup', handleKeyup);
 
     return () => {
       document.removeEventListener('keydown', handleKeydown);
+      document.removeEventListener('keyup', handleKeyup);
     };
   }, []);
 

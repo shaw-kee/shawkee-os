@@ -18,6 +18,7 @@ const Calculator = () => {
                 onClick={handleClickFunctionKey(functionKey)}
                 ref={callbackKeyRef}
                 data-key={functionKey}
+                data-kind='function'
               >
                 {displayAC()}
               </button>
@@ -28,6 +29,7 @@ const Calculator = () => {
                 onClick={handleClickFunctionKey(functionKey)}
                 ref={callbackKeyRef}
                 data-key={functionKey}
+                data-kind='function'
               >
                 {icons[functionKey]}
               </button>
@@ -43,6 +45,7 @@ const Calculator = () => {
                 onClick={handleClickNumber(number)}
                 ref={callbackKeyRef}
                 data-key={number}
+                data-kind='number'
               >
                 {number}
               </button>
@@ -53,6 +56,7 @@ const Calculator = () => {
                 onClick={handleClickNumber(number)}
                 ref={callbackKeyRef}
                 data-key={number}
+                data-kind='number'
               >
                 {number}
               </button>
@@ -67,6 +71,7 @@ const Calculator = () => {
               onClick={handleClickOperator(operator)}
               ref={callbackKeyRef}
               data-key={operator}
+              data-kind='operator'
             >
               {icons[operator]}
             </button>
