@@ -7,6 +7,7 @@ const Calculator = () => {
   const [input, setInput] = useState('0');
 
   const handleClickNumber = (number: string) => {
+    if (number === '.' && input.includes('.')) return;
     if (formula.formulaOperator === '=') {
       setFormula({ ...formula, formulaOperator: '' });
     }
