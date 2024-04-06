@@ -15,7 +15,7 @@ const Calculator = () => {
   return (
     <div className='flex h-full flex-col bg-[#595559]/95 shadow-[inset_0_0_2px_1px_rgba(187,187,187,0.8)]'>
       <div
-        className='flex min-h-[6rem] items-end justify-end px-6 text-[4rem] font-thin text-white'
+        className='mx-6 flex min-h-[6rem] items-end justify-end overflow-hidden text-[4rem] font-thin text-white'
         ref={callbackDisplayRef}
       >
         {displayResult()}
