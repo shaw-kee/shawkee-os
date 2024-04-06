@@ -31,10 +31,10 @@ const useCalculator = () => {
     }
 
     if (element.textContent.length >= 7) {
-      element.style.fontSize = '3rem';
+      element.style.fontSize = '2rem';
     }
 
-    if (element.textContent.length >= 20) {
+    if (element.textContent.length >= 15) {
       element.style.fontSize = '1rem';
     }
   };
