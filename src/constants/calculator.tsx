@@ -7,6 +7,7 @@ import EqualIcon from '@/assets/icons/Calculator/Equal.svg?react';
 import MultiplyIcon from '@/assets/icons/Calculator/Multiply.svg?react';
 import { IconType } from '@/types/calculator';
 
+export const defaultState = { operand: '', formulaOperator: '' };
 export const numbers = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '.'];
 export const functionKeys = ['AC', '+-', '%'];
 export const operators = ['/', '*', '-', '+', '='];
