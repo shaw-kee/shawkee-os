@@ -13,6 +13,8 @@ export default {
         'calc-function': '#676569E6',
         'calc-operator': '#ff970e',
         'calc-number': '#807e82E6',
+        'calc-number-active': '#aba8ad',
+        'calc-operator-active': '#ff970eB3',
       },
     },
   },

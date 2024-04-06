@@ -4,6 +4,7 @@ import useCalculator from './useCalculator';
 const Calculator = () => {
   const { handleClickFunctionKey, handleClickNumber, handleClickOperator, displayAC, displayResult, callbackKeyRef } =
     useCalculator();
+
   return (
     <div className='flex h-full flex-col bg-[#595559]/95 shadow-[inset_0_0_2px_1px_rgba(187,187,187,0.8)]'>
       <div className='flex justify-end px-6 text-[4rem] font-thin text-white'>{displayResult()}</div>
@@ -37,7 +38,7 @@ const Calculator = () => {
           {numbers.map((number) =>
             number === '0' ? (
               <button
-                className='col-span-2 bg-calc-number text-[1.5rem] font-normal text-white active:bg-[#aba8ad]'
+                className='active:bg-calc-number-active col-span-2 bg-calc-number text-[1.5rem] font-normal text-white'
                 key={`calc-${number}`}
                 onClick={handleClickNumber(number)}
                 ref={callbackKeyRef}
@@ -47,7 +48,7 @@ const Calculator = () => {
               </button>
             ) : (
               <button
-                className='bg-calc-number text-[1.5rem] font-normal text-white active:bg-[#aba8ad]'
+                className='active:bg-calc-number-active bg-calc-number text-[1.5rem] font-normal text-white'
                 key={`calc-${number}`}
                 onClick={handleClickNumber(number)}
                 ref={callbackKeyRef}
@@ -61,7 +62,7 @@ const Calculator = () => {
         <div className='col-start-4 row-start-1 row-end-6 flex flex-col gap-[2px]'>
           {operators.map((operator) => (
             <button
-              className='flex flex-1 items-center justify-center bg-calc-operator text-[1.5rem] font-normal text-white active:bg-[#ff970e]/70'
+              className='active:bg-calc-operator-active flex flex-1 items-center justify-center bg-calc-operator text-[1.5rem] font-normal text-white'
               key={`calc-${operator}`}
               onClick={handleClickOperator(operator)}
               ref={callbackKeyRef}
