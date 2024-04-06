@@ -49,7 +49,7 @@ const useCalculator = () => {
     const handleKeydown = (e: KeyboardEvent) => {
       switch (e.key) {
         case 'Escape':
-          keypadRef.current['AC'].click();
+          activateKey('AC', 'bg-calc-number');
           break;
         case 'Backspace':
           setInput((prev) => (prev.length <= 1 ? '0' : prev.slice(0, -1)));
