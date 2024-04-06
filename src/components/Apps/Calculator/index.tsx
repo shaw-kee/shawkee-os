@@ -6,7 +6,7 @@ const Calculator = () => {
   const [formula, setFormula] = useState(defaultState);
   const [input, setInput] = useState('0');
 
-  const handleClickFunctionKey = (functionKey: string) => {
+  const handleClickFunctionKey = (functionKey: string) => () => {
     if (functionKey === 'AC') {
       if (input === '0') setFormula(defaultState);
       setInput('0');
@@ -25,7 +25,7 @@ const Calculator = () => {
     }
   };
 
-  const handleClickNumber = (number: string) => {
+  const handleClickNumber = (number: string) => () => {
     if (number === '.' && input.includes('.')) return;
     if (formula.formulaOperator === '=') {
       setFormula({ ...formula, formulaOperator: '' });
@@ -40,7 +40,7 @@ const Calculator = () => {
     });
   };
 
-  const handleClickOperator = (operator: string) => {
+  const handleClickOperator = (operator: string) => () => {
     const { operand, formulaOperator } = formula;
     if (input === '0' && operand === '') return;
     if (formulaOperator === '=') {
@@ -90,7 +90,7 @@ const Calculator = () => {
             <button
               className='flex flex-[1_0_30%] items-center justify-center bg-calc-function text-[1.5rem] font-normal text-white active:bg-calc-number'
               key={`calc-${functionKey}`}
-              onClick={() => handleClickFunctionKey(functionKey)}
+              onClick={handleClickFunctionKey(functionKey)}
             >
               {icons[functionKey] ? icons[functionKey] : functionKey}
             </button>
@@ -102,7 +102,7 @@ const Calculator = () => {
               <button
                 className='col-span-2 bg-calc-number text-[1.5rem] font-normal text-white active:bg-[#aba8ad]'
                 key={`calc-${number}`}
-                onClick={() => handleClickNumber(number)}
+                onClick={handleClickNumber(number)}
               >
                 {number}
               </button>
@@ -110,7 +110,7 @@ const Calculator = () => {
               <button
                 className='bg-calc-number text-[1.5rem] font-normal text-white active:bg-[#aba8ad]'
                 key={`calc-${number}`}
-                onClick={() => handleClickNumber(number)}
+                onClick={handleClickNumber(number)}
               >
                 {number}
               </button>
@@ -122,7 +122,7 @@ const Calculator = () => {
             <button
               className='flex flex-1 items-center justify-center bg-calc-operator text-[1.5rem] font-normal text-white active:bg-[#ff970e]/70'
               key={`calc-${operator}`}
-              onClick={() => handleClickOperator(operator)}
+              onClick={handleClickOperator(operator)}
             >
               {icons[operator]}
             </button>
