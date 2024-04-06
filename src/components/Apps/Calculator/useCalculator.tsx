@@ -23,6 +23,22 @@ const useCalculator = () => {
     keypadRef.current[element.dataset.key] = element;
   };
 
+  const callbackDisplayRef = (element: HTMLDivElement) => {
+    if (!element || !element.textContent) return;
+
+    if (element.textContent.length < 5) {
+      element.style.fontSize = '4rem';
+    }
+
+    if (element.textContent.length >= 7) {
+      element.style.fontSize = '3rem';
+    }
+
+    if (element.textContent.length >= 20) {
+      element.style.fontSize = '1rem';
+    }
+  };
+
   useEffect(() => {
     const handleKeydown = (e: KeyboardEvent) => {
       switch (e.key) {
@@ -176,6 +192,7 @@ const useCalculator = () => {
     displayAC,
     displayResult,
     callbackKeyRef,
+    callbackDisplayRef,
   };
 };
 

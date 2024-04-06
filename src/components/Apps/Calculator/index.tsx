@@ -2,12 +2,24 @@ import { functionKeys, icons, numbers, operators } from '@/constants/calculator'
 import useCalculator from './useCalculator';
 
 const Calculator = () => {
-  const { handleClickFunctionKey, handleClickNumber, handleClickOperator, displayAC, displayResult, callbackKeyRef } =
-    useCalculator();
+  const {
+    handleClickFunctionKey,
+    handleClickNumber,
+    handleClickOperator,
+    displayAC,
+    displayResult,
+    callbackKeyRef,
+    callbackDisplayRef,
+  } = useCalculator();
 
   return (
     <div className='flex h-full flex-col bg-[#595559]/95 shadow-[inset_0_0_2px_1px_rgba(187,187,187,0.8)]'>
-      <div className='flex justify-end px-6 text-[4rem] font-thin text-white'>{displayResult()}</div>
+      <div
+        className='flex min-h-[6rem] items-end justify-end px-6 text-[4rem] font-thin text-white'
+        ref={callbackDisplayRef}
+      >
+        {displayResult()}
+      </div>
       <div className='grid grow grid-cols-4 grid-rows-5 gap-[2px]'>
         <div className='col-span-3 row-span-1 flex gap-[2px]'>
           {functionKeys.map((functionKey) =>
