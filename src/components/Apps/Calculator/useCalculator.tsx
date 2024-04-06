@@ -39,6 +39,12 @@ const useCalculator = () => {
     }
   };
 
+  const activateKey = (operator: string, className: string) => {
+    keypadRef.current[operator].click();
+    keypadRef.current[operator].classList.add(className);
+    setTimeout(() => keypadRef.current[operator].classList.remove(className), 100);
+  };
+
   useEffect(() => {
     const handleKeydown = (e: KeyboardEvent) => {
       switch (e.key) {
@@ -49,12 +55,10 @@ const useCalculator = () => {
           setInput((prev) => (prev.length <= 1 ? '0' : prev.slice(0, -1)));
           break;
         case 'Enter':
-          keypadRef.current['='].click();
-          keypadRef.current['='].classList.add('bg-calc-operator-active');
+          activateKey('=', 'bg-calc-operator-active');
           break;
         case 'x':
-          keypadRef.current['*'].click();
-          keypadRef.current['*'].classList.add('bg-calc-operator-active');
+          activateKey('*', 'bg-calc-operator-active');
           break;
       }
 
@@ -63,46 +67,22 @@ const useCalculator = () => {
 
         switch (kind) {
           case 'function':
-            keypadRef.current[e.key].classList.add('bg-calc-number');
+            activateKey(e.key, 'bg-calc-number');
             break;
           case 'number':
-            keypadRef.current[e.key].classList.add('bg-calc-number-active');
+            activateKey(e.key, 'bg-calc-number-active');
             break;
           case 'operator':
-            keypadRef.current[e.key].classList.add('bg-calc-operator-active');
+            activateKey(e.key, 'bg-calc-operator-active');
             break;
         }
-
-        keypadRef.current[e.key].click();
       }
-    };
-
-    const handleKeyup = (e: KeyboardEvent) => {
-      switch (e.key) {
-        case 'Enter':
-          keypadRef.current['='].classList.remove('bg-calc-operator-active');
-          break;
-        case 'x':
-          keypadRef.current['*'].classList.remove('bg-calc-operator-active');
-          break;
-      }
-
-      if (!allKeys[e.key]) return;
-
-      if (keypadRef.current[e.key].dataset.kind === 'function') {
-        keypadRef.current[e.key].classList.remove('bg-calc-number');
-      }
-
-      keypadRef.current[e.key].classList.remove('bg-calc-number-active');
-      keypadRef.current[e.key].classList.remove('bg-calc-operator-active');
     };
 
     document.addEventListener('keydown', handleKeydown);
-    document.addEventListener('keyup', handleKeyup);
 
     return () => {
       document.removeEventListener('keydown', handleKeydown);
-      document.removeEventListener('keyup', handleKeyup);
     };
   }, []);
 
