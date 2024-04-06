@@ -6,6 +6,25 @@ const Calculator = () => {
   const [formula, setFormula] = useState(defaultState);
   const [input, setInput] = useState('0');
 
+  const handleClickFunctionKey = (functionKey: string) => {
+    if (functionKey === 'AC') {
+      if (input === '0') setFormula(defaultState);
+      setInput('0');
+    }
+
+    if (functionKey === '+-') {
+      setInput((prev) => {
+        if (prev === '0') return prev;
+        if (prev.includes('-')) return prev.replace('-', '');
+        return `-${prev}`;
+      });
+    }
+
+    if (functionKey === '%') {
+      setInput((prev) => String(Number(prev) / 100));
+    }
+  };
+
   const handleClickNumber = (number: string) => {
     if (number === '.' && input.includes('.')) return;
     if (formula.formulaOperator === '=') {
@@ -71,6 +90,7 @@ const Calculator = () => {
             <button
               className='flex flex-[1_0_30%] items-center justify-center bg-calc-function text-[1.5rem] font-normal text-white active:bg-calc-number'
               key={`calc-${functionKey}`}
+              onClick={() => handleClickFunctionKey(functionKey)}
             >
               {icons[functionKey] ? icons[functionKey] : functionKey}
             </button>
