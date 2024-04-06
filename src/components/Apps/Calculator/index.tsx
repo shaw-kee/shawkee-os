@@ -81,20 +81,34 @@ const Calculator = () => {
     return input;
   };
 
+  const displayAC = () => {
+    return input === '0' && formula.operand === '' ? 'AC' : 'C';
+  };
+
   return (
     <div className='flex h-full flex-col bg-[#595559]/95 shadow-[inset_0_0_2px_1px_rgba(187,187,187,0.8)]'>
       <div className='flex justify-end px-6 text-[4rem] font-thin text-white'>{displayResult()}</div>
       <div className='grid grow grid-cols-4 grid-rows-5 gap-[2px]'>
         <div className='col-span-3 row-span-1 flex gap-[2px]'>
-          {functionKeys.map((functionKey) => (
-            <button
-              className='flex flex-[1_0_30%] items-center justify-center bg-calc-function text-[1.5rem] font-normal text-white active:bg-calc-number'
-              key={`calc-${functionKey}`}
-              onClick={handleClickFunctionKey(functionKey)}
-            >
-              {icons[functionKey] ? icons[functionKey] : functionKey}
-            </button>
-          ))}
+          {functionKeys.map((functionKey) =>
+            functionKey === 'AC' ? (
+              <button
+                className='flex flex-[1_0_30%] items-center justify-center bg-calc-function text-[1.5rem] font-normal text-white active:bg-calc-number'
+                key={`calc-${functionKey}`}
+                onClick={handleClickFunctionKey(functionKey)}
+              >
+                {displayAC()}
+              </button>
+            ) : (
+              <button
+                className='flex flex-[1_0_30%] items-center justify-center bg-calc-function text-[1.5rem] font-normal text-white active:bg-calc-number'
+                key={`calc-${functionKey}`}
+                onClick={handleClickFunctionKey(functionKey)}
+              >
+                {icons[functionKey]}
+              </button>
+            )
+          )}
         </div>
         <div className='col-span-3 row-span-4 grid grid-cols-3 grid-rows-4 gap-[2px]'>
           {numbers.map((number) =>
