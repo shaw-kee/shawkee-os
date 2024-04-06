@@ -1,9 +1,53 @@
-import { defaultState } from '@/constants/calculator';
-import { useState } from 'react';
+import { defaultState, functionKeys, numbers, operators } from '@/constants/calculator';
+import { useEffect, useRef, useState } from 'react';
+
+interface KeypadRefType {
+  [key: string]: HTMLButtonElement;
+}
+
+interface KeyType {
+  [key: string]: string;
+}
+
+const allKeys: KeyType = [...operators, ...numbers, ...functionKeys].reduce((obj, key) => {
+  return { ...obj, [key]: key };
+}, {});
 
 const useCalculator = () => {
   const [formula, setFormula] = useState(defaultState);
   const [input, setInput] = useState('0');
+  const keypadRef = useRef<KeypadRefType>({});
+
+  const callbackKeyRef = (element: HTMLButtonElement) => {
+    if (!element || !element.dataset.key) return;
+    keypadRef.current[element.dataset.key] = element;
+  };
+
+  useEffect(() => {
+    const handleKeydown = (e: KeyboardEvent) => {
+      switch (e.key) {
+        case 'Escape':
+          keypadRef.current['AC'].click();
+          break;
+        case 'Backspace':
+          setInput((prev) => (prev.length <= 1 ? '0' : prev.slice(0, -1)));
+          break;
+        case 'Enter':
+          keypadRef.current['='].click();
+          break;
+        case 'x':
+          keypadRef.current['*'].click();
+          break;
+      }
+
+      if (allKeys[e.key]) keypadRef.current[e.key].click();
+    };
+    document.addEventListener('keydown', handleKeydown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeydown);
+    };
+  }, []);
 
   const handleClickFunctionKey = (functionKey: string) => () => {
     if (functionKey === 'AC') {
@@ -90,6 +134,7 @@ const useCalculator = () => {
     handleClickOperator,
     displayAC,
     displayResult,
+    callbackKeyRef,
   };
 };
 
