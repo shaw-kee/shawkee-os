@@ -90,6 +90,8 @@ const AppWindow = ({
   const handleClickWindow = () => dispatch({ type: 'OPEN', id });
 
   const handleMaximizeWindow = () => {
+    if (!isResizable || isFullscreen) return;
+
     if (!isMaximize) {
       setTempMaximize({ x, y, width, height });
       setResize({ x: 0, y: 0, width: boundary.width, height: boundary.height });
@@ -135,9 +137,9 @@ const AppWindow = ({
   return (
     <div
       style={{ width, height, zIndex, transform: `translate(${x}px, ${y}px)` }}
-      className={`absolute flex flex-col overflow-hidden ${isFullscreen ? '' : 'rounded-md'} ${
-        isMinimize ? 'invisible opacity-0' : ''
-      } `}
+      className={`absolute flex flex-col overflow-hidden shadow-[0_10px_20px_6px_rgba(0,0,0,0.3)] ${
+        isFullscreen ? '' : 'rounded-md'
+      } ${isMinimize ? 'invisible opacity-0' : ''} `}
       onMouseDown={handleClickWindow}
       onTransitionEnd={handleTransitionEnd}
       ref={windowRef}
@@ -147,13 +149,14 @@ const AppWindow = ({
           isFullscreen ? 'absolute inset-x-0 h-3 opacity-0 hover:static hover:h-7 hover:opacity-100' : 'min-h-[1.75rem]'
         }`}
         onMouseDown={isFullscreen ? undefined : handleDragElement}
-        onDoubleClick={isFullscreen ? undefined : handleMaximizeWindow}
+        onDoubleClick={handleMaximizeWindow}
       >
         <ControlBox
           handleClose={handleClose}
           handleMinimize={handleMinimizeWindow}
           handleFullscreen={handleFullscreen}
           isFullscreen={isFullscreen}
+          isResizable={isResizable}
         />
         <span className='select-none font-bold'>{title}</span>
       </div>

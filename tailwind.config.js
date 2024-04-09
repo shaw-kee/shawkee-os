@@ -8,7 +8,15 @@ export default {
       md: ['16px', '24px'],
       lg: ['20px', '28px'],
     },
-    extend: {},
+    extend: {
+      colors: {
+        'calc-function': '#676569E6',
+        'calc-operator': '#ff970e',
+        'calc-number': '#807e82E6',
+        'calc-number-active': '#aba8ad',
+        'calc-operator-active': '#ff970eB3',
+      },
+    },
   },
   plugins: [],
 };
