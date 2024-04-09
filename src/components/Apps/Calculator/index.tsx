@@ -25,7 +25,7 @@ const Calculator = () => {
           {functionKeys.map((functionKey) =>
             functionKey === 'AC' ? (
               <button
-                className='flex flex-[1_0_30%] items-center justify-center bg-calc-function text-[1.5rem] font-normal text-white active:bg-calc-number'
+                className='flex flex-[1_0_30%] items-center justify-center bg-calc-function text-[1.5rem] font-normal text-white focus:outline-none active:bg-calc-number'
                 key={`calc-${functionKey}`}
                 onClick={handleClickFunctionKey(functionKey)}
                 ref={callbackKeyRef}
@@ -36,7 +36,7 @@ const Calculator = () => {
               </button>
             ) : (
               <button
-                className='flex flex-[1_0_30%] items-center justify-center bg-calc-function text-[1.5rem] font-normal text-white active:bg-calc-number'
+                className='flex flex-[1_0_30%] items-center justify-center bg-calc-function text-[1.5rem] font-normal text-white focus:outline-none active:bg-calc-number'
                 key={`calc-${functionKey}`}
                 onClick={handleClickFunctionKey(functionKey)}
                 ref={callbackKeyRef}
@@ -52,7 +52,7 @@ const Calculator = () => {
           {numbers.map((number) =>
             number === '0' ? (
               <button
-                className='active:bg-calc-number-active col-span-2 bg-calc-number text-[1.5rem] font-normal text-white'
+                className='col-span-2 bg-calc-number text-[1.5rem] font-normal text-white focus:outline-none active:bg-calc-number-active'
                 key={`calc-${number}`}
                 onClick={handleClickNumber(number)}
                 ref={callbackKeyRef}
@@ -63,7 +63,7 @@ const Calculator = () => {
               </button>
             ) : (
               <button
-                className='active:bg-calc-number-active bg-calc-number text-[1.5rem] font-normal text-white'
+                className='bg-calc-number text-[1.5rem] font-normal text-white focus:outline-none active:bg-calc-number-active'
                 key={`calc-${number}`}
                 onClick={handleClickNumber(number)}
                 ref={callbackKeyRef}
@@ -78,7 +78,7 @@ const Calculator = () => {
         <div className='col-start-4 row-start-1 row-end-6 flex flex-col gap-[2px]'>
           {operators.map((operator) => (
             <button
-              className='active:bg-calc-operator-active flex flex-1 items-center justify-center bg-calc-operator text-[1.5rem] font-normal text-white'
+              className='flex flex-1 items-center justify-center bg-calc-operator text-[1.5rem] font-normal text-white focus:outline-none active:bg-calc-operator-active'
               key={`calc-${operator}`}
               onClick={handleClickOperator(operator)}
               ref={callbackKeyRef}

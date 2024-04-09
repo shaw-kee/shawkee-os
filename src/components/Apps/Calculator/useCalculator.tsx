@@ -40,6 +40,7 @@ const useCalculator = () => {
   };
 
   const activateKey = (operator: string, className: string) => {
+    keypadRef.current[operator].focus();
     keypadRef.current[operator].click();
     keypadRef.current[operator].classList.add(className);
     setTimeout(() => keypadRef.current[operator].classList.remove(className), 100);
