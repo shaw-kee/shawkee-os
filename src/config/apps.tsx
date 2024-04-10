@@ -4,6 +4,7 @@ import Notes from '@/components/Apps/Notes';
 import PhotoBooth from '@/components/Apps/PhotoBooth';
 import Safari from '@/components/Apps/Safari';
 import SnakeGame from '@/components/Apps/SnakeGame';
+import Terminal from '@/components/Apps/Terminal';
 import { INITIAL_INDEX } from '@/constants/app';
 import { ReactElement } from 'react';
 
@@ -79,6 +80,20 @@ export const apps: App[] = [
     isMinimize: false,
     isResizable: false,
     content: <Calculator />,
+  },
+  {
+    id: 'terminal',
+    title: 'Terminal',
+    imageUrl: 'src/assets/icons/Dock/Terminal_Icon.png',
+    initialX: 700,
+    initialY: 200,
+    minWidth: 800,
+    minHeight: 600,
+    zIndex: INITIAL_INDEX,
+    isOpen: false,
+    isMinimize: false,
+    isResizable: true,
+    content: <Terminal />,
   },
   {
     id: 'calendar',
