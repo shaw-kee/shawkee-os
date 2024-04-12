@@ -85,7 +85,7 @@ export const apps: App[] = [
     id: 'terminal',
     title: 'Terminal',
     imageUrl: 'src/assets/icons/Dock/Terminal_Icon.png',
-    initialX: 700,
+    initialX: 400,
     initialY: 200,
     minWidth: 800,
     minHeight: 600,
