@@ -10,7 +10,7 @@ const Terminal = () => {
   const currentInputRef = useRef<HTMLInputElement>();
 
   const addContent = (content: ReactElement) => {
-    setContents((prevContents) => [...prevContents, { id: Date.now().toString(), content }]);
+    setContents((prevContents) => [...prevContents, { id: Date.now().toString() + prevContents.length, content }]);
   };
 
   const generateInput = () => {
@@ -35,6 +35,7 @@ const Terminal = () => {
 
     if (e.key === 'Enter') {
       currentInputRef.current.readOnly = true;
+      if (currentInputRef.current.value !== '') addContent(command(currentInputRef.current.value));
       addContent(generateInput());
     }
   }, []);
@@ -49,6 +50,46 @@ const Terminal = () => {
   const handleClick = () => {
     if (!currentInputRef.current) return;
     currentInputRef.current.focus();
+  };
+
+  const command = (input: string) => {
+    const [command, argument] = input.split(' ');
+
+    switch (command) {
+      case 'help':
+        return help();
+      default:
+        return <span className='text-white'>{`zsh: command not found:  ${command}`}</span>;
+    }
+  };
+
+  const help = () => {
+    return (
+      <ul className='mb-2 list-disc pl-6 text-white'>
+        <li>
+          <span className='text-yellow-200'>cat {'<file>'}</span> - See the content of {'<file>'}
+        </li>
+        <li>
+          <span className='text-yellow-200'>cd {'<dir>'}</span> - Move into
+          {' <dir>'}, "cd .." to move to the parent directory, "cd" or "cd ~" to return to root
+        </li>
+        <li>
+          <span className='text-yellow-200'>ls</span> - See files and directories in the current directory
+        </li>
+        <li>
+          <span className='text-yellow-200'>clear</span> - Clear the screen
+        </li>
+        <li>
+          <span className='text-yellow-200'>help</span> - Display this help menu
+        </li>
+        <li>
+          press <span className='text-yellow-200'>up arrow / down arrow</span> - Select history commands
+        </li>
+        <li>
+          press <span className='text-yellow-200'>tab</span> - Auto complete
+        </li>
+      </ul>
+    );
   };
 
   return (
