@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useRef, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 
 interface ContentType {
   id: string;
@@ -8,6 +8,10 @@ interface ContentType {
 const Terminal = () => {
   const [contents, setContents] = useState<ContentType[]>([]);
   const currentInputRef = useRef<HTMLInputElement>();
+
+  useEffect(() => {
+    setContents([{ id: Date.now().toString(), content: generateInput() }]);
+  }, []);
 
   const addContent = (content: ReactElement) => {
     setContents((prevContents) => [...prevContents, { id: Date.now().toString() + prevContents.length, content }]);
@@ -34,8 +38,9 @@ const Terminal = () => {
     if (!currentInputRef.current) return;
 
     if (e.key === 'Enter') {
+      const result = command(currentInputRef.current.value);
       currentInputRef.current.readOnly = true;
-      if (currentInputRef.current.value !== '') addContent(command(currentInputRef.current.value));
+      if (currentInputRef.current.value !== '' && result !== null) addContent(result);
       addContent(generateInput());
     }
   }, []);
@@ -58,6 +63,9 @@ const Terminal = () => {
     switch (command) {
       case 'help':
         return help();
+      case 'clear':
+        clearTerminal();
+        return null;
       default:
         return <span className='text-white'>{`zsh: command not found:  ${command}`}</span>;
     }
@@ -92,12 +100,15 @@ const Terminal = () => {
     );
   };
 
+  const clearTerminal = () => {
+    setContents([]);
+  };
+
   return (
     <div className='flex h-full flex-col overflow-x-auto bg-slate-800/95 p-3' onClick={handleClick}>
       <div className='text-white'>
         <span>Hello World! Type `help` to get started</span>
       </div>
-      {generateInput()}
       {contents.map(({ id, content }) => (
         <React.Fragment key={id}>{content}</React.Fragment>
       ))}
