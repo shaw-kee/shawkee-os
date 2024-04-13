@@ -36,8 +36,8 @@ const Terminal = () => {
     return (
       <div className='flex gap-1'>
         <div className='flex gap-1'>
-          <span className='text-green-400'>shawkee@macbook-pro</span>
-          <span className='text-yellow-500'>{currentPath.current === '' ? '~' : currentPath.current}</span>
+          <span className='text-teal-400'>shawkee@macbook-pro</span>
+          <span className='text-rose-400'>{currentPath.current === '' ? '~' : currentPath.current}</span>
         </div>
         <span className='font-bold text-slate-400'>&gt;</span>
         <input
@@ -165,7 +165,7 @@ const Terminal = () => {
 
   return (
     <div className='flex h-full flex-col overflow-x-auto bg-slate-800/95 p-3' onClick={handleClick}>
-      <div className='text-white'>
+      <div className='mb-1 text-white'>
         <span>Hello World! Type `help` to get started</span>
       </div>
       {contents.map(({ id, content }) => (
