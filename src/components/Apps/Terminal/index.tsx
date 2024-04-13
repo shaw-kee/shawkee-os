@@ -1,3 +1,4 @@
+import { terminalRoot } from '@/config/terminal';
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 
 interface ContentType {
@@ -7,6 +8,7 @@ interface ContentType {
 
 const Terminal = () => {
   const [contents, setContents] = useState<ContentType[]>([]);
+  const currentChildren = useRef(terminalRoot);
   const currentInputRef = useRef<HTMLInputElement>();
 
   useEffect(() => {
@@ -65,10 +67,14 @@ const Terminal = () => {
         return help();
       case 'clear':
         clearTerminal();
-        return null;
+        break;
+      case 'ls':
+        return ls();
       default:
         return <span className='text-white'>{`zsh: command not found:  ${command}`}</span>;
     }
+
+    return null;
   };
 
   const help = () => {
@@ -97,6 +103,18 @@ const Terminal = () => {
           press <span className='text-yellow-200'>tab</span> - Auto complete
         </li>
       </ul>
+    );
+  };
+
+  const ls = () => {
+    return (
+      <div className='grid auto-rows-auto grid-cols-[repeat(auto-fill,15rem)]'>
+        {currentChildren.current.map((children) => (
+          <span className={`${children.type === 'file' ? 'text-white' : 'text-blue-400'}`} key={children.id}>
+            {children.title}
+          </span>
+        ))}
+      </div>
     );
   };
 
