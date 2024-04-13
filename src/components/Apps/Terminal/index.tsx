@@ -1,6 +1,6 @@
 import { terminalRoot } from '@/config/terminal';
 import { TerminalDirectory } from '@/types/terminal';
-import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
+import React, { KeyboardEvent, ReactElement, useEffect, useRef, useState } from 'react';
 
 interface ContentType {
   id: string;
@@ -43,13 +43,14 @@ const Terminal = () => {
         <input
           className='grow bg-transparent text-white caret-slate-400 outline-none'
           ref={callbackInputRef}
+          onKeyDown={handleKeydown}
           autoFocus
         />
       </div>
     );
   };
 
-  const handleKeydown = useCallback((e: KeyboardEvent) => {
+  const handleKeydown = (e: KeyboardEvent) => {
     if (!currentInputRef.current) return;
 
     if (e.key === 'Enter') {
@@ -58,13 +59,10 @@ const Terminal = () => {
       if (currentInputRef.current.value !== '' && result !== undefined) addContent(result);
       addContent(generateInput());
     }
-  }, []);
+  };
 
   const callbackInputRef = (element: HTMLInputElement) => {
-    if (element) {
-      element.addEventListener('keydown', handleKeydown);
-      currentInputRef.current = element;
-    }
+    if (element) currentInputRef.current = element;
   };
 
   const handleClick = () => {
