@@ -1,4 +1,5 @@
 import { terminalRoot } from '@/config/terminal';
+import { TerminalDirectory } from '@/types/terminal';
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 
 interface ContentType {
@@ -8,12 +9,24 @@ interface ContentType {
 
 const Terminal = () => {
   const [contents, setContents] = useState<ContentType[]>([]);
+  const [path, setPath] = useState<string[]>([]);
   const currentChildren = useRef(terminalRoot);
   const currentInputRef = useRef<HTMLInputElement>();
+  const currentPath = useRef('');
 
   useEffect(() => {
     setContents([{ id: Date.now().toString(), content: generateInput() }]);
   }, []);
+
+  useEffect(() => {
+    const getCurrentChildren = () => {
+      if (path.length === 0) return terminalRoot;
+      return (terminalRoot.find((directory) => directory.title === path[path.length - 1]) as TerminalDirectory)
+        .children;
+    };
+
+    currentChildren.current = getCurrentChildren();
+  }, [path]);
 
   const addContent = (content: ReactElement) => {
     setContents((prevContents) => [...prevContents, { id: Date.now().toString() + prevContents.length, content }]);
@@ -24,7 +37,7 @@ const Terminal = () => {
       <div className='flex gap-1'>
         <div className='flex gap-1'>
           <span className='text-green-400'>shawkee@macbook-pro</span>
-          <span className='text-yellow-500'>~</span>
+          <span className='text-yellow-500'>{currentPath.current === '' ? '~' : currentPath.current}</span>
         </div>
         <span className='font-bold text-slate-400'>&gt;</span>
         <input
@@ -42,7 +55,7 @@ const Terminal = () => {
     if (e.key === 'Enter') {
       const result = command(currentInputRef.current.value);
       currentInputRef.current.readOnly = true;
-      if (currentInputRef.current.value !== '' && result !== null) addContent(result);
+      if (currentInputRef.current.value !== '' && result !== undefined) addContent(result);
       addContent(generateInput());
     }
   }, []);
@@ -68,13 +81,13 @@ const Terminal = () => {
       case 'clear':
         clearTerminal();
         break;
+      case 'cd':
+        return changeDirectory(argument);
       case 'ls':
         return ls();
       default:
         return <span className='text-white'>{`zsh: command not found:  ${command}`}</span>;
     }
-
-    return null;
   };
 
   const help = () => {
@@ -106,6 +119,31 @@ const Terminal = () => {
     );
   };
 
+  const changeDirectory = (argument: string) => {
+    const targetChild = currentChildren.current.find((child) => child.title === argument);
+    const isDirectory = targetChild !== undefined && targetChild.type === 'directory';
+    const backToRoot = argument === undefined || argument === '' || argument === '~';
+
+    if (backToRoot) {
+      currentPath.current = '';
+      setPath([]);
+      return;
+    }
+    if (argument === '.') return;
+    if (argument === '..') {
+      currentPath.current = getParentPath();
+      setPath((prevPath) => prevPath.slice(0, -1));
+      return;
+    }
+    if (isDirectory) {
+      currentPath.current = argument;
+      setPath((prevPath) => [...prevPath, argument]);
+      return;
+    }
+
+    return <span className='text-white'>cd: no such file or directory: {argument}</span>;
+  };
+
   const ls = () => {
     return (
       <div className='grid auto-rows-auto grid-cols-[repeat(auto-fill,15rem)]'>
@@ -120,6 +158,11 @@ const Terminal = () => {
 
   const clearTerminal = () => {
     setContents([]);
+  };
+
+  const getParentPath = () => {
+    const prevPath = path.slice(-1);
+    return prevPath.length === 0 ? '' : prevPath[0];
   };
 
   return (

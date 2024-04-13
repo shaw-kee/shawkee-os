@@ -4,7 +4,7 @@ export const terminalRoot: (TerminalFile | TerminalDirectory)[] = [
   {
     id: 'shaw',
     title: 'shaw',
-    type: 'folder',
+    type: 'directory',
     children: [
       {
         id: 'shaw-1',
@@ -20,7 +20,7 @@ export const terminalRoot: (TerminalFile | TerminalDirectory)[] = [
       },
     ],
   },
-  { id: 'mckee', title: 'mckee', type: 'folder', children: [] },
+  { id: 'mckee', title: 'mckee', type: 'directory', children: [] },
   {
     id: 'our-text',
     title: 'our-text',
