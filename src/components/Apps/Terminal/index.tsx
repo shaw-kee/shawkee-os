@@ -1,5 +1,5 @@
 import { terminalRoot } from '@/config/terminal';
-import { TerminalDirectory } from '@/types/terminal';
+import { getCurrentChildren, getCurrentPath } from '@/utils/terminal';
 import React, { KeyboardEvent, ReactElement, useEffect, useRef, useState } from 'react';
 
 interface ContentType {
@@ -9,35 +9,20 @@ interface ContentType {
 
 const Terminal = () => {
   const [contents, setContents] = useState<ContentType[]>([]);
-  const [path, setPath] = useState<string[]>([]);
   const currentChildren = useRef(terminalRoot);
   const currentInputRef = useRef<HTMLInputElement>();
-  const currentPath = useRef('');
+  const path = useRef<string[]>([]);
 
   useEffect(() => {
     setContents([{ id: Date.now().toString(), content: generateInput() }]);
   }, []);
-
-  useEffect(() => {
-    const getCurrentChildren = () => {
-      if (path.length === 0) return terminalRoot;
-      return (terminalRoot.find((directory) => directory.title === path[path.length - 1]) as TerminalDirectory)
-        .children;
-    };
-
-    currentChildren.current = getCurrentChildren();
-  }, [path]);
-
-  const addContent = (content: ReactElement) => {
-    setContents((prevContents) => [...prevContents, { id: Date.now().toString() + prevContents.length, content }]);
-  };
 
   const generateInput = () => {
     return (
       <div className='flex gap-1'>
         <div className='flex gap-1'>
           <span className='text-teal-400'>shawkee@macbook-pro</span>
-          <span className='text-rose-400'>{currentPath.current === '' ? '~' : currentPath.current}</span>
+          <span className='text-rose-400'>{getCurrentPath(path.current)}</span>
         </div>
         <span className='font-bold text-slate-400'>&gt;</span>
         <input
@@ -123,19 +108,18 @@ const Terminal = () => {
     const backToRoot = argument === undefined || argument === '' || argument === '~';
 
     if (backToRoot) {
-      currentPath.current = '';
-      setPath([]);
+      path.current = [];
       return;
     }
     if (argument === '.') return;
     if (argument === '..') {
-      currentPath.current = getParentPath();
-      setPath((prevPath) => prevPath.slice(0, -1));
+      path.current = path.current.slice(0, -1);
+      currentChildren.current = getCurrentChildren(path.current);
       return;
     }
     if (isDirectory) {
-      currentPath.current = argument;
-      setPath((prevPath) => [...prevPath, argument]);
+      path.current = [...path.current, argument];
+      currentChildren.current = getCurrentChildren(path.current);
       return;
     }
 
@@ -158,9 +142,8 @@ const Terminal = () => {
     setContents([]);
   };
 
-  const getParentPath = () => {
-    const prevPath = path.slice(-1);
-    return prevPath.length === 0 ? '' : prevPath[0];
+  const addContent = (content: ReactElement) => {
+    setContents((prevContents) => [...prevContents, { id: Date.now().toString() + prevContents.length, content }]);
   };
 
   return (
