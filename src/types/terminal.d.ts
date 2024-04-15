@@ -2,7 +2,7 @@ export interface TerminalFile {
   id: string;
   title: string;
   type: string;
-  content: string;
+  content: JSX.Element;
 }
 
 export interface TerminalDirectory {

@@ -10,13 +10,13 @@ export const terminalRoot: (TerminalFile | TerminalDirectory)[] = [
         id: 'shaw-1',
         title: 'shaw-1',
         type: 'file',
-        content: 'hi',
+        content: <span>Shaw-1</span>,
       },
       {
         id: 'shaw-2',
         title: 'shaw-2',
         type: 'file',
-        content: 'hi-2',
+        content: <span>Shaw-2</span>,
       },
     ],
   },
@@ -25,6 +25,6 @@ export const terminalRoot: (TerminalFile | TerminalDirectory)[] = [
     id: 'our-text',
     title: 'our-text',
     type: 'file',
-    content: 'ot',
+    content: <span>our-text</span>,
   },
 ];
