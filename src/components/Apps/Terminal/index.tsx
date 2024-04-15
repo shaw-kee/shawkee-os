@@ -112,6 +112,7 @@ const Terminal = () => {
 
     if (backToRoot) {
       path.current = [];
+      currentChildren.current = terminalRoot;
       return;
     }
     if (argument === '.') return;
