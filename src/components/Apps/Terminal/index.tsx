@@ -27,7 +27,7 @@ const Terminal = () => {
         </div>
         <span className='font-bold text-slate-400'>&gt;</span>
         <input
-          className='grow bg-transparent text-white caret-slate-400 outline-none'
+          className='grow bg-transparent caret-slate-400 outline-none'
           ref={callbackInputRef}
           onKeyDown={handleKeydown}
           autoFocus
@@ -72,13 +72,13 @@ const Terminal = () => {
       case 'cat':
         return displayContent(argument);
       default:
-        return <span className='text-white'>{`zsh: command not found:  ${command}`}</span>;
+        return <span>{`zsh: command not found:  ${command}`}</span>;
     }
   };
 
   const help = () => {
     return (
-      <ul className='mb-2 list-disc pl-6 text-white'>
+      <ul className='mb-2 list-disc pl-6'>
         <li>
           <span className='text-yellow-200'>cat {'<file>'}</span> - See the content of {'<file>'}
         </li>
@@ -126,14 +126,14 @@ const Terminal = () => {
       return;
     }
 
-    return <span className='text-white'>cd: no such file or directory: {argument}</span>;
+    return <span>cd: no such file or directory: {argument}</span>;
   };
 
   const ls = () => {
     return (
       <div className='grid auto-rows-auto grid-cols-[repeat(auto-fill,15rem)]'>
         {currentChildren.current.map((children) => (
-          <span className={`${children.type === 'file' ? 'text-white' : 'text-blue-400'}`} key={children.id}>
+          <span className={`${children.type === 'directory' ? 'text-blue-400' : ''}`} key={children.id}>
             {children.title}
           </span>
         ))}
@@ -149,11 +149,7 @@ const Terminal = () => {
     const targetChild = currentChildren.current.find((child) => child.title === file);
     const isFile = targetChild !== undefined && targetChild.type === 'file';
 
-    return isFile ? (
-      (targetChild as TerminalFile).content
-    ) : (
-      <span className='text-white'>cat: no such file or directory: {file}</span>
-    );
+    return isFile ? (targetChild as TerminalFile).content : <span>cat: no such file or directory: {file}</span>;
   };
 
   const addContent = (content: JSX.Element) => {
@@ -161,8 +157,8 @@ const Terminal = () => {
   };
 
   return (
-    <div className='flex h-full flex-col overflow-x-auto bg-slate-800/95 p-3' onClick={handleClick}>
-      <div className='mb-1 text-white'>
+    <div className='flex h-full flex-col overflow-x-auto bg-slate-800/95 p-3 text-white' onClick={handleClick}>
+      <div className='mb-1'>
         <span>Hello World! Type `help` to get started</span>
       </div>
       {contents.map(({ id, content }) => (
