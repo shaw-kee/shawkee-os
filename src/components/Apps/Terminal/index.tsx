@@ -1,4 +1,5 @@
 import { terminalRoot } from '@/config/terminal';
+import { TerminalFile } from '@/types/terminal';
 import { getCurrentChildren, getCurrentPath } from '@/utils/terminal';
 import React, { KeyboardEvent, ReactElement, useEffect, useRef, useState } from 'react';
 
@@ -68,6 +69,8 @@ const Terminal = () => {
         return changeDirectory(argument);
       case 'ls':
         return ls();
+      case 'cat':
+        return displayContent(argument);
       default:
         return <span className='text-white'>{`zsh: command not found:  ${command}`}</span>;
     }
@@ -142,7 +145,18 @@ const Terminal = () => {
     setContents([]);
   };
 
-  const addContent = (content: ReactElement) => {
+  const displayContent = (file: string) => {
+    const targetChild = currentChildren.current.find((child) => child.title === file);
+    const isFile = targetChild !== undefined && targetChild.type === 'file';
+
+    return isFile ? (
+      (targetChild as TerminalFile).content
+    ) : (
+      <span className='text-white'>cat: no such file or directory: {file}</span>
+    );
+  };
+
+  const addContent = (content: JSX.Element) => {
     setContents((prevContents) => [...prevContents, { id: Date.now().toString() + prevContents.length, content }]);
   };
 
