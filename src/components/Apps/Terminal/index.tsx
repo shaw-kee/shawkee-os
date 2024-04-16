@@ -1,6 +1,6 @@
 import { terminalRoot } from '@/config/terminal';
 import { TerminalFile } from '@/types/terminal';
-import { getCurrentChildren, getCurrentPath } from '@/utils/terminal';
+import { History, getCurrentChildren, getCurrentPath } from '@/utils/terminal';
 import React, { KeyboardEvent, ReactElement, useEffect, useRef, useState } from 'react';
 
 interface ContentType {
@@ -9,6 +9,7 @@ interface ContentType {
 }
 
 const Terminal = () => {
+  const history = new History();
   const [contents, setContents] = useState<ContentType[]>([]);
   const currentChildren = useRef(terminalRoot);
   const currentInputRef = useRef<HTMLInputElement>();
@@ -42,8 +43,17 @@ const Terminal = () => {
     if (e.key === 'Enter') {
       const result = command(currentInputRef.current.value);
       currentInputRef.current.readOnly = true;
+      history.pushHistory(currentInputRef.current.value);
       if (currentInputRef.current.value !== '' && result !== undefined) addContent(result);
       addContent(generateInput());
+    }
+
+    if (e.key === 'ArrowUp') {
+      currentInputRef.current.value = history.getPrevCommand();
+    }
+
+    if (e.key === 'ArrowDown') {
+      currentInputRef.current.value = history.getNextCommand();
     }
   };
 
