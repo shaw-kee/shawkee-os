@@ -26,7 +26,7 @@ export class History {
 
   getPrevCommand() {
     if (this.#cursor > 0) this.#setCursor(this.#cursor - 1);
-    return this.#stack[this.#cursor];
+    return this.isBound() ? this.#stack[this.#cursor] : '';
   }
 
   getNextCommand() {
@@ -35,7 +35,7 @@ export class History {
   }
 
   isBound() {
-    return this.#cursor > 0 && this.#cursor < this.#stack.length ? true : false;
+    return this.#cursor >= 0 && this.#cursor < this.#stack.length ? true : false;
   }
 
   #setCursor(value: number) {

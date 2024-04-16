@@ -42,9 +42,9 @@ const Terminal = () => {
 
     if (e.key === 'Enter') {
       const result = command(currentInputRef.current.value);
-      currentInputRef.current.readOnly = true;
-      history.pushHistory(currentInputRef.current.value);
+      if (currentInputRef.current.value.trim() !== '') history.pushHistory(currentInputRef.current.value);
       if (currentInputRef.current.value !== '' && result !== undefined) addContent(result);
+      currentInputRef.current.readOnly = true;
       addContent(generateInput());
     }
 
