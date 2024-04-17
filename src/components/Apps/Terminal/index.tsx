@@ -1,4 +1,4 @@
-import { terminalRoot } from '@/config/terminal';
+import { commands, terminalRoot } from '@/config/terminal';
 import { ContentType, TerminalFile } from '@/types/terminal';
 import { History, getCurrentChildren, getCurrentPath } from '@/utils/terminal';
 import React, { KeyboardEvent, useEffect, useRef, useState } from 'react';
@@ -49,6 +49,11 @@ const Terminal = () => {
 
     if (e.key === 'ArrowDown') {
       currentInputRef.current.value = history.getNextCommand();
+    }
+
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      currentInputRef.current.value = autoComplete(currentInputRef.current.value);
     }
   };
 
@@ -156,6 +161,23 @@ const Terminal = () => {
     const isFile = targetChild !== undefined && targetChild.type === 'file';
 
     return isFile ? (targetChild as TerminalFile).content : <span>cat: no such file or directory: {file}</span>;
+  };
+
+  const autoComplete = (input: string): string => {
+    if (input === '') return '';
+
+    const [inputCommand, inputArgument] = input.split(' ');
+    const autoCommand = commands.find((command) => command.startsWith(inputCommand));
+
+    if (inputArgument === undefined) {
+      return autoCommand ? autoCommand : inputCommand;
+    } else {
+      const targetChild = currentChildren.current.find((child) => child.title.startsWith(inputArgument));
+      const isCompleteCommand = targetChild !== undefined && inputCommand === autoCommand;
+      if (isCompleteCommand) return `${autoCommand} ${targetChild.title}`;
+    }
+
+    return `${inputCommand} ${inputArgument}`;
   };
 
   const addContent = (content: JSX.Element) => {

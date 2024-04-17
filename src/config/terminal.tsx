@@ -1,5 +1,7 @@
 import { TerminalDirectory, TerminalFile } from '@/types/terminal';
 
+export const commands = ['cd', 'cat', 'clear', 'ls', 'help'];
+
 export const terminalRoot: (TerminalFile | TerminalDirectory)[] = [
   {
     id: 'shaw',
