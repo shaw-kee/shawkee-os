@@ -44,6 +44,7 @@ const Terminal = () => {
     }
 
     if (e.key === 'ArrowUp') {
+      e.preventDefault();
       currentInputRef.current.value = history.getPrevCommand();
     }
 
