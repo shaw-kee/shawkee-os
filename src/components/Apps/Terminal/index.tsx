@@ -1,12 +1,7 @@
 import { terminalRoot } from '@/config/terminal';
-import { TerminalFile } from '@/types/terminal';
+import { ContentType, TerminalFile } from '@/types/terminal';
 import { History, getCurrentChildren, getCurrentPath } from '@/utils/terminal';
-import React, { KeyboardEvent, ReactElement, useEffect, useRef, useState } from 'react';
-
-interface ContentType {
-  id: string;
-  content: ReactElement;
-}
+import React, { KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 const Terminal = () => {
   const history = new History();
