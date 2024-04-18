@@ -31,7 +31,7 @@ const DockItem = ({ id, title, imageUrl, isOpen = false, link = '', mousePositio
       className='tooltip flex flex-col items-center justify-end hover:cursor-pointer'
       onClick={handleClick}
     >
-      <div className='tooltip-text top-[calc(-100%-20px)] inline-flex items-center rounded-md bg-[#F6F6F6B8] px-3 py-1 text-sm text-black shadow-[0_2px_6px_0_rgba(0,0,0,0.20),0_0_0_0.5px_rgba(0,0,0,0.12)]'>
+      <div className='tooltip-text top-[calc(-100%-10px)] inline-flex items-center rounded-md bg-[#F6F6F6B8] px-3 py-1 text-sm text-black shadow-[0_2px_6px_0_rgba(0,0,0,0.20),0_0_0_0.5px_rgba(0,0,0,0.12)]'>
         {title}
       </div>
       <div>
