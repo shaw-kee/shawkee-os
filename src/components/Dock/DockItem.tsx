@@ -21,7 +21,7 @@ const DockItem = ({ id, title, imageUrl, isOpen = false, link = '', mousePositio
   if (!dispatch) throw new Error('dispatch is null');
 
   const handleClick = () => {
-    dispatch({ type: 'OPEN', id });
+    if (link === '') dispatch({ type: 'OPEN', id });
   };
 
   return (
