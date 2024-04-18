@@ -78,24 +78,28 @@ const SnakeGame = () => {
     const handleKeydown = (event: KeyboardEvent) => {
       switch (event.key) {
         case 'ArrowUp':
+          if (yVelocity === 1) break;
           xVelocity = 0;
           yVelocity = -1;
           break;
         case 'ArrowDown':
+          if (yVelocity === -1) break;
           xVelocity = 0;
           yVelocity = 1;
           break;
         case 'ArrowLeft':
+          if (xVelocity === 1) break;
           xVelocity = -1;
           yVelocity = 0;
           break;
         case 'ArrowRight':
+          if (xVelocity === -1) break;
           xVelocity = 1;
           yVelocity = 0;
           break;
+        default:
+          break;
       }
-      // up
-      console.log(event.key);
     };
 
     document.addEventListener('keydown', handleKeydown);
