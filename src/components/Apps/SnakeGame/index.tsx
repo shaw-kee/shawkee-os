@@ -43,8 +43,11 @@ const SnakeGame = () => {
     const tileSize = canvas.width / TILE_COUNT;
 
     // TODO: 스타트 위치는 랜덤으로
-    let headX = 5;
-    let headY = 5;
+    let headX = 10;
+    let headY = 10;
+
+    let appleX = 5;
+    let appleY = 5;
 
     let xVelocity = 0;
     let yVelocity = 0;
@@ -53,9 +56,11 @@ const SnakeGame = () => {
     canvas.height = containerSize.height;
 
     const drawGame = () => {
-      console.log('draw!');
-      changeSnakePosition();
       clearScreen();
+      changeSnakePosition();
+
+      checkAppleCollision();
+      drawApple();
       drawSnake();
       timeoutId = setTimeout(drawGame, 1000 / SPEED);
     };
@@ -73,6 +78,18 @@ const SnakeGame = () => {
     const changeSnakePosition = () => {
       headX = headX + xVelocity;
       headY = headY + yVelocity;
+    };
+
+    const drawApple = () => {
+      ctx.fillStyle = 'red';
+      ctx.fillRect(appleX * TILE_COUNT, appleY * TILE_COUNT, tileSize, tileSize);
+    };
+
+    const checkAppleCollision = () => {
+      if (appleX === headX && appleY === headY) {
+        appleX = Math.floor(Math.random() * TILE_COUNT);
+        appleY = Math.floor(Math.random() * TILE_COUNT);
+      }
     };
 
     const handleKeydown = (event: KeyboardEvent) => {
@@ -114,7 +131,7 @@ const SnakeGame = () => {
 
   return (
     <div ref={containerRef} className='h-full w-full'>
-      <canvas ref={canvasRef} className='border border-black bg-black' />;
+      <canvas ref={canvasRef} className='border bg-black' />;
     </div>
   );
 };
