@@ -1,5 +1,4 @@
 import Calculator from '@/components/Apps/Calculator';
-import Calendar from '@/components/Apps/Calendar';
 import Notes from '@/components/Apps/Notes';
 import PhotoBooth from '@/components/Apps/PhotoBooth';
 import Safari from '@/components/Apps/Safari';
@@ -108,20 +107,6 @@ export const apps: App[] = [
     isOpen: false,
     isMinimize: false,
     isResizable: false,
-  },
-  {
-    id: 'calendar',
-    title: 'Calendar',
-    imageUrl: 'src/assets/icons/Dock/Calendar_Icon.png',
-    initialX: 900,
-    initialY: 500,
-    minWidth: 300,
-    minHeight: 400,
-    zIndex: INITIAL_INDEX,
-    isOpen: false,
-    isMinimize: false,
-    isResizable: true,
-    content: <Calendar />,
   },
   {
     id: 'snake_game',
