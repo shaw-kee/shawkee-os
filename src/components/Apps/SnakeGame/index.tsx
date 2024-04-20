@@ -61,12 +61,27 @@ const SnakeGame = () => {
 
     const drawGame = () => {
       clearScreen();
+      const result = isGameOver();
+      if (result) {
+        alert('GameOver !!!');
+        return;
+      }
       changeSnakePosition();
 
       checkAppleCollision();
       drawApple();
       drawSnake();
       timeoutId = setTimeout(drawGame, 1000 / SPEED);
+    };
+
+    const isGameOver = () => {
+      let gameOver = false;
+
+      if (headX < 0 || headY < 0 || headX === TILE_COUNT || headY === TILE_COUNT) {
+        gameOver = true;
+      }
+
+      return gameOver;
     };
 
     const clearScreen = () => {
