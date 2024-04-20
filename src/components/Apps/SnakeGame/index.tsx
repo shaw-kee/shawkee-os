@@ -1,3 +1,4 @@
+import { Position } from '@/types/position';
 import { useEffect, useRef } from 'react';
 
 const SPEED = 10;
@@ -46,6 +47,9 @@ const SnakeGame = () => {
     let headX = 10;
     let headY = 10;
 
+    const snakeParts: Position[] = [];
+    let tailLength = 2;
+
     let appleX = 5;
     let appleY = 5;
 
@@ -72,6 +76,16 @@ const SnakeGame = () => {
 
     const drawSnake = () => {
       ctx.fillStyle = 'green';
+      snakeParts.forEach((snakePart) => {
+        ctx.fillRect(snakePart.x * TILE_COUNT, snakePart.y * TILE_COUNT, tileSize, tileSize);
+      });
+
+      snakeParts.push({ x: headX, y: headY });
+      while (snakeParts.length > tailLength) {
+        snakeParts.shift();
+      }
+
+      ctx.fillStyle = 'orange';
       ctx.fillRect(headX * TILE_COUNT, headY * TILE_COUNT, tileSize, tileSize);
     };
 
@@ -89,6 +103,7 @@ const SnakeGame = () => {
       if (appleX === headX && appleY === headY) {
         appleX = Math.floor(Math.random() * TILE_COUNT);
         appleY = Math.floor(Math.random() * TILE_COUNT);
+        tailLength += 1;
       }
     };
 
