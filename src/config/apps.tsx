@@ -3,6 +3,7 @@ import Calendar from '@/components/Apps/Calendar';
 import Notes from '@/components/Apps/Notes';
 import PhotoBooth from '@/components/Apps/PhotoBooth';
 import Safari from '@/components/Apps/Safari';
+import SnakeGame from '@/components/Apps/SnakeGame';
 import { INITIAL_INDEX } from '@/constants/app';
 import { ReactElement } from 'react';
 
@@ -92,5 +93,19 @@ export const apps: App[] = [
     isMinimize: false,
     isResizable: true,
     content: <Calendar />,
+  },
+  {
+    id: 'snake_game',
+    title: 'Snake Game',
+    imageUrl: 'src/assets/icons/Dock/Calendar_Icon.png',
+    initialX: 300,
+    initialY: 400,
+    minWidth: 400,
+    minHeight: 400,
+    zIndex: INITIAL_INDEX,
+    isOpen: false,
+    isMinimize: false,
+    isResizable: false,
+    content: <SnakeGame />,
   },
 ];
