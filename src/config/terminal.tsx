@@ -1,4 +1,5 @@
 import { TerminalDirectory, TerminalFile } from '@/types/terminal';
+import { DoingWhat, Info } from './terminalContents';
 
 export const commands = ['cd', 'cat', 'clear', 'ls', 'help'];
 
@@ -9,24 +10,34 @@ export const terminalRoot: (TerminalFile | TerminalDirectory)[] = [
     type: 'directory',
     children: [
       {
-        id: 'shaw-1',
-        title: 'shaw-1',
+        id: 'who-am-i',
+        title: 'who-am-i.txt',
         type: 'file',
-        content: <span>Shaw-1</span>,
-      },
-      {
-        id: 'shaw-2',
-        title: 'shaw-2',
-        type: 'file',
-        content: <span>Shaw-2</span>,
+        content: (
+          <span className='text-lg'>
+            I'm a <span className='text-yellow-300'>super smart</span> web full-stack developer. 👨‍💻
+          </span>
+        ),
       },
     ],
   },
-  { id: 'mckee', title: 'mckee', type: 'directory', children: [] },
   {
-    id: 'our-text',
-    title: 'our-text',
+    id: 'mckee',
+    title: 'mckee',
+    type: 'directory',
+    children: [
+      {
+        id: 'doing-what',
+        title: 'doing-what.js',
+        type: 'file',
+        content: <DoingWhat />,
+      },
+    ],
+  },
+  {
+    id: 'info',
+    title: 'info.js',
     type: 'file',
-    content: <span>our-text</span>,
+    content: <Info />,
   },
 ];
