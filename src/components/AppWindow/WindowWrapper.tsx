@@ -2,6 +2,7 @@ import { AppReducerContext, AppStateContext } from '@/store/App/AppContext';
 import { useContext, useEffect, useRef, useState } from 'react';
 import AppWindow from '@/components/AppWindow';
 import { Size } from '@/types/size';
+import { WindowApp } from '@/types/app';
 
 const WindowWrapper = () => {
   const dispatch = useContext(AppReducerContext);
@@ -18,27 +19,25 @@ const WindowWrapper = () => {
     }
   }, []);
 
-  const appList = apps
-    .filter((app) => app.isOpen)
-    .map(({ id, initialX, initialY, minWidth, minHeight, title, zIndex, isMinimize, isResizable, content }) => (
-      <AppWindow
-        title={title}
-        key={id}
-        id={id}
-        initialPosition={{ x: initialX, y: initialY }}
-        minSize={{ width: minWidth, height: minHeight }}
-        zIndex={zIndex}
-        boundary={{ width, height }}
-        isMinimize={isMinimize}
-        isResizable={isResizable}
-      >
-        {content}
-      </AppWindow>
-    ));
-
   return (
     <div className='absolute bottom-0 left-0 right-0 top-[25px]' ref={boundaryRef}>
-      {appList}
+      {apps
+        .filter((app): app is WindowApp => app.type === 'window' && app.isOpen)
+        .map(({ id, initialX, initialY, minWidth, minHeight, title, zIndex, isMinimize, isResizable, content }) => (
+          <AppWindow
+            title={title}
+            key={id}
+            id={id}
+            initialPosition={{ x: initialX, y: initialY }}
+            minSize={{ width: minWidth, height: minHeight }}
+            zIndex={zIndex}
+            boundary={{ width, height }}
+            isMinimize={isMinimize}
+            isResizable={isResizable}
+          >
+            {content}
+          </AppWindow>
+        ))}
     </div>
   );
 };

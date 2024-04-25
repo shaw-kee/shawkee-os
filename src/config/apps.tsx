@@ -5,25 +5,9 @@ import Safari from '@/components/Apps/Safari';
 import SnakeGame from '@/components/Apps/SnakeGame';
 import Terminal from '@/components/Apps/Terminal';
 import { INITIAL_INDEX } from '@/constants/app';
-import { ReactElement } from 'react';
+import { LinkApp, WindowApp } from '@/types/app';
 
-export interface App {
-  id: string;
-  title: string;
-  imageUrl: string;
-  link?: string;
-  isOpen?: boolean;
-  initialX: number;
-  initialY: number;
-  minWidth: number;
-  minHeight: number;
-  zIndex: number;
-  isMinimize: boolean;
-  isResizable: boolean;
-  content?: ReactElement;
-}
-
-export const apps: App[] = [
+export const apps: (WindowApp | LinkApp)[] = [
   {
     id: 'notes',
     title: 'Notes',
@@ -37,6 +21,7 @@ export const apps: App[] = [
     isMinimize: false,
     isResizable: true,
     content: <Notes />,
+    type: 'window',
   },
   {
     id: 'safari',
@@ -51,6 +36,7 @@ export const apps: App[] = [
     isMinimize: false,
     isResizable: true,
     content: <Safari />,
+    type: 'window',
   },
   {
     id: 'photo_booth',
@@ -65,6 +51,7 @@ export const apps: App[] = [
     isMinimize: false,
     isResizable: false,
     content: <PhotoBooth />,
+    type: 'window',
   },
   {
     id: 'calculator',
@@ -79,6 +66,7 @@ export const apps: App[] = [
     isMinimize: false,
     isResizable: false,
     content: <Calculator />,
+    type: 'window',
   },
   {
     id: 'terminal',
@@ -93,20 +81,14 @@ export const apps: App[] = [
     isMinimize: false,
     isResizable: true,
     content: <Terminal />,
+    type: 'window',
   },
   {
     id: 'github',
     title: 'Github',
     imageUrl: 'src/assets/icons/Dock/Github_Icon.png',
     link: 'https://github.com/shaw-kee/shawkee-os',
-    initialX: 0,
-    initialY: 0,
-    minWidth: 0,
-    minHeight: 0,
-    zIndex: 0,
-    isOpen: false,
-    isMinimize: false,
-    isResizable: false,
+    type: 'link',
   },
   {
     id: 'snake_game',
