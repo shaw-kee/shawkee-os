@@ -1,9 +1,9 @@
 import { terminalRoot } from '@/config/terminal';
-import { TerminalDirectory } from '@/types/terminal';
 
 export const getCurrentChildren = (path: string[]) => {
-  if (path.length === 0) return terminalRoot;
-  return (terminalRoot.find((directory) => directory.title === path[path.length - 1]) as TerminalDirectory).children;
+  const targetChild = terminalRoot.find((directory) => directory.title === path[path.length - 1]);
+  if (targetChild !== undefined && targetChild.type === 'directory') return targetChild.children;
+  return terminalRoot;
 };
 
 export const getCurrentPath = (path: string[]) => {

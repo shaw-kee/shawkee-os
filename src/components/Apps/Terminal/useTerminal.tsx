@@ -1,5 +1,5 @@
 import { commands, terminalRoot } from '@/config/terminal';
-import { ContentType, TerminalFile } from '@/types/terminal';
+import { ContentType } from '@/types/terminal';
 import { History, getCurrentChildren, getCurrentPath } from '@/utils/terminal';
 import { KeyboardEvent, useEffect, useRef, useState } from 'react';
 
@@ -160,8 +160,7 @@ const useTerminal = () => {
   const displayContent = (file: string) => {
     const targetChild = currentChildren.current.find((child) => child.title === file);
     const isFile = targetChild !== undefined && targetChild.type === 'file';
-
-    return isFile ? (targetChild as TerminalFile).content : <span>cat: no such file or directory: {file}</span>;
+    return isFile ? targetChild.content : <span>cat: no such file or directory: {file}</span>;
   };
 
   const autoComplete = (input: string): string => {

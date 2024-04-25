@@ -3,14 +3,14 @@ import { ReactElement } from 'react';
 export interface TerminalFile {
   id: string;
   title: string;
-  type: string;
+  type: 'file';
   content: JSX.Element;
 }
 
 export interface TerminalDirectory {
   id: string;
   title: string;
-  type: string;
+  type: 'directory';
   children: (TerminalFile | TerminalDirectory)[];
 }
 
