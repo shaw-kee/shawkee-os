@@ -1,1 +1,1 @@
-export const DOCK_SIZE = 50;
+export const DOCK_SIZE = 45;

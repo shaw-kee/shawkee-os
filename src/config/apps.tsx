@@ -1,29 +1,13 @@
 import Calculator from '@/components/Apps/Calculator';
-import Calendar from '@/components/Apps/Calendar';
 import Notes from '@/components/Apps/Notes';
 import PhotoBooth from '@/components/Apps/PhotoBooth';
 import Safari from '@/components/Apps/Safari';
 import SnakeGame from '@/components/Apps/SnakeGame';
+import Terminal from '@/components/Apps/Terminal';
 import { INITIAL_INDEX } from '@/constants/app';
-import { ReactElement } from 'react';
+import { LinkApp, WindowApp } from '@/types/app';
 
-export interface App {
-  id: string;
-  title: string;
-  imageUrl: string;
-  link?: string;
-  isOpen?: boolean;
-  initialX: number;
-  initialY: number;
-  minWidth: number;
-  minHeight: number;
-  zIndex: number;
-  isMinimize: boolean;
-  isResizable: boolean;
-  content?: ReactElement;
-}
-
-export const apps: App[] = [
+export const apps: (WindowApp | LinkApp)[] = [
   {
     id: 'notes',
     title: 'Notes',
@@ -37,6 +21,7 @@ export const apps: App[] = [
     isMinimize: false,
     isResizable: true,
     content: <Notes />,
+    type: 'window',
   },
   {
     id: 'safari',
@@ -51,6 +36,7 @@ export const apps: App[] = [
     isMinimize: false,
     isResizable: true,
     content: <Safari />,
+    type: 'window',
   },
   {
     id: 'photo_booth',
@@ -65,6 +51,7 @@ export const apps: App[] = [
     isMinimize: false,
     isResizable: false,
     content: <PhotoBooth />,
+    type: 'window',
   },
   {
     id: 'calculator',
@@ -79,25 +66,34 @@ export const apps: App[] = [
     isMinimize: false,
     isResizable: false,
     content: <Calculator />,
+    type: 'window',
   },
   {
-    id: 'calendar',
-    title: 'Calendar',
-    imageUrl: 'src/assets/icons/Dock/Calendar_Icon.png',
-    initialX: 900,
-    initialY: 500,
-    minWidth: 300,
-    minHeight: 400,
+    id: 'terminal',
+    title: 'Terminal',
+    imageUrl: 'src/assets/icons/Dock/Terminal_Icon.png',
+    initialX: 400,
+    initialY: 200,
+    minWidth: 800,
+    minHeight: 600,
     zIndex: INITIAL_INDEX,
     isOpen: false,
     isMinimize: false,
     isResizable: true,
-    content: <Calendar />,
+    content: <Terminal />,
+    type: 'window',
+  },
+  {
+    id: 'github',
+    title: 'Github',
+    imageUrl: 'src/assets/icons/Dock/Github_Icon.png',
+    link: 'https://github.com/shaw-kee/shawkee-os',
+    type: 'link',
   },
   {
     id: 'snake_game',
     title: 'Snake Game',
-    imageUrl: 'src/assets/icons/Dock/Calendar_Icon.png',
+    imageUrl: 'src/assets/icons/Dock/Terminal_Icon.png',
     initialX: 300,
     initialY: 400,
     minWidth: 400,
@@ -107,5 +103,6 @@ export const apps: App[] = [
     isMinimize: false,
     isResizable: false,
     content: <SnakeGame />,
+    type: 'window',
   },
 ];
