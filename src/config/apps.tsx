@@ -93,7 +93,7 @@ export const apps: (WindowApp | LinkApp)[] = [
   {
     id: 'snake_game',
     title: 'Snake Game',
-    imageUrl: 'src/assets/icons/Dock/Calendar_Icon.png',
+    imageUrl: 'src/assets/icons/Dock/Terminal_Icon.png',
     initialX: 300,
     initialY: 400,
     minWidth: 400,
@@ -103,5 +103,6 @@ export const apps: (WindowApp | LinkApp)[] = [
     isMinimize: false,
     isResizable: false,
     content: <SnakeGame />,
+    type: 'window',
   },
 ];
