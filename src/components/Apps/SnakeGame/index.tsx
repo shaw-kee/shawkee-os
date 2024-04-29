@@ -53,6 +53,9 @@ const SnakeGame = () => {
     let appleX = 5;
     let appleY = 5;
 
+    let inputXVelocity = 0;
+    let inputYVelocity = 0;
+
     let xVelocity = 0;
     let yVelocity = 0;
 
@@ -60,28 +63,43 @@ const SnakeGame = () => {
     canvas.height = containerSize.height;
 
     const drawGame = () => {
-      clearScreen();
-      const result = isGameOver();
-      if (result) {
+      xVelocity = inputXVelocity;
+      yVelocity = inputYVelocity;
+
+      changeSnakePosition();
+
+      if (isGameOver()) {
         alert('GameOver !!!');
         return;
       }
-      changeSnakePosition();
+
+      clearScreen();
 
       checkAppleCollision();
       drawApple();
       drawSnake();
+
       timeoutId = setTimeout(drawGame, 1000 / SPEED);
     };
 
     const isGameOver = () => {
-      let gameOver = false;
+      console.log(xVelocity, yVelocity);
 
-      if (headX < 0 || headY < 0 || headX === TILE_COUNT || headY === TILE_COUNT) {
-        gameOver = true;
+      if (xVelocity === 0 && yVelocity === 0) {
+        return false;
       }
 
-      return gameOver;
+      if (headX < 0 || headY < 0 || headX === TILE_COUNT || headY === TILE_COUNT) {
+        return true;
+      }
+
+      for (const snakePart of snakeParts) {
+        if (snakePart.x === headX && snakePart.y === headY) {
+          return true;
+        }
+      }
+
+      return false;
     };
 
     const clearScreen = () => {
@@ -125,24 +143,24 @@ const SnakeGame = () => {
     const handleKeydown = (event: KeyboardEvent) => {
       switch (event.key) {
         case 'ArrowUp':
-          if (yVelocity === 1) break;
-          xVelocity = 0;
-          yVelocity = -1;
+          if (inputYVelocity === 1) break;
+          inputXVelocity = 0;
+          inputYVelocity = -1;
           break;
         case 'ArrowDown':
-          if (yVelocity === -1) break;
-          xVelocity = 0;
-          yVelocity = 1;
+          if (inputYVelocity === -1) break;
+          inputXVelocity = 0;
+          inputYVelocity = 1;
           break;
         case 'ArrowLeft':
-          if (xVelocity === 1) break;
-          xVelocity = -1;
-          yVelocity = 0;
+          if (inputXVelocity === 1) break;
+          inputXVelocity = -1;
+          inputYVelocity = 0;
           break;
         case 'ArrowRight':
-          if (xVelocity === -1) break;
-          xVelocity = 1;
-          yVelocity = 0;
+          if (inputXVelocity === -1) break;
+          inputXVelocity = 1;
+          inputYVelocity = 0;
           break;
         default:
           break;
