@@ -1,8 +1,6 @@
 import { Position } from '@/types/position';
 import { useEffect, useRef } from 'react';
 
-const SPEED = 10;
-
 const TILE_COUNT = 20;
 
 const SnakeGame = () => {
@@ -59,6 +57,9 @@ const SnakeGame = () => {
     let xVelocity = 0;
     let yVelocity = 0;
 
+    let score = 0;
+    let speed = 10;
+
     canvas.width = containerSize.width;
     canvas.height = containerSize.height;
 
@@ -79,12 +80,17 @@ const SnakeGame = () => {
       drawApple();
       drawSnake();
 
-      timeoutId = setTimeout(drawGame, 1000 / SPEED);
+      if (score > 5) {
+        speed = 12;
+      }
+      if (score > 10) {
+        speed = 15;
+      }
+
+      timeoutId = setTimeout(drawGame, 1000 / speed);
     };
 
     const isGameOver = () => {
-      console.log(xVelocity, yVelocity);
-
       if (xVelocity === 0 && yVelocity === 0) {
         return false;
       }
@@ -137,6 +143,7 @@ const SnakeGame = () => {
         appleX = Math.floor(Math.random() * TILE_COUNT);
         appleY = Math.floor(Math.random() * TILE_COUNT);
         tailLength += 1;
+        score += 1;
       }
     };
 
