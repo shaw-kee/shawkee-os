@@ -2,6 +2,9 @@
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
+    fontFamily: {
+      sans: ['"Noto Sans KR"', 'sans-serif'],
+    },
     fontSize: {
       xs: ['8px', '16px'],
       sm: ['12px', '20px'],
