@@ -90,13 +90,13 @@ export default class SnakeGameManager {
   }
 
   #drawSnake() {
-    const convasContext = this.#canvasContext;
+    const canvasContext = this.#canvasContext;
     const snakeParts = this.#snakeParts;
     const { x: headX, y: headY } = this.#headPosition;
 
-    convasContext.fillStyle = 'green';
+    canvasContext.fillStyle = 'green';
     snakeParts.forEach((snakePart) => {
-      convasContext.fillRect(snakePart.x * TILE_COUNT, snakePart.y * TILE_COUNT, this.#tileSize, this.#tileSize);
+      canvasContext.fillRect(snakePart.x * TILE_COUNT, snakePart.y * TILE_COUNT, this.#tileSize, this.#tileSize);
     });
 
     snakeParts.push({ x: headX, y: headY });
@@ -104,8 +104,8 @@ export default class SnakeGameManager {
       snakeParts.shift();
     }
 
-    convasContext.fillStyle = 'orange';
-    convasContext.fillRect(headX * TILE_COUNT, headY * TILE_COUNT, this.#tileSize, this.#tileSize);
+    canvasContext.fillStyle = 'orange';
+    canvasContext.fillRect(headX * TILE_COUNT, headY * TILE_COUNT, this.#tileSize, this.#tileSize);
   }
 
   #drawApple() {
