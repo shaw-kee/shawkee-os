@@ -30,7 +30,6 @@ const SnakeGame = () => {
     const snakeGameManager = new SnakeGameManager(canvas);
     const containerSize = getContainerSize();
     snakeGameManager.setCanvasSize(containerSize);
-    snakeGameManager.initialize();
     snakeGameManager.drawGame();
 
     return () => {
@@ -39,7 +38,7 @@ const SnakeGame = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className='h-full w-full'>
+    <div ref={containerRef} className='w-ful h-full '>
       <canvas ref={canvasRef} className='border bg-black' />
     </div>
   );

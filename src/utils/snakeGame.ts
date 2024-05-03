@@ -40,6 +40,8 @@ export default class SnakeGameManager {
 
     this.#snakeParts = [];
     this.#snakeTailLength = 2;
+
+    this.#addEventHandler();
   }
 
   #getRandomPosition() {
@@ -158,11 +160,7 @@ export default class SnakeGameManager {
 
   setCanvasSize({ width, height }: Size) {
     this.#canvas.width = width;
-    this.#canvas.width = height;
-  }
-
-  initialize() {
-    this.#addEventHandler();
+    this.#canvas.height = height;
   }
 
   drawGame() {
