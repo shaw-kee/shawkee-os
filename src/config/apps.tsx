@@ -84,13 +84,6 @@ export const apps: (WindowApp | LinkApp)[] = [
     type: 'window',
   },
   {
-    id: 'github',
-    title: 'Github',
-    imageUrl: 'src/assets/icons/Dock/Github_Icon.png',
-    link: 'https://github.com/shaw-kee/shawkee-os',
-    type: 'link',
-  },
-  {
     id: 'snake_game',
     title: 'Snake Game',
     imageUrl: 'src/assets/icons/Dock/Snake_Game_Icon.png',
@@ -104,5 +97,12 @@ export const apps: (WindowApp | LinkApp)[] = [
     isResizable: false,
     content: <SnakeGame />,
     type: 'window',
+  },
+  {
+    id: 'github',
+    title: 'Github',
+    imageUrl: 'src/assets/icons/Dock/Github_Icon.png',
+    link: 'https://github.com/shaw-kee/shawkee-os',
+    type: 'link',
   },
 ];
