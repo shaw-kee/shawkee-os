@@ -1,7 +1,7 @@
 import { Position } from '@/types/position';
-import { Size } from '@/types/size';
 
 export const TILE_COUNT = 20;
+const CANVAS_SIZE = 400;
 
 export default class SnakeGameManager {
   #canvas: HTMLCanvasElement;
@@ -25,6 +25,10 @@ export default class SnakeGameManager {
   constructor(canvas: HTMLCanvasElement) {
     this.#canvas = canvas;
     this.#canvasContext = this.#getCanvasContext(canvas);
+
+    this.#canvas.width = CANVAS_SIZE;
+    this.#canvas.height = CANVAS_SIZE;
+
     this.#tileSize = canvas.width / TILE_COUNT;
 
     this.#headPosition = this.#getRandomPosition();
@@ -175,11 +179,6 @@ export default class SnakeGameManager {
 
     this.drawEnd();
     this.drawGame();
-  }
-
-  setCanvasSize({ width, height }: Size) {
-    this.#canvas.width = width;
-    this.#canvas.height = height;
   }
 
   drawGame() {

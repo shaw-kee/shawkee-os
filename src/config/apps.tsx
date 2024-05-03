@@ -90,7 +90,7 @@ export const apps: (WindowApp | LinkApp)[] = [
     initialX: 300,
     initialY: 400,
     minWidth: 400,
-    minHeight: 400,
+    minHeight: 428,
     zIndex: INITIAL_INDEX,
     isOpen: false,
     isMinimize: false,
