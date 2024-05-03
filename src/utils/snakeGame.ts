@@ -158,6 +158,25 @@ export default class SnakeGameManager {
     document.removeEventListener('keydown', this.#handleKeydown.bind(this));
   }
 
+  #reset() {
+    this.#headPosition = this.#getRandomPosition();
+    this.#applePosition = this.#getRandomPosition();
+
+    this.#inputVelocity = { x: 0, y: 0 };
+    this.#velocity = { x: 0, y: 0 };
+
+    this.#score = 0;
+    this.#speed = 10;
+
+    this.#timeoutId = null;
+
+    this.#snakeParts = [];
+    this.#snakeTailLength = 2;
+
+    this.drawEnd();
+    this.drawGame();
+  }
+
   setCanvasSize({ width, height }: Size) {
     this.#canvas.width = width;
     this.#canvas.height = height;
@@ -169,8 +188,8 @@ export default class SnakeGameManager {
     this.#changeSnakePosition();
 
     if (this.#isGameOver()) {
-      alert('GameOver !!!');
-      return;
+      alert('GameOver!\nPress Enter key to restart your game.');
+      return this.#reset();
     }
 
     this.#clearScreen();
