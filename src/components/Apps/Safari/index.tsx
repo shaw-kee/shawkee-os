@@ -99,7 +99,6 @@ const Safari = () => {
 
   useEffect(() => {
     if (!inputRef.current) return;
-    console.log(histories, historyCursor);
     inputRef.current.value = histories[historyCursor];
   }, [historyCursor, histories]);
 
