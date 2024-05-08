@@ -68,7 +68,7 @@ export default class SnakeGameManager {
     this.#headPosition = { x: headX, y: headY };
   }
 
-  #isGameOver = () => {
+  #isGameOver() {
     if (this.#velocity.x === 0 && this.#velocity.y === 0) {
       return false;
     }
@@ -86,7 +86,7 @@ export default class SnakeGameManager {
     }
 
     return false;
-  };
+  }
 
   #clearScreen() {
     this.#canvasContext.fillStyle = 'white';
