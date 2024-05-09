@@ -13,10 +13,19 @@ const WindowWrapper = () => {
   const apps = useContext(AppStateContext);
 
   useEffect(() => {
-    if (boundaryRef.current) {
-      const boundaryRect = boundaryRef.current.getBoundingClientRect();
-      setBoundary({ width: boundaryRect.width, height: boundaryRect.height });
-    }
+    const resizeBoundary = () => {
+      if (boundaryRef.current) {
+        const boundaryRect = boundaryRef.current.getBoundingClientRect();
+        setBoundary({ width: boundaryRect.width, height: boundaryRect.height });
+      }
+    };
+
+    resizeBoundary();
+    window.addEventListener('resize', resizeBoundary);
+
+    return () => {
+      window.removeEventListener('resize', resizeBoundary);
+    };
   }, []);
 
   return (
