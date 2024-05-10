@@ -16,6 +16,7 @@ const useWindowResize = () => {
   };
 
   useEffect(() => {
+    resizeHandler();
     window.addEventListener('resize', resizeHandler);
 
     return () => {
