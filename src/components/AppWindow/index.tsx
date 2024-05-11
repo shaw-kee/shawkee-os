@@ -41,6 +41,8 @@ const AppWindow = ({
     width,
     height,
     setResize,
+    repositionElement,
+    resizeElement,
     handleResizeEast,
     handleResizeNorth,
     handleResizeNorthWest,
@@ -52,18 +54,25 @@ const AppWindow = ({
     handleDragElement,
     ref: windowRef,
   } = useRND(initialPosition, minSize, boundary);
+
+  const resizeWindow = ({ x, y, width, height }: Position & Size) => {
+    setResize({ x, y, width, height });
+    repositionElement({ x, y });
+    resizeElement({ width, height });
+  };
+
   const {
     isResize: isMaximize,
     setIsResize: setIsMaximize,
     setPrevSize: setTempMaximize,
     prevState: maximizePrevState,
-  } = usePrevSize(setResize);
+  } = usePrevSize(resizeWindow);
   const {
     isResize: isFullscreen,
     setIsResize: setIsFullscreen,
     setPrevSize: setTempFullscreen,
     prevState: fullscreenPrevState,
-  } = usePrevSize(setResize);
+  } = usePrevSize(resizeWindow);
   const [tempMinimize, setTempMinimize] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
   const minimizePrevState = usePrevState(isMinimize);
 
@@ -95,6 +104,8 @@ const AppWindow = ({
     if (!isMaximize) {
       setTempMaximize({ x, y, width, height });
       setResize({ x: 0, y: 0, width: boundary.width, height: boundary.height });
+      repositionElement({ x: 0, y: 0 });
+      resizeElement({ width: boundary.width, height: boundary.height });
     }
 
     setIsMaximize((prev) => !prev);
