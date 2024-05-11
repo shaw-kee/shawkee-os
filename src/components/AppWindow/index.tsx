@@ -82,7 +82,7 @@ const AppWindow = ({
       const { x, y, width, height } = tempMinimize;
       setResize({ x, y, width, height });
     }
-  }, [setResize, tempMinimize, isMinimize, isMaximize, minimizePrevState, isFullscreen]);
+  }, [setResize, tempMinimize, isMinimize, minimizePrevState]);
 
   useEffect(() => {
     if (!windowRef.current) return;
