@@ -7,18 +7,24 @@ import OverlayProvider from './store/Overlay/OverlayProvider';
 import SystemProvider from './store/System/SystemProvider';
 import { useContext } from 'react';
 import { SystemStateContext } from './store/System/SystemContext';
+import useWindowResize from './hooks/useWindowResize';
 
 function App() {
   return (
     <SystemProvider>
       <AppProvider>
         <OverlayProvider>
-          <Desktop />
+          <ResponsiveScreen />
         </OverlayProvider>
       </AppProvider>
     </SystemProvider>
   );
 }
+
+const ResponsiveScreen = () => {
+  const isAvailableWindowSize = useWindowResize();
+  return isAvailableWindowSize ? <Desktop /> : <Mobile />;
+};
 
 const Desktop = () => {
   const { brightness } = useContext(SystemStateContext);
@@ -33,6 +39,15 @@ const Desktop = () => {
       <MenuBar />
       <WindowWrapper />
       <Dock />
+    </div>
+  );
+};
+
+const Mobile = () => {
+  return (
+    <div className='flex h-screen w-full flex-col items-center justify-center gap-2 break-keep bg-slate-700 px-2 text-center text-slate-100'>
+      <h1 className='text-[2rem] font-semibold'>앱이 지원하지 않는 스크린 사이즈입니다.</h1>
+      <p className='text-[1rem]'>최소 넓이: 1024px, 최소 높이: 768px</p>
     </div>
   );
 };
