@@ -1,5 +1,5 @@
 import { AppReducerContext } from '@/store/App/AppContext';
-import { PropsWithChildren, useContext, useEffect, useState } from 'react';
+import { PropsWithChildren, useContext, useEffect, useRef, useState } from 'react';
 import useRND from './useRND';
 import { Size } from '@/types/size';
 import { Position } from '@/types/position';
@@ -75,6 +75,7 @@ const AppWindow = ({
   } = usePrevSize(resizeWindow);
   const [tempMinimize, setTempMinimize] = useState<Position & Size>({ x: 0, y: 0, width: 0, height: 0 });
   const minimizePrevState = usePrevState(isMinimize);
+  const transitionFlag = useRef<boolean>(false);
 
   useEffect(() => {
     if (!isMinimize && minimizePrevState) {
@@ -86,13 +87,12 @@ const AppWindow = ({
   useEffect(() => {
     if (!windowRef.current) return;
 
-    const resize = isMinimize || isMaximize || isFullscreen;
     const restoreResize =
       (!isMinimize && minimizePrevState) ||
       (!isMaximize && maximizePrevState) ||
       (!isFullscreen && fullscreenPrevState);
 
-    if (resize || restoreResize) windowRef.current.style.transition = APP_WINDOW_TRANSITION;
+    if (transitionFlag.current || restoreResize) windowRef.current.style.transition = APP_WINDOW_TRANSITION;
   });
 
   const handleClose = () => dispatch({ type: 'CLOSE', id });
@@ -102,6 +102,7 @@ const AppWindow = ({
     if (!isResizable || isFullscreen) return;
 
     if (!isMaximize) {
+      transitionFlag.current = true;
       setTempMaximize({ x, y, width, height });
       setResize({ x: 0, y: 0, width: boundary.width, height: boundary.height });
       repositionElement({ x: 0, y: 0 });
@@ -113,6 +114,7 @@ const AppWindow = ({
 
   const handleMinimizeWindow = () => {
     if (windowRef.current) {
+      transitionFlag.current = true;
       dispatch({ type: 'MINIMIZE', id });
       setTempMinimize({ x, y, width, height });
       setResize({
@@ -133,6 +135,7 @@ const AppWindow = ({
 
   const handleFullscreen = () => {
     if (!isFullscreen) {
+      transitionFlag.current = true;
       setTempFullscreen({ x, y, width, height });
       setResize({ x: 0, y: -MENUBAR_HEIGHT, width: boundary.width, height: boundary.height + MENUBAR_HEIGHT });
       document.addEventListener('keydown', handleKeyDown);
@@ -142,7 +145,10 @@ const AppWindow = ({
   };
 
   const handleTransitionEnd = () => {
-    if (windowRef.current) windowRef.current.style.transition = 'none';
+    if (windowRef.current) {
+      windowRef.current.style.transition = 'none';
+      transitionFlag.current = false;
+    }
   };
 
   return (
