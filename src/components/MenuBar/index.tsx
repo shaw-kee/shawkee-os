@@ -7,33 +7,19 @@ import Clock from './Clock';
 import MenuList from './MenuList';
 import MenuOverlay from './MenuOverlay';
 import ControlCenter from './ControlCenter';
-import { useContext, useMemo, type MouseEvent } from 'react';
+import { type MouseEvent } from 'react';
 import useOverlay from '@/hooks/useOverlay';
 import useAudio from '@/hooks/useAudio';
 import MusicSrc from '@/assets/music/sample.mp3';
 import Spotlight from '../Spotlight';
-import { AppStateContext } from '@/store/App/AppContext';
-import { WindowApp } from '@/types/app';
+import useAppMenu from './useAppMenu';
 
 const SYSTEM_MENUS = ['About This Mac', 'Log Out shawkee'];
 
 const MenuBar = () => {
   const overlay = useOverlay();
   const { togglePlay } = useAudio({ src: MusicSrc });
-  const apps = useContext(AppStateContext);
-
-  const focusedApp: WindowApp | null = apps.reduce((previousApp: WindowApp | null, currentApp) => {
-    if (currentApp.type === 'window' && currentApp.isOpen) {
-      if (previousApp === null) return currentApp;
-      if (previousApp.zIndex < currentApp.zIndex) return currentApp;
-    }
-    return previousApp;
-  }, null);
-
-  const appMenus = useMemo(() => {
-    if (!focusedApp) return null;
-    return [`Hide ${focusedApp.title}`, `Quit ${focusedApp.title}`];
-  }, [focusedApp]);
+  const { appTitle, appMenus } = useAppMenu();
 
   const openSystemMenu = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -47,8 +33,8 @@ const MenuBar = () => {
 
   const openAppMenu = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
+    if (appTitle === 'Finder') return;
     const rect = event.currentTarget.getBoundingClientRect();
-    if (appMenus === null) return;
     overlay.open(() => (
       <MenuOverlay initialPosition={{ x: rect.x, y: rect.y + rect.height }} close={overlay.close}>
         <MenuList menus={appMenus} />
@@ -79,7 +65,7 @@ const MenuBar = () => {
             <AppleIcon width={14} height={17} viewBox='0 0 14 17' />
           </MenuBarItem>
           <MenuBarItem onClick={openAppMenu}>
-            <span className='font-semibold'>{focusedApp === null ? 'Finder' : focusedApp.title}</span>
+            <span className='font-semibold'>{appTitle}</span>
           </MenuBarItem>
         </div>
         <div className='flex'>
