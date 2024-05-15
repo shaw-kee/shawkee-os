@@ -46,7 +46,7 @@ const MenuOverlay = ({ children, initialPosition, close }: MenuListProps) => {
 
   return (
     <div
-      className={`popup-container absolute z-50 flex flex-col rounded-md p-[5px] text-[13px]`}
+      className={`popup-container absolute z-50 flex min-w-[220px] flex-col rounded-md p-[5px] text-[13px]`}
       style={{ left: position.x, top: position.y }}
       ref={ref}
     >

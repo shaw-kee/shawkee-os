@@ -58,11 +58,13 @@ const MenuBar = () => {
   return (
     <>
       <div className='flex w-full justify-between bg-white/50 px-[8px] backdrop-blur-[25px]'>
-        <div className='flex'>
+        <div className='flex space-x-[-2px]'>
           <MenuBarItem onClick={openMenu}>
             <AppleIcon width={14} height={17} viewBox='0 0 14 17' />
           </MenuBarItem>
-          <MenuBarItem>{focusedApp === null ? 'Finder' : focusedApp.title}</MenuBarItem>
+          <MenuBarItem>
+            <span className='font-semibold'>{focusedApp === null ? 'Finder' : focusedApp.title}</span>
+          </MenuBarItem>
         </div>
         <div className='flex'>
           <MenuBarItem>
