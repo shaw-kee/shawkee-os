@@ -6,6 +6,7 @@ import MenuOverlay from './MenuOverlay';
 import MenuList from './MenuList';
 import { Position } from '@/types/position';
 import { Menu } from '@/types/menu';
+import Alert from '../Alert';
 
 const useAppMenu = () => {
   const overlay = useOverlay();
@@ -43,7 +44,18 @@ const useAppMenu = () => {
   };
 
   const systemMenus: Menu[] = [
-    { label: 'About This Mac', onClick: () => {} },
+    {
+      label: 'About This Mac',
+      onClick: () => {
+        overlay.open(() => (
+          <Alert title='Shakee OS' description='Inspired by the macOS'>
+            <Alert.Button fill onClick={overlay.close}>
+              Close
+            </Alert.Button>
+          </Alert>
+        ));
+      },
+    },
     { label: 'Log Out shawkee', onClick: () => {} },
   ];
 
