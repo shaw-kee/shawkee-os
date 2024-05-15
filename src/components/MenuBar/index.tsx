@@ -7,18 +7,28 @@ import Clock from './Clock';
 import MenuList from './MenuList';
 import MenuOverlay from './MenuOverlay';
 import ControlCenter from './ControlCenter';
-import type { MouseEvent } from 'react';
+import { useContext, type MouseEvent } from 'react';
 import useOverlay from '@/hooks/useOverlay';
 import useAudio from '@/hooks/useAudio';
 import MusicSrc from '@/assets/music/sample.mp3';
 import Spotlight from '../Spotlight';
+import { AppStateContext } from '@/store/App/AppContext';
+import { WindowApp } from '@/types/app';
 
-const DEFAULT_MENUS = ['Menu1', 'Menu2', 'Menu3', 'LongTextMenuLongTextMenuLongTextMenu'];
+const DEFAULT_MENUS = ['About This Mac', 'Log Out shawkee'];
 
 const MenuBar = () => {
   const overlay = useOverlay();
-
   const { togglePlay } = useAudio({ src: MusicSrc });
+  const apps = useContext(AppStateContext);
+
+  const focusedApp: WindowApp | null = apps.reduce((previousApp: WindowApp | null, currentApp) => {
+    if (currentApp.type === 'window' && currentApp.isOpen) {
+      if (previousApp === null) return currentApp;
+      if (previousApp.zIndex < currentApp.zIndex) return currentApp;
+    }
+    return previousApp;
+  }, null);
 
   const openMenu = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -52,9 +62,7 @@ const MenuBar = () => {
           <MenuBarItem onClick={openMenu}>
             <AppleIcon width={14} height={17} viewBox='0 0 14 17' />
           </MenuBarItem>
-          <MenuBarItem>Finder</MenuBarItem>
-          <MenuBarItem>Menu1</MenuBarItem>
-          <MenuBarItem onClick={openMenu}>Menu2</MenuBarItem>
+          <MenuBarItem>{focusedApp === null ? 'Finder' : focusedApp.title}</MenuBarItem>
         </div>
         <div className='flex'>
           <MenuBarItem>
@@ -66,7 +74,7 @@ const MenuBar = () => {
           <MenuBarItem onClick={openControlCenter}>
             <ControlCenterIcon width={14} height={13} viewBox='0 0 14 13' />
           </MenuBarItem>
-          <MenuBarItem onClick={openMenu}>
+          <MenuBarItem>
             <Clock />
           </MenuBarItem>
         </div>
