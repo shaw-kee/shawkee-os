@@ -144,6 +144,8 @@ const useRND = (initialPosition: Position, minSize: Size, boundary: Size) => {
     width,
     height,
     setResize,
+    repositionElement,
+    resizeElement,
     handleResizeEast,
     handleResizeNorth,
     handleResizeNorthEast,
