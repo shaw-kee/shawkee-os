@@ -4,7 +4,6 @@ import WifiIcon from '@/assets/icons/WifiIcon.svg?react';
 import ControlCenterIcon from '@/assets/icons/ControlCenterIcon.svg?react';
 import MenuBarItem from './MenuBarItem';
 import Clock from './Clock';
-import MenuList from './MenuList';
 import MenuOverlay from './MenuOverlay';
 import ControlCenter from './ControlCenter';
 import { type MouseEvent } from 'react';
@@ -12,34 +11,23 @@ import useOverlay from '@/hooks/useOverlay';
 import useAudio from '@/hooks/useAudio';
 import MusicSrc from '@/assets/music/sample.mp3';
 import Spotlight from '../Spotlight';
-import useAppMenu from './useAppMenu';
-
-const SYSTEM_MENUS = ['About This Mac', 'Log Out shawkee'];
+import useAppMenu from './useMenu';
 
 const MenuBar = () => {
   const overlay = useOverlay();
   const { togglePlay } = useAudio({ src: MusicSrc });
-  const { appTitle, appMenus } = useAppMenu();
+  const { appTitle, openAppMenu, openSystemMenu } = useAppMenu();
 
-  const openSystemMenu = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleClickSystemMenu = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     const rect = event.currentTarget.getBoundingClientRect();
-    overlay.open(() => (
-      <MenuOverlay initialPosition={{ x: rect.x, y: rect.y + rect.height }} close={overlay.close}>
-        <MenuList menus={SYSTEM_MENUS} />
-      </MenuOverlay>
-    ));
+    openSystemMenu({ x: rect.x, y: rect.y + rect.height });
   };
 
-  const openAppMenu = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleClickAppMenu = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
-    if (appTitle === 'Finder') return;
     const rect = event.currentTarget.getBoundingClientRect();
-    overlay.open(() => (
-      <MenuOverlay initialPosition={{ x: rect.x, y: rect.y + rect.height }} close={overlay.close}>
-        <MenuList menus={appMenus} />
-      </MenuOverlay>
-    ));
+    openAppMenu({ x: rect.x, y: rect.y + rect.height });
   };
 
   const openControlCenter = (event: MouseEvent<HTMLButtonElement>) => {
@@ -61,10 +49,10 @@ const MenuBar = () => {
     <>
       <div className='flex w-full justify-between bg-white/50 px-[8px] backdrop-blur-[25px]'>
         <div className='flex space-x-[-2px]'>
-          <MenuBarItem onClick={openSystemMenu}>
+          <MenuBarItem onClick={handleClickSystemMenu}>
             <AppleIcon width={14} height={17} viewBox='0 0 14 17' />
           </MenuBarItem>
-          <MenuBarItem onClick={openAppMenu}>
+          <MenuBarItem onClick={handleClickAppMenu}>
             <span className='font-semibold'>{appTitle}</span>
           </MenuBarItem>
         </div>
