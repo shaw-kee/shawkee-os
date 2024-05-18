@@ -12,7 +12,7 @@ const MenuList = ({ menus, close }: MenuListProps) => {
         <li key={index} className='menu-item rounded-[5px] px-2.5 py-0.5 hover:text-white'>
           <button
             type='button'
-            className='cursor-default leading-4'
+            className='w-full cursor-default text-left leading-4'
             onClick={(event) => {
               event.preventDefault();
               close();
