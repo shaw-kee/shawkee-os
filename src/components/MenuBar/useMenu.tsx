@@ -8,6 +8,13 @@ import { Position } from '@/types/position';
 import { Menu } from '@/types/menu';
 import Alert from '../Alert';
 
+const ABOUT_MAC_INFORMATION = [
+  { key: 'Chip', value: 'Apple M2 Max' },
+  { key: 'Memory', value: '64GB' },
+  { key: 'Serial number', value: 'S0H5A1W8K2E4E' },
+  { key: 'shawkeeOS', value: '0.0.1' },
+];
+
 const useAppMenu = () => {
   const overlay = useOverlay();
   const apps = useContext(AppStateContext);
@@ -48,7 +55,19 @@ const useAppMenu = () => {
       label: 'About This Mac',
       onClick: () => {
         overlay.open(() => (
-          <Alert title='Shakee OS' description='Inspired by the macOS'>
+          <Alert
+            title='MacBook Pro'
+            description='Inspired by the macOS'
+            appIconUrl='src/assets/icons/Dock/Finder_Icon.png'
+          >
+            <ul className='mb-4 flex w-56 flex-col items-center gap-0.5'>
+              {ABOUT_MAC_INFORMATION.map(({ key, value }) => (
+                <li className='flex w-full items-center gap-3' key={key}>
+                  <div className='grow basis-0 text-right'>{key}</div>
+                  <div className='grow basis-0 text-left'>{value}</div>
+                </li>
+              ))}
+            </ul>
             <Alert.Button fill onClick={overlay.close}>
               Close
             </Alert.Button>
