@@ -1,7 +1,7 @@
 import { formatDate } from '@/utils/formatDate';
 import { useEffect, useState } from 'react';
 
-const useCurrentDate = ({ onlyTime = false }: { onlyTime?: boolean } = {}) => {
+const useCurrentDate = () => {
   const [date, setDate] = useState(() => new Date());
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const useCurrentDate = ({ onlyTime = false }: { onlyTime?: boolean } = {}) => {
     };
   });
 
-  return { date: formatDate({ date, onlyTime }) };
+  return { ...formatDate(date) };
 };
 
 export default useCurrentDate;

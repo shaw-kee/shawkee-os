@@ -1,9 +1,7 @@
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-type FormatDateParams = { date: Date; onlyTime?: boolean };
-
-export const formatDate = ({ date, onlyTime = false }: FormatDateParams) => {
+export const formatDate = (date: Date) => {
   const dayOfWeek = days[date.getDay()];
   const month = months[date.getMonth()];
   const day = date.getDate();
@@ -15,9 +13,5 @@ export const formatDate = ({ date, onlyTime = false }: FormatDateParams) => {
   hour = hour === 0 ? 12 : hour;
   const minutePadded = minute < 10 ? '0' + minute : minute;
 
-  if (onlyTime) {
-    return `${hour}:${minutePadded}`;
-  }
-
-  return `${dayOfWeek} ${month} ${day}  ${hour}:${minutePadded} ${meridiem}`;
+  return { date: `${dayOfWeek} ${month} ${day}`, time: `${hour}:${minutePadded} ${meridiem}` };
 };

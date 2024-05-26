@@ -1,8 +1,8 @@
 import useCurrentDate from '@/hooks/useCurrentDate';
 
 const Clock = () => {
-  const { date } = useCurrentDate();
-  return <div className='whitespace-pre'>{date}</div>;
+  const { date, time } = useCurrentDate();
+  return <div className='whitespace-pre'>{`${date}  ${time}`}</div>;
 };
 
 export default Clock;
