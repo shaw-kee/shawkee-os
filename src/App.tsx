@@ -8,6 +8,7 @@ import SystemProvider from './store/System/SystemProvider';
 import { useContext } from 'react';
 import { SystemStateContext } from './store/System/SystemContext';
 import useWindowResize from './hooks/useWindowResize';
+import LockScreen from './components/LockScreen';
 
 function App() {
   return (
@@ -27,7 +28,7 @@ const ResponsiveScreen = () => {
 };
 
 const Desktop = () => {
-  const { brightness } = useContext(SystemStateContext);
+  const { brightness, isLockScreen } = useContext(SystemStateContext);
   return (
     <div
       className='h-screen w-full'
@@ -36,9 +37,15 @@ const Desktop = () => {
       }}
     >
       <img src={WallpaperUrl} className='absolute h-full w-full object-cover' />
-      <MenuBar />
-      <WindowWrapper />
-      <Dock />
+      {isLockScreen ? (
+        <LockScreen />
+      ) : (
+        <>
+          <MenuBar />
+          <WindowWrapper />
+          <Dock />
+        </>
+      )}
     </div>
   );
 };
