@@ -46,32 +46,30 @@ const MenuBar = () => {
   };
 
   return (
-    <>
-      <div className='flex w-full justify-between bg-white/50 px-[8px] backdrop-blur-[25px]'>
-        <div className='flex space-x-[-2px]'>
-          <MenuBarItem onClick={handleClickSystemMenu}>
-            <AppleIcon width={14} height={17} viewBox='0 0 14 17' />
-          </MenuBarItem>
-          <MenuBarItem onClick={handleClickAppMenu}>
-            <span className='font-semibold'>{appTitle}</span>
-          </MenuBarItem>
-        </div>
-        <div className='flex'>
-          <MenuBarItem>
-            <WifiIcon width={16} height={11} viewBox='0 0 16 11' />
-          </MenuBarItem>
-          <MenuBarItem onClick={openSpotlight}>
-            <SpotlightIcon width={14} height={13} viewBox='0 0 14 13' />
-          </MenuBarItem>
-          <MenuBarItem onClick={openControlCenter}>
-            <ControlCenterIcon width={14} height={13} viewBox='0 0 14 13' />
-          </MenuBarItem>
-          <MenuBarItem>
-            <Clock />
-          </MenuBarItem>
-        </div>
+    <div className='absolute left-0 top-0 flex w-full justify-between bg-white/50 px-[8px] backdrop-blur-[25px]'>
+      <div className='flex space-x-[-2px]'>
+        <MenuBarItem onClick={handleClickSystemMenu}>
+          <AppleIcon width={14} height={17} viewBox='0 0 14 17' />
+        </MenuBarItem>
+        <MenuBarItem onClick={handleClickAppMenu}>
+          <span className='font-semibold'>{appTitle}</span>
+        </MenuBarItem>
       </div>
-    </>
+      <div className='flex'>
+        <MenuBarItem>
+          <WifiIcon width={16} height={11} viewBox='0 0 16 11' />
+        </MenuBarItem>
+        <MenuBarItem onClick={openSpotlight}>
+          <SpotlightIcon width={14} height={13} viewBox='0 0 14 13' />
+        </MenuBarItem>
+        <MenuBarItem onClick={openControlCenter}>
+          <ControlCenterIcon width={14} height={13} viewBox='0 0 14 13' />
+        </MenuBarItem>
+        <MenuBarItem>
+          <Clock />
+        </MenuBarItem>
+      </div>
+    </div>
   );
 };
 
