@@ -14,7 +14,7 @@ const useCurrentDate = () => {
     };
   });
 
-  return { date: formatDate(date) };
+  return { ...formatDate(date) };
 };
 
 export default useCurrentDate;

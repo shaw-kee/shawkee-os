@@ -12,5 +12,6 @@ export const formatDate = (date: Date) => {
   hour = hour % 12;
   hour = hour === 0 ? 12 : hour;
   const minutePadded = minute < 10 ? '0' + minute : minute;
-  return `${dayOfWeek} ${month} ${day}  ${hour}:${minutePadded} ${meridiem}`;
+
+  return { date: `${dayOfWeek} ${month} ${day}`, time: `${hour}:${minutePadded} ${meridiem}` };
 };

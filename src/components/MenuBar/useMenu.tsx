@@ -7,6 +7,7 @@ import MenuList from './MenuList';
 import { Position } from '@/types/position';
 import { Menu } from '@/types/menu';
 import Alert from '../Alert';
+import { SystemReducerContext } from '@/store/System/SystemContext';
 
 const ABOUT_MAC_INFORMATION = [
   { key: 'Chip', value: 'Apple M2 Max' },
@@ -18,9 +19,10 @@ const ABOUT_MAC_INFORMATION = [
 const useAppMenu = () => {
   const overlay = useOverlay();
   const apps = useContext(AppStateContext);
-  const dispatch = useContext(AppReducerContext);
+  const appDispatch = useContext(AppReducerContext);
+  const systemDispatch = useContext(SystemReducerContext);
 
-  if (!dispatch) throw new Error('dispatch is null');
+  if (!appDispatch || !systemDispatch) throw new Error('dispatch is null');
 
   const focusedApp: WindowApp | null = apps.reduce((previousApp: WindowApp | null, currentApp) => {
     if (currentApp.type === 'window' && currentApp.isOpen) {
@@ -32,9 +34,9 @@ const useAppMenu = () => {
 
   const handleClickQuitMenu = useCallback(() => {
     if (focusedApp) {
-      dispatch({ type: 'CLOSE', id: focusedApp.id });
+      appDispatch({ type: 'CLOSE', id: focusedApp.id });
     }
-  }, [dispatch, focusedApp]);
+  }, [appDispatch, focusedApp]);
 
   const appMenus = useMemo(() => {
     if (focusedApp === null) return [];
@@ -75,7 +77,12 @@ const useAppMenu = () => {
         ));
       },
     },
-    { label: 'Log Out shawkee', onClick: () => {} },
+    {
+      label: 'Log Out shawkee...',
+      onClick: () => {
+        systemDispatch({ type: 'SET_IS_LOCK_SCREEN', value: true });
+      },
+    },
   ];
 
   const openSystemMenu = ({ x, y }: Position) => {

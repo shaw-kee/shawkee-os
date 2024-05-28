@@ -8,6 +8,8 @@ import SystemProvider from './store/System/SystemProvider';
 import { useContext } from 'react';
 import { SystemStateContext } from './store/System/SystemContext';
 import useWindowResize from './hooks/useWindowResize';
+import LockScreen from './components/LockScreen';
+import { motion, AnimatePresence } from 'framer-motion';
 
 function App() {
   return (
@@ -27,7 +29,7 @@ const ResponsiveScreen = () => {
 };
 
 const Desktop = () => {
-  const { brightness } = useContext(SystemStateContext);
+  const { brightness, isLockScreen } = useContext(SystemStateContext);
   return (
     <div
       className='h-screen w-full'
@@ -35,10 +37,26 @@ const Desktop = () => {
         filter: `brightness(${brightness}%)`,
       }}
     >
-      <img src={WallpaperUrl} className='absolute h-full w-full object-cover' />
-      <MenuBar />
-      <WindowWrapper />
-      <Dock />
+      <AnimatePresence>
+        <img src={WallpaperUrl} className='absolute h-full w-full object-cover' />
+        {isLockScreen ? (
+          <motion.div
+            key='lockScreen'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className='h-full w-full'
+          >
+            <LockScreen />
+          </motion.div>
+        ) : (
+          <>
+            <MenuBar />
+            <WindowWrapper />
+            <Dock />
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

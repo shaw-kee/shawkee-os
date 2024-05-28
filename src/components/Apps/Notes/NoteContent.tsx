@@ -69,13 +69,17 @@ const NoteContent = React.memo(({ selectedMemo, onClick, onChange }: Props) => {
     }
   };
 
+  const formattedDate = Object.values(formatDate(date)).join('  ');
+
   return (
     <div className='flex grow flex-col overflow-y-auto bg-white' onClick={onClick}>
       <span
         className={`mt-2 select-none text-center text-sm font-bold text-black/30 ${
           selectedMemo.year === '' ? 'invisible' : ''
         }`}
-      >{`${formatDate(date)}`}</span>
+      >
+        {formattedDate}
+      </span>
       <div
         className={`mt-2 flex flex-col px-4 ${selectedMemo.year === '' ? 'invisible' : ''}`}
         onKeyDown={handleKeyDown}
