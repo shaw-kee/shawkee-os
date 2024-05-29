@@ -1,5 +1,5 @@
 import MenuBar from './components/MenuBar';
-import WallpaperUrl from './assets/wallpaper.jpg';
+import WallpaperUrl from '/public/assets/wallpaper.jpg';
 import Dock from '@/components/Dock';
 import AppProvider from '@/store/App/AppProvider';
 import WindowWrapper from '@/components/AppWindow/WindowWrapper';

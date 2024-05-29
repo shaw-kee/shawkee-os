@@ -1,10 +1,10 @@
-import PlusMinusIcon from '@/assets/icons/Calculator/PlusMinus.svg?react';
-import PlusIcon from '@/assets/icons/Calculator/Plus.svg?react';
-import PercentIcon from '@/assets/icons/Calculator/Percent.svg?react';
-import MinusIcon from '@/assets/icons/Calculator/Minus.svg?react';
-import DivideIcon from '@/assets/icons/Calculator/Divide.svg?react';
-import EqualIcon from '@/assets/icons/Calculator/Equal.svg?react';
-import MultiplyIcon from '@/assets/icons/Calculator/Multiply.svg?react';
+import PlusMinusIcon from '@/assets/svg/Calculator/PlusMinus.svg?react';
+import PlusIcon from '@/assets/svg/Calculator/Plus.svg?react';
+import PercentIcon from '@/assets/svg/Calculator/Percent.svg?react';
+import MinusIcon from '@/assets/svg/Calculator/Minus.svg?react';
+import DivideIcon from '@/assets/svg/Calculator/Divide.svg?react';
+import EqualIcon from '@/assets/svg/Calculator/Equal.svg?react';
+import MultiplyIcon from '@/assets/svg/Calculator/Multiply.svg?react';
 import { IconType } from '@/types/calculator';
 
 export const defaultState = { operand: '', formulaOperator: '' };

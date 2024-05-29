@@ -1,8 +1,8 @@
 import { type KeyboardEvent, type FocusEvent, useEffect, useState, useRef } from 'react';
-import RefreshIcon from '@/assets/icons/Safari/RefreshIcon.svg?react';
-import HomeIcon from '@/assets/icons/Safari/HomeIcon.svg?react';
-import LeftArrowIcon from '@/assets/icons/Safari/LeftArrowIcon.svg?react';
-import RightArrowIcon from '@/assets/icons/Safari/RightArrowIcon.svg?react';
+import RefreshIcon from '@/assets/svg/Safari/RefreshIcon.svg?react';
+import HomeIcon from '@/assets/svg/Safari/HomeIcon.svg?react';
+import LeftArrowIcon from '@/assets/svg/Safari/LeftArrowIcon.svg?react';
+import RightArrowIcon from '@/assets/svg/Safari/RightArrowIcon.svg?react';
 import HomePage from './HomePage';
 
 const Safari = () => {

@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import CameraIcon from '@/assets/icons/PhotoBooth/CameraIcon.svg?react';
-import CancelIcon from '@/assets/icons/PhotoBooth/CancelIcon.svg?react';
+import CameraIcon from '@/assets/svg/PhotoBooth/CameraIcon.svg?react';
+import CancelIcon from '@/assets/svg/PhotoBooth/CancelIcon.svg?react';
 
 type Photo = { id: number; src: string };
 

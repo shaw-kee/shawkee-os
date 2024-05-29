@@ -1,5 +1,5 @@
-import SidebarIcon from '@/assets/icons/Notes/Sidebar.svg?react';
-import DirectoryIcon from '@/assets/icons/Notes/Directory.svg?react';
+import SidebarIcon from '@/assets/svg/Notes/Sidebar.svg?react';
+import DirectoryIcon from '@/assets/svg/Notes/Directory.svg?react';
 import { NoteData } from '@/types/note';
 
 interface Props {

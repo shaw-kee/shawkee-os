@@ -1,7 +1,7 @@
-import CloseIcon from '@/assets/icons/AppWindow/Close.svg?react';
-import MinimizeIcon from '@/assets/icons/AppWindow/Minimize.svg?react';
-import FullscreenIcon from '@/assets/icons/AppWindow/Fullscreen.svg?react';
-import ExitFullscreenIcon from '@/assets/icons/AppWindow/ExitFullscreen.svg?react';
+import CloseIcon from '@/assets/svg/AppWindow/Close.svg?react';
+import MinimizeIcon from '@/assets/svg/AppWindow/Minimize.svg?react';
+import FullscreenIcon from '@/assets/svg/AppWindow/Fullscreen.svg?react';
+import ExitFullscreenIcon from '@/assets/svg/AppWindow/ExitFullscreen.svg?react';
 
 interface Props {
   isFullscreen: boolean;
