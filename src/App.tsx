@@ -5,7 +5,7 @@ import AppProvider from '@/store/App/AppProvider';
 import WindowWrapper from '@/components/AppWindow/WindowWrapper';
 import OverlayProvider from './store/Overlay/OverlayProvider';
 import SystemProvider from './store/System/SystemProvider';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { SystemStateContext } from './store/System/SystemContext';
 import useWindowResize from './hooks/useWindowResize';
 import LockScreen from './components/LockScreen';
@@ -50,11 +50,11 @@ const Desktop = () => {
             <LockScreen />
           </motion.div>
         ) : (
-          <>
+          <React.Fragment key='lockScreen'>
             <MenuBar />
             <WindowWrapper />
             <Dock />
-          </>
+          </React.Fragment>
         )}
       </AnimatePresence>
     </div>
