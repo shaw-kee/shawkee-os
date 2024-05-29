@@ -2,7 +2,6 @@ import Calculator from '@/components/Apps/Calculator';
 import Notes from '@/components/Apps/Notes';
 import PhotoBooth from '@/components/Apps/PhotoBooth';
 import Safari from '@/components/Apps/Safari';
-import SnakeGame from '@/components/Apps/SnakeGame';
 import Terminal from '@/components/Apps/Terminal';
 import { INITIAL_INDEX } from '@/constants/app';
 import { LinkApp, WindowApp } from '@/types/app';
@@ -83,21 +82,21 @@ export const apps: (WindowApp | LinkApp)[] = [
     content: <Terminal />,
     type: 'window',
   },
-  {
-    id: 'snake_game',
-    title: 'Snake Game',
-    imageUrl: '/assets/image/Dock/Snake_Game_Icon.png',
-    initialX: 300,
-    initialY: 400,
-    minWidth: 400,
-    minHeight: 428,
-    zIndex: INITIAL_INDEX,
-    isOpen: false,
-    isMinimize: false,
-    isResizable: false,
-    content: <SnakeGame />,
-    type: 'window',
-  },
+  // {
+  //   id: 'snake_game',
+  //   title: 'Snake Game',
+  //   imageUrl: '/assets/image/Dock/Snake_Game_Icon.png',
+  //   initialX: 300,
+  //   initialY: 400,
+  //   minWidth: 400,
+  //   minHeight: 428,
+  //   zIndex: INITIAL_INDEX,
+  //   isOpen: false,
+  //   isMinimize: false,
+  //   isResizable: false,
+  //   content: <SnakeGame />,
+  //   type: 'window',
+  // },
   {
     id: 'github',
     title: 'Github',
