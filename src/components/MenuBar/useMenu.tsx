@@ -60,7 +60,7 @@ const useAppMenu = () => {
           <Alert
             title='MacBook Pro'
             description='Inspired by the macOS'
-            appIconUrl='src/assets/icons/Dock/Finder_Icon.png'
+            appIconUrl='/assets/image/Dock/Finder_Icon.png'
           >
             <ul className='mb-4 flex w-56 flex-col items-center gap-0.5'>
               {ABOUT_MAC_INFORMATION.map(({ key, value }) => (

@@ -1,5 +1,4 @@
 import MenuBar from './components/MenuBar';
-import WallpaperUrl from '/public/assets/wallpaper.jpg';
 import Dock from '@/components/Dock';
 import AppProvider from '@/store/App/AppProvider';
 import WindowWrapper from '@/components/AppWindow/WindowWrapper';
@@ -38,7 +37,7 @@ const Desktop = () => {
       }}
     >
       <AnimatePresence>
-        <img src={WallpaperUrl} className='absolute h-full w-full object-cover' />
+        <img src='/assets/wallpaper.jpg' className='absolute h-full w-full object-cover' />
         {isLockScreen ? (
           <motion.div
             key='lockScreen'
