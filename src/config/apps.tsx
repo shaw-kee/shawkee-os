@@ -11,7 +11,7 @@ export const apps: (WindowApp | LinkApp)[] = [
   {
     id: 'notes',
     title: 'Notes',
-    imageUrl: 'src/assets/icons/Dock/Notes_Icon.png',
+    imageUrl: '/assets/image/Dock/Notes_Icon.png',
     initialX: 300,
     initialY: 100,
     minWidth: 800,
@@ -26,7 +26,7 @@ export const apps: (WindowApp | LinkApp)[] = [
   {
     id: 'safari',
     title: 'Safari',
-    imageUrl: 'src/assets/icons/Dock/Safari_Icon.png',
+    imageUrl: '/assets/image/Dock/Safari_Icon.png',
     initialX: 600,
     initialY: 300,
     minWidth: 1000,
@@ -41,7 +41,7 @@ export const apps: (WindowApp | LinkApp)[] = [
   {
     id: 'photo_booth',
     title: 'Photo Booth',
-    imageUrl: 'src/assets/icons/Dock/Photo_Booth_Icon.png',
+    imageUrl: '/assets/image/Dock/Photo_Booth_Icon.png',
     initialX: 700,
     initialY: 400,
     minWidth: 600,
@@ -56,7 +56,7 @@ export const apps: (WindowApp | LinkApp)[] = [
   {
     id: 'calculator',
     title: 'Calculator',
-    imageUrl: 'src/assets/icons/Dock/Calculator_Icon.png',
+    imageUrl: '/assets/image/Dock/Calculator_Icon.png',
     initialX: 700,
     initialY: 200,
     minWidth: 300,
@@ -71,7 +71,7 @@ export const apps: (WindowApp | LinkApp)[] = [
   {
     id: 'terminal',
     title: 'Terminal',
-    imageUrl: 'src/assets/icons/Dock/Terminal_Icon.png',
+    imageUrl: '/assets/image/Dock/Terminal_Icon.png',
     initialX: 400,
     initialY: 200,
     minWidth: 800,
@@ -86,7 +86,7 @@ export const apps: (WindowApp | LinkApp)[] = [
   {
     id: 'snake_game',
     title: 'Snake Game',
-    imageUrl: 'src/assets/icons/Dock/Snake_Game_Icon.png',
+    imageUrl: '/assets/image/Dock/Snake_Game_Icon.png',
     initialX: 300,
     initialY: 400,
     minWidth: 400,
@@ -101,7 +101,7 @@ export const apps: (WindowApp | LinkApp)[] = [
   {
     id: 'github',
     title: 'Github',
-    imageUrl: 'src/assets/icons/Dock/Github_Icon.png',
+    imageUrl: '/assets/image/Dock/Github_Icon.png',
     link: 'https://github.com/shaw-kee/shawkee-os',
     type: 'link',
   },
