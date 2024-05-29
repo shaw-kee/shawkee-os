@@ -39,7 +39,7 @@ const DockItem = ({ id, title, imageUrl, isOpen = false, link = '', mousePositio
           <img src={imageUrl} className='aspect-square w-full active:contrast-50' draggable={false} />
         </ConditionalLink>
       </div>
-      <div className={`absolute bottom-[2px] h-1 w-1 rounded-full bg-[#575757] ${isOpen ? '' : 'hidden'}`} />
+      <div className={`absolute bottom-[2px] h-1 w-1 rounded-full bg-black ${isOpen ? '' : 'hidden'}`} />
     </motion.div>
   );
 };
