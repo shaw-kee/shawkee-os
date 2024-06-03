@@ -20,7 +20,7 @@ const LockScreen = () => {
       </div>
       <div className='mb-16 flex flex-col items-center gap-6'>
         <div className='w-16 rounded-full bg-white'>
-          <img src='src/assets/icons/Dock/Finder_Icon.png' />
+          <img src='/assets/image/Dock/Finder_Icon.png' />
         </div>
         <input
           type='password'

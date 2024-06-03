@@ -38,8 +38,9 @@ npm run dev
 
 # Preview
 
-![main_1](https://github.com/shaw-kee/shawkee-os/assets/62253743/626a7b0c-8dc3-446c-810c-e7efa6b5af6f)
-<!-- ![main_2](https://github.com/shaw-kee/shawkee-os/assets/62253743/c6df89a4-84b5-43f0-9a3b-3c16fccd5210) -->
+![main](https://github.com/shaw-kee/shawkee-os/assets/62253743/0534f501-abc5-4115-8b2c-98a0e2cd15ae)
 
-# License
-shawkee-os is MIT licensed.
+&nbsp;
+
+## License
+shawkee-os is [MIT](https://github.com/shaw-kee/shawkee-os/blob/main/LICENSE) licensed.

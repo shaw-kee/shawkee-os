@@ -1,5 +1,5 @@
 import { NoteData, SelectedMemo } from '@/types/note';
-import DirectoryIcon from '@/assets/icons/Notes/Directory.svg?react';
+import DirectoryIcon from '@/assets/svg/Notes/Directory.svg?react';
 import React from 'react';
 
 interface Props {

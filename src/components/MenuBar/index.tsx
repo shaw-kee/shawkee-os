@@ -1,7 +1,7 @@
-import AppleIcon from '@/assets/icons/AppleIcon.svg?react';
-import SpotlightIcon from '@/assets/icons/SpotlightIcon.svg?react';
-import WifiIcon from '@/assets/icons/WifiIcon.svg?react';
-import ControlCenterIcon from '@/assets/icons/ControlCenterIcon.svg?react';
+import AppleIcon from '@/assets/svg/AppleIcon.svg?react';
+import SpotlightIcon from '@/assets/svg/SpotlightIcon.svg?react';
+import WifiIcon from '@/assets/svg/WifiIcon.svg?react';
+import ControlCenterIcon from '@/assets/svg/ControlCenterIcon.svg?react';
 import MenuBarItem from './MenuBarItem';
 import Clock from './Clock';
 import MenuOverlay from './MenuOverlay';
@@ -9,7 +9,7 @@ import ControlCenter from './ControlCenter';
 import { type MouseEvent } from 'react';
 import useOverlay from '@/hooks/useOverlay';
 import useAudio from '@/hooks/useAudio';
-import MusicSrc from '@/assets/music/sample.mp3';
+import MusicSrc from '/assets/music/sample.mp3';
 import Spotlight from '../Spotlight';
 import useAppMenu from './useMenu';
 

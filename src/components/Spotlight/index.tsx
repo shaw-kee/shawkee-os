@@ -1,4 +1,4 @@
-import SpotlightIcon from '@/assets/icons/SpotlightIcon.svg?react';
+import SpotlightIcon from '@/assets/svg/SpotlightIcon.svg?react';
 import { AppReducerContext, AppStateContext } from '@/store/App/AppContext';
 import { useContext, useEffect, useRef, useState } from 'react';
 
