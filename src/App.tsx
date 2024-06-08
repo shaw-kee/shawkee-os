@@ -14,9 +14,7 @@ function App() {
   return (
     <SystemProvider>
       <AppProvider>
-        <OverlayProvider>
-          <ResponsiveScreen />
-        </OverlayProvider>
+        <ResponsiveScreen />
       </AppProvider>
     </SystemProvider>
   );
@@ -36,26 +34,28 @@ const Desktop = () => {
         filter: `brightness(${brightness}%)`,
       }}
     >
-      <AnimatePresence>
-        <img src='/assets/wallpaper.jpg' className='absolute h-full w-full object-cover' />
-        {isLockScreen ? (
-          <motion.div
-            key='lockScreen'
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className='h-full w-full'
-          >
-            <LockScreen />
-          </motion.div>
-        ) : (
-          <React.Fragment key='lockScreen'>
-            <MenuBar />
-            <WindowWrapper />
-            <Dock />
-          </React.Fragment>
-        )}
-      </AnimatePresence>
+      <OverlayProvider>
+        <AnimatePresence>
+          <img src='/assets/wallpaper.jpg' className='absolute h-full w-full object-cover' />
+          {isLockScreen ? (
+            <motion.div
+              key='lockScreen'
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className='h-full w-full'
+            >
+              <LockScreen />
+            </motion.div>
+          ) : (
+            <React.Fragment key='lockScreen'>
+              <MenuBar />
+              <WindowWrapper />
+              <Dock />
+            </React.Fragment>
+          )}
+        </AnimatePresence>
+      </OverlayProvider>
     </div>
   );
 };
