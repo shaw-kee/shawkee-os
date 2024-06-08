@@ -22,6 +22,8 @@ export default class SnakeGameManager {
   #snakeParts: Position[];
   #snakeTailLength: number;
 
+  #isMoving: boolean;
+
   constructor(canvas: HTMLCanvasElement) {
     this.#canvas = canvas;
     this.#canvasContext = this.#getCanvasContext(canvas);
@@ -44,6 +46,8 @@ export default class SnakeGameManager {
 
     this.#snakeParts = [];
     this.#snakeTailLength = 2;
+
+    this.#isMoving = false;
 
     this.#addEventHandler();
   }
@@ -131,6 +135,10 @@ export default class SnakeGameManager {
   }
 
   #handleKeydown(event: KeyboardEvent) {
+    if (this.#isMoving) {
+      return;
+    }
+
     const { x: inputXVelocity, y: inputYVelocity } = this.#inputVelocity;
     switch (event.key) {
       case 'ArrowUp':
@@ -152,6 +160,8 @@ export default class SnakeGameManager {
       default:
         break;
     }
+
+    this.#isMoving = true;
   }
 
   #addEventHandler() {
@@ -203,8 +213,8 @@ export default class SnakeGameManager {
     if (this.#score > 10) {
       this.#speed = 15;
     }
-
     this.#timeoutId = setTimeout(this.drawGame.bind(this), 1000 / this.#speed);
+    this.#isMoving = false;
   }
 
   drawEnd() {
