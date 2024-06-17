@@ -4,15 +4,17 @@ import { Position } from '@/types/position';
 import { clampValue, mouseDrag } from '@/utils/mouseDrag';
 import { useRef, useState } from 'react';
 
-const useRND = (initialPosition: Position, minSize: Size, boundary: Size) => {
+const useRND = (minSize: Size, boundary: Size) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const { width: minWidth, height: minHeight } = minSize;
-  const { x: initialX, y: initialY } = initialPosition;
   const { width: boundaryWidth, height: boundaryHeight } = boundary;
 
   const [{ width, height }, setSize] = useState<Size>({ width: minWidth, height: minHeight });
-  const [{ x, y }, setPosition] = useState<Position>({ x: initialX, y: initialY });
+  const [{ x, y }, setPosition] = useState<Position>({
+    x: boundaryWidth / 2 - minWidth / 2,
+    y: boundaryHeight / 2 - minHeight / 2,
+  });
 
   const mouseUpPosition = useRef({ x, y });
   const mouseUpSize = useRef({ width, height });

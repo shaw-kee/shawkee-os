@@ -13,7 +13,6 @@ const MENUBAR_HEIGHT = 25;
 interface Props {
   title: string;
   id: string;
-  initialPosition: Position;
   minSize: Size;
   zIndex: number;
   boundary: Size;
@@ -24,7 +23,6 @@ interface Props {
 const AppWindow = ({
   title,
   id,
-  initialPosition,
   minSize,
   zIndex,
   boundary,
@@ -53,7 +51,7 @@ const AppWindow = ({
     handleResizeWest,
     handleDragElement,
     ref: windowRef,
-  } = useRND(initialPosition, minSize, boundary);
+  } = useRND(minSize, boundary);
 
   const resizeWindow = ({ x, y, width, height }: Position & Size) => {
     setResize({ x, y, width, height });
