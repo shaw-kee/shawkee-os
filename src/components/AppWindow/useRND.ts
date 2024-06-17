@@ -1,7 +1,7 @@
 import { BOUNDARY_MARGIN, BOUNDARY_MIN } from '@/constants/resize';
 import { Size } from '@/types/size';
 import { Position } from '@/types/position';
-import { clampValue, mouseDrag } from '@/utils/mouseDrag';
+import { clampValue, initPosition, mouseDrag } from '@/utils/mouseDrag';
 import { useRef, useState } from 'react';
 
 const useRND = (minSize: Size, boundary: Size) => {
@@ -11,10 +11,7 @@ const useRND = (minSize: Size, boundary: Size) => {
   const { width: boundaryWidth, height: boundaryHeight } = boundary;
 
   const [{ width, height }, setSize] = useState<Size>({ width: minWidth, height: minHeight });
-  const [{ x, y }, setPosition] = useState<Position>({
-    x: Math.round(boundaryWidth / 2 - minWidth / 2),
-    y: Math.round(boundaryHeight / 2 - minHeight / 2),
-  });
+  const [{ x, y }, setPosition] = useState<Position>(initPosition(minSize, boundary));
 
   const mouseUpPosition = useRef({ x, y });
   const mouseUpSize = useRef({ width, height });
