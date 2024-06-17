@@ -6,10 +6,9 @@ import { Position } from '@/types/position';
 import { DOCK_SIZE } from '@/constants/dock';
 import ControlBox from './ControlBox';
 import usePrevState from '@/hooks/usePrevState';
-import { APP_WINDOW_TRANSITION } from '@/constants/app';
+import { APP_WINDOW_TRANSITION, MENUBAR_HEIGHT } from '@/constants/app';
 import usePrevSize from './usePrevSize';
 
-const MENUBAR_HEIGHT = 25;
 interface Props {
   title: string;
   id: string;
