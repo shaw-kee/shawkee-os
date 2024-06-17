@@ -23,8 +23,8 @@ const useRND = (minSize: Size, boundary: Size) => {
   const { handleMouseDown: handleDragElement } = mouseDrag((moveX, moveY) => {
     if (!ref.current) return;
 
-    const calculatedX = clampValue(x + moveX, BOUNDARY_MIN - width + BOUNDARY_MARGIN, boundary.width - BOUNDARY_MARGIN);
-    const calculatedY = clampValue(y + moveY, BOUNDARY_MIN, boundary.height - BOUNDARY_MARGIN);
+    const calculatedX = clampValue(x + moveX, BOUNDARY_MIN - width + BOUNDARY_MARGIN, boundaryWidth - BOUNDARY_MARGIN);
+    const calculatedY = clampValue(y + moveY, BOUNDARY_MIN, boundaryHeight - BOUNDARY_MARGIN);
 
     repositionElement({ x: calculatedX, y: calculatedY });
   }, handleMouseUp);
