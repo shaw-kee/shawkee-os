@@ -1,7 +1,7 @@
 import { BOUNDARY_MARGIN, BOUNDARY_MIN } from '@/constants/resize';
 import { Size } from '@/types/size';
 import { Position } from '@/types/position';
-import { clampValue, initPosition, mouseDrag } from '@/utils/mouseDrag';
+import { clampValue, initPosition, mouseDrag } from '@/utils/appWindow';
 import { useRef, useState } from 'react';
 
 const useRND = (minSize: Size, boundary: Size) => {
