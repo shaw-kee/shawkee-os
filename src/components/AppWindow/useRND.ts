@@ -12,8 +12,8 @@ const useRND = (minSize: Size, boundary: Size) => {
 
   const [{ width, height }, setSize] = useState<Size>({ width: minWidth, height: minHeight });
   const [{ x, y }, setPosition] = useState<Position>({
-    x: boundaryWidth / 2 - minWidth / 2,
-    y: boundaryHeight / 2 - minHeight / 2,
+    x: Math.round(boundaryWidth / 2 - minWidth / 2),
+    y: Math.round(boundaryHeight / 2 - minHeight / 2),
   });
 
   const mouseUpPosition = useRef({ x, y });
