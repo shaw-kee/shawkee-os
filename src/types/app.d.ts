@@ -3,8 +3,6 @@ export interface WindowApp {
   title: string;
   imageUrl: string;
   isOpen: boolean;
-  initialX: number;
-  initialY: number;
   minWidth: number;
   minHeight: number;
   zIndex: number;

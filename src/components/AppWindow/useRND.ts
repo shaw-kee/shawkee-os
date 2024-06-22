@@ -1,18 +1,17 @@
 import { BOUNDARY_MARGIN, BOUNDARY_MIN } from '@/constants/resize';
 import { Size } from '@/types/size';
 import { Position } from '@/types/position';
-import { clampValue, mouseDrag } from '@/utils/mouseDrag';
+import { clampValue, initPosition, mouseDrag } from '@/utils/appWindow';
 import { useRef, useState } from 'react';
 
-const useRND = (initialPosition: Position, minSize: Size, boundary: Size) => {
+const useRND = (minSize: Size, boundary: Size) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const { width: minWidth, height: minHeight } = minSize;
-  const { x: initialX, y: initialY } = initialPosition;
   const { width: boundaryWidth, height: boundaryHeight } = boundary;
 
   const [{ width, height }, setSize] = useState<Size>({ width: minWidth, height: minHeight });
-  const [{ x, y }, setPosition] = useState<Position>({ x: initialX, y: initialY });
+  const [{ x, y }, setPosition] = useState<Position>(initPosition(minSize, boundary));
 
   const mouseUpPosition = useRef({ x, y });
   const mouseUpSize = useRef({ width, height });
@@ -24,8 +23,8 @@ const useRND = (initialPosition: Position, minSize: Size, boundary: Size) => {
   const { handleMouseDown: handleDragElement } = mouseDrag((moveX, moveY) => {
     if (!ref.current) return;
 
-    const calculatedX = clampValue(x + moveX, BOUNDARY_MIN - width + BOUNDARY_MARGIN, boundary.width - BOUNDARY_MARGIN);
-    const calculatedY = clampValue(y + moveY, BOUNDARY_MIN, boundary.height - BOUNDARY_MARGIN);
+    const calculatedX = clampValue(x + moveX, BOUNDARY_MIN - width + BOUNDARY_MARGIN, boundaryWidth - BOUNDARY_MARGIN);
+    const calculatedY = clampValue(y + moveY, BOUNDARY_MIN, boundaryHeight - BOUNDARY_MARGIN);
 
     repositionElement({ x: calculatedX, y: calculatedY });
   }, handleMouseUp);

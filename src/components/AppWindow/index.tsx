@@ -6,14 +6,12 @@ import { Position } from '@/types/position';
 import { DOCK_SIZE } from '@/constants/dock';
 import ControlBox from './ControlBox';
 import usePrevState from '@/hooks/usePrevState';
-import { APP_WINDOW_TRANSITION } from '@/constants/app';
+import { APP_WINDOW_TRANSITION, MENUBAR_HEIGHT } from '@/constants/app';
 import usePrevSize from './usePrevSize';
 
-const MENUBAR_HEIGHT = 25;
 interface Props {
   title: string;
   id: string;
-  initialPosition: Position;
   minSize: Size;
   zIndex: number;
   boundary: Size;
@@ -24,7 +22,6 @@ interface Props {
 const AppWindow = ({
   title,
   id,
-  initialPosition,
   minSize,
   zIndex,
   boundary,
@@ -53,7 +50,7 @@ const AppWindow = ({
     handleResizeWest,
     handleDragElement,
     ref: windowRef,
-  } = useRND(initialPosition, minSize, boundary);
+  } = useRND(minSize, boundary);
 
   const resizeWindow = ({ x, y, width, height }: Position & Size) => {
     setResize({ x, y, width, height });

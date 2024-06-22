@@ -32,12 +32,11 @@ const WindowWrapper = () => {
     <div className='absolute bottom-0 left-0 right-0 top-[25px]' ref={boundaryRef}>
       {apps
         .filter((app): app is WindowApp => app.type === 'window' && app.isOpen)
-        .map(({ id, initialX, initialY, minWidth, minHeight, title, zIndex, isMinimize, isResizable, content }) => (
+        .map(({ id, minWidth, minHeight, title, zIndex, isMinimize, isResizable, content }) => (
           <AppWindow
             title={title}
             key={id}
             id={id}
-            initialPosition={{ x: initialX, y: initialY }}
             minSize={{ width: minWidth, height: minHeight }}
             zIndex={zIndex}
             boundary={{ width, height }}
