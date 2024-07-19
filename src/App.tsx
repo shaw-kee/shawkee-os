@@ -8,7 +8,6 @@ import React, { useContext } from 'react';
 import { SystemStateContext } from './store/System/SystemContext';
 import useWindowResize from './hooks/useWindowResize';
 import LockScreen from './components/LockScreen';
-import { motion, AnimatePresence } from 'framer-motion';
 
 function App() {
   return (
@@ -35,26 +34,16 @@ const Desktop = () => {
       }}
     >
       <OverlayProvider>
-        <AnimatePresence>
-          <img src='/assets/wallpaper.jpg' className='absolute h-full w-full object-cover' />
-          {isLockScreen ? (
-            <motion.div
-              key='lockScreen'
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className='h-full w-full'
-            >
-              <LockScreen />
-            </motion.div>
-          ) : (
-            <React.Fragment key='lockScreen'>
-              <MenuBar />
-              <WindowWrapper />
-              <Dock />
-            </React.Fragment>
-          )}
-        </AnimatePresence>
+        <img src='/assets/wallpaper.jpg' className='absolute h-full w-full object-cover' />
+        {isLockScreen ? (
+          <LockScreen />
+        ) : (
+          <React.Fragment>
+            <MenuBar />
+            <WindowWrapper />
+            <Dock />
+          </React.Fragment>
+        )}
       </OverlayProvider>
     </div>
   );
