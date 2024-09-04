@@ -7,7 +7,7 @@ interface Bookmark {
 const SAFARI_BOOKMARKS: Bookmark[] = [
   {
     title: 'Blog.minjong',
-    url: 'https://blog.minjong.codes',
+    url: 'https://blog.minjong.dev',
     iconUrl: '/assets/image/Bookmarks/blog-minjong.png',
   },
   {
