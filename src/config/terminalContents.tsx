@@ -19,8 +19,8 @@ export const Info = () => {
           <li>
             <span className='text-stone-300'>blog</span>
             <span className='text-teal-400'>: </span>
-            <a href='https://blog.minjong.codes' target='_blank' className='text-lime-400'>
-              https://blog.minjong.codes
+            <a href='https://blog.minjong.dev' target='_blank' className='text-lime-400'>
+              https://blog.minjong.dev
             </a>
           </li>
           <li>
